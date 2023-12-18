@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'simulator-view' title`, () => {
+  it(`should have the 'emergency-view' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('simulator-view');
+    expect(app.title).toEqual('emergency-view');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, simulator-view');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, emergency-view');
   });
 });
