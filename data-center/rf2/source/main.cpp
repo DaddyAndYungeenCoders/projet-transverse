@@ -15,26 +15,15 @@ MicroBitSerial serial(USBTX, USBRX);
 ManagedString CODE = "CDJMS:";
 int BUF_SIZE = 16;
 
-void encrypt_aes(uint8_t message[]) {
+
+uint8_t key[] = "secret key 123";
+// iv : initialisation vector
+uint8_t iv[16] = {0xf0, 0xf1, 0xf2, 0xf3, 0xf4, 0xf5, 0xf6, 0xf7, 0xf8, 0xf9, 0xfa, 0xfb, 0xfc, 0xfd, 0xfe, 0xff};
+   
+void encrypt_decrypt(uint8_t message[]) {
     struct AES_ctx ctx;
-    uint8_t key[] = "secret key 123";
-    // iv : initialisation vector
-    uint8_t iv[16] = {0xf0, 0xf1, 0xf2, 0xf3, 0xf4, 0xf5, 0xf6, 0xf7, 0xf8, 0xf9, 0xfa, 0xfb, 0xfc, 0xfd, 0xfe, 0xff};
-
     AES_init_ctx_iv(&ctx, key, iv);
-    // AES_CBC_encrypt_buffer(&ctx, message, strlen((char *) message));
-    AES_CBC_encrypt_buffer(&ctx, message, 32);
-}
-
-void decrypt_aes(uint8_t message[]) {
-    struct AES_ctx ctx;
-    uint8_t key[] = "secret key 123";
-    // iv : initialisation vector
-    uint8_t iv[16] = {0xf0, 0xf1, 0xf2, 0xf3, 0xf4, 0xf5, 0xf6, 0xf7, 0xf8, 0xf9, 0xfa, 0xfb, 0xfc, 0xfd, 0xfe, 0xff};
-
-    AES_init_ctx_iv(&ctx, key, iv);
-    // AES_CBC_encrypt_buffer(&ctx, message, strlen((char *) message));
-    AES_CBC_decrypt_buffer(&ctx, message, 32);
+    AES_CTR_xcrypt_buffer(&ctx, message, strlen((char *) message));
 }
 
 
@@ -47,7 +36,7 @@ bool check_cdjms(ManagedString s){
 void send_RF(ManagedString s){
     ManagedString tosend = CODE + s;
     uBit.radio.datagram.send(tosend);
-    serial.send(" send : " + tosend);
+    serial.send("sent");
 }
 
 void send_encrypt_RF(ManagedString s){
@@ -55,10 +44,9 @@ void send_encrypt_RF(ManagedString s){
     uint8_t message[MAX_TEXT_LENGTH];
     memcpy(message, (const uint8_t*)s.toCharArray(), MAX_TEXT_LENGTH);
 
-    encrypt_aes(message);
+    encrypt_decrypt(message);
     // serial.send(" encrypt : " + ManagedString((char*)message));
-    //send_RF(ManagedString((char*)s));
-    send_RF((char*)message);
+    send_RF(ManagedString((char*)message));
 
 }
 
@@ -67,7 +55,7 @@ ManagedString decrypt_RF(ManagedString s){
     uint8_t message[MAX_TEXT_LENGTH];
     memcpy(message, (const uint8_t *)s.toCharArray(), MAX_TEXT_LENGTH);
 
-    decrypt_aes(message);
+    encrypt_decrypt(message);
     return (char*)message;
 }
 
@@ -86,7 +74,6 @@ void onData(MicroBitEvent) {
     {
         ManagedString test = decode_RF(buf);
         // serial.send("Decoded data");
-        // serial.send(test);
         ManagedString decrypted = decrypt_RF(decode_RF(buf));
         serial.send(decrypted);
     }
@@ -101,6 +88,7 @@ int main() {
     uBit.radio.setGroup(57);
     uBit.messageBus.listen(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, onData);
     uBit.radio.enable();
+    
 
     while (1) {
         if (uBit.buttonA.isPressed()) {
@@ -111,11 +99,10 @@ int main() {
         if (uBit.buttonB.isPressed()) {
             // for testing purpose
             // serial.send("btnB");
-            send_encrypt_RF("Hello from0000000000000000000000");
+            send_encrypt_RF("Hello from000000000000000");
         }
         uBit.sleep(1000);
     }
 
     release_fiber();
-
 }
