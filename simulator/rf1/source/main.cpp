@@ -15,6 +15,7 @@ ManagedString saved_message;
 int etape = 0;
 int tries = 0;
 bool retry = false;
+bool message_en_cours = false;
 
 MicroBit uBit;
 MicroBitSerial serial(USBTX, USBRX);
@@ -75,6 +76,7 @@ void onTimeout()
     if (tries >= MAX_RETRY){
         serial.send("ABANDON \r\n");
         tries =0;
+        message_en_cours = false;
         return ;
     }else {
         etape = 0;
@@ -87,6 +89,7 @@ void onTimeout()
 
 
 void exactly(ManagedString message){
+    message_en_cours = true;
     serial.send("Exactly : " + etape + message + "\r\n" );
     if (message == "nok" || message == ""){
         etape = 0;
@@ -113,6 +116,8 @@ void exactly(ManagedString message){
             //serial.send("ACKDONE");
             timer.detach();
             tries = 0;
+            message_en_cours = false;
+
         } else {
             etape = 0;
             send_encrypt_RF("nok");
@@ -158,12 +163,15 @@ int main() {
         }
 
         if (uBit.buttonA.isPressed()) {
-            exactly("Hello World !");
+            if (!message_en_cours){
+                exactly("Hello World !");  
+            }
         }
 
         if (uBit.buttonB.isPressed()) {
-
-            exactly("I love IOT");
+            if (!message_en_cours){
+                exactly("I love IOT");
+            }
         }
         //ManagedString toRead = serial.read(sizeof(char[128]), ASYNC);
 
