@@ -7,24 +7,34 @@
 #include "aes.h"
 #include "aes.c"
 
-#define MAX_TEXT_LENGTH 20
+#define MAX_TEXT_LENGTH 32
 
 MicroBit uBit;
-MicroBitI2C i2c(I2C_SDA0, I2C_SCL0);
-MicroBitPin P0(MICROBIT_ID_IO_P0, MICROBIT_PIN_P0, PIN_CAPABILITY_DIGITAL_OUT);
 MicroBitSerial serial(USBTX, USBRX);
 
 ManagedString CODE = "CDJMS:";
 int BUF_SIZE = 16;
 
-void encrypt_decrypt(uint8_t message[]) {
+void encrypt_aes(uint8_t message[]) {
     struct AES_ctx ctx;
     uint8_t key[] = "secret key 123";
     // iv : initialisation vector
     uint8_t iv[16] = {0xf0, 0xf1, 0xf2, 0xf3, 0xf4, 0xf5, 0xf6, 0xf7, 0xf8, 0xf9, 0xfa, 0xfb, 0xfc, 0xfd, 0xfe, 0xff};
 
     AES_init_ctx_iv(&ctx, key, iv);
-    AES_CTR_xcrypt_buffer(&ctx, message, strlen((char *) message));
+    // AES_CBC_encrypt_buffer(&ctx, message, strlen((char *) message));
+    AES_CBC_encrypt_buffer(&ctx, message, 32);
+}
+
+void decrypt_aes(uint8_t message[]) {
+    struct AES_ctx ctx;
+    uint8_t key[] = "secret key 123";
+    // iv : initialisation vector
+    uint8_t iv[16] = {0xf0, 0xf1, 0xf2, 0xf3, 0xf4, 0xf5, 0xf6, 0xf7, 0xf8, 0xf9, 0xfa, 0xfb, 0xfc, 0xfd, 0xfe, 0xff};
+
+    AES_init_ctx_iv(&ctx, key, iv);
+    // AES_CBC_encrypt_buffer(&ctx, message, strlen((char *) message));
+    AES_CBC_decrypt_buffer(&ctx, message, 32);
 }
 
 
@@ -35,17 +45,29 @@ bool check_cdjms(ManagedString s){
 
 //Envoie des données en RF
 void send_RF(ManagedString s){
-   ManagedString tosend = CODE + s;
-   uBit.radio.datagram.send(tosend);
+    ManagedString tosend = CODE + s;
+    uBit.radio.datagram.send(tosend);
+    serial.send(" send : " + tosend);
 }
 
+void send_encrypt_RF(ManagedString s){
+    // serial.send(" send : " + s);
+    uint8_t message[MAX_TEXT_LENGTH];
+    memcpy(message, (const uint8_t*)s.toCharArray(), MAX_TEXT_LENGTH);
+
+    encrypt_aes(message);
+    // serial.send(" encrypt : " + ManagedString((char*)message));
+    //send_RF(ManagedString((char*)s));
+    send_RF((char*)message);
+
+}
 
 // Décodage des données reçu
 ManagedString decrypt_RF(ManagedString s){
     uint8_t message[MAX_TEXT_LENGTH];
     memcpy(message, (const uint8_t *)s.toCharArray(), MAX_TEXT_LENGTH);
 
-    encrypt_decrypt(message);
+    decrypt_aes(message);
     return (char*)message;
 }
 
@@ -59,9 +81,12 @@ void onData(MicroBitEvent) {
     // PacketBuffer buf(BUF_SIZE);
     ManagedString buf = uBit.radio.datagram.recv();
     serial.send("Received data");
-    serial.send(buf);
+    // serial.send(buf);
     if (check_cdjms(buf))
     {
+        ManagedString test = decode_RF(buf);
+        // serial.send("Decoded data");
+        // serial.send(test);
         ManagedString decrypted = decrypt_RF(decode_RF(buf));
         serial.send(decrypted);
     }
@@ -80,7 +105,13 @@ int main() {
     while (1) {
         if (uBit.buttonA.isPressed()) {
             // for testing purpose
-            serial.send("btnA");
+            // serial.send("btnA");
+            send_encrypt_RF("Hello world!");
+        }
+        if (uBit.buttonB.isPressed()) {
+            // for testing purpose
+            // serial.send("btnB");
+            send_encrypt_RF("Hello from0000000000000000000000");
         }
         uBit.sleep(1000);
     }
