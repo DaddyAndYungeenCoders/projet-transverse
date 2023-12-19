@@ -8,7 +8,6 @@
 #include "aes.c"
 
 #include "project.h"
-// #include "project.c"
 
 #define MAX_TEXT_LENGTH 32
 #define MAX_RETRY 5
@@ -43,16 +42,15 @@ bool check_cdjms(ManagedString s){
 void send_RF(ManagedString s){
     ManagedString tosend = CODE + s;
     uBit.radio.datagram.send(tosend);
-    serial.send("sent\n\r");
+    // serial.send("sent\n\r");
 }
 
 void send_encrypt_RF(ManagedString s){
-    serial.send("send : " + s + "\n\r");
+    // serial.send("send : " + s + "\n\r");
     uint8_t message[MAX_TEXT_LENGTH];
     memcpy(message, (const uint8_t*)s.toCharArray(), MAX_TEXT_LENGTH);
 
     encrypt_decrypt(message);
-    // serial.send(" encrypt : " + ManagedString((char*)message));
     send_RF(ManagedString((char*)message));
 
 }
@@ -70,25 +68,23 @@ ManagedString decode_RF(ManagedString s){
    return s.substring(CODE.length(), s.length());
 }
 
-
 void check_qos(ManagedString s) {
     // si on recoit "nok" => on recommence au début du protocole
     if (s == "nok") {
         etape = 0;
-        serial.send("--ERROR--" + s + "--ERROR--\n\r");
+        // serial.send("--ERROR--" + s + "--ERROR--\n\r");
     }
     
     if (etape == 0) {
         // on enregistre le message reçu, on envoie un ACK et on passe à l'étape suivante
         received_message = s;
         send_encrypt_RF("ACK" + received_message);
-        // timer.attach_us(onTimeout, TIMEOUT * 1000);
         etape = 1;
     } else if (etape == 1) {
         // on vérifie que le message reçu est bien le même que celui envoyé, précédé d'un ACKBACK
         if (s == "ACKBACK" + received_message) {
             send_encrypt_RF("ACKDONE");
-            serial.send("--DONE--" + received_message + "--DONE--\n\r");
+            // serial.send("--DONE--" + received_message + "--DONE--\n\r");
         } else {
             send_encrypt_RF("nok");
         }
@@ -105,20 +101,18 @@ void onData(MicroBitEvent) {
     // PacketBuffer buf(BUF_SIZE);
     ManagedString buf = uBit.radio.datagram.recv();
     serial.send("Received data : ");
-    // serial.send(buf);
     if (check_cdjms(buf)) {
         ManagedString test = decode_RF(buf);
-        // serial.send("Decoded data");
         ManagedString decrypted = decrypt_RF(decode_RF(buf));
-        serial.send(decrypted + "\n\r");
+        // serial.send(decrypted + "\n\r");
         check_qos(decrypted);
-        serial.send("--------------\n\r");
+        // serial.send("--------------\n\r");
     }
 }
 
 void onTimeout(){
     // traitement
-    serial.send("Timeout\n\r");
+    // serial.send("Timeout\n\r");
     timer.detach();
 }
 
