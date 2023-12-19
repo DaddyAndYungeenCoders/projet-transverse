@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Roboto&display=swap');
+
+$base-path: "/assets/";
+// IF WE WANT TO ADD AN IMAGE THEN WE JUST HAVE TO ADD THE FILE NAME HERE
+$icon-names: "fire-solid", "smoking-solid", "truck-droplet-solid";
+
+.tool-container {
+  height: fit-content;
+  width: fit-content;
+  padding: 0.25rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  border-radius: 32px;
+  box-shadow: 0 1px 2px rgba(60,64,67,0.4), 0 1px 3px 1px rgba(60,64,67,0.25);
+  font-family: 'Roboto', sans-serif;
+  cursor: pointer;
+  margin: 0 2rem;
+
+  &:hover {
+    background-color: #EEE;
+    box-shadow: 1px 2px 3px rgba(60,64,67,0.4), 1px 2px 4px 2px rgba(60,64,67,0.25);
+  }
+
+  .icon-container {
+    min-width: fit-content;
+    margin-right: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .create-button {
+    .rotate {
+      transition: transform 0.2s ease-in-out;
+      transform: rotate(45deg);
+    }
+  }
+
+  .menu {
+    position: absolute;
+    bottom: -1.5rem;
+    // TODO
+  }
+}
+
+@each $icon-name in $icon-names {
+  .#{$icon-name} {
+    width: 1rem;
+    min-height: 1rem;
+  }
+}

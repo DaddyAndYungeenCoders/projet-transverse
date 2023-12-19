@@ -1,0 +1,19 @@
+@import "../shared/styles/main-style-system";
+
+.app-container {
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  background-color: #333;
+
+  .toolbar {
+    position: absolute;
+    top: 1rem;
+    min-width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

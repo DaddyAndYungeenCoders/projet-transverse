@@ -1,5 +1,13 @@
 @import "../node_modules/leaflet/dist/leaflet.css";
+@import "shared/styles/main-style-system";
 
 #map {
   height: 100vh;
+}
+
+body {
+  background-color: #333;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }

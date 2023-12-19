@@ -1,0 +1,29 @@
+<div class="tool-container" (click)="handle()">
+  <ng-container *ngTemplateOutlet="isCreateButton ? create : filter"></ng-container>
+</div>
+
+<ng-template #filter>
+  <div *ngIf="imagePath.trim()" class="icon-container">
+    <fa-icon [icon]="image"/>
+  </div>
+
+  <div class="text-container">
+    <span class="text">
+      {{ text }}
+    </span>
+  </div>
+</ng-template>
+
+<ng-template #create>
+  <div class="create-button">
+    <div class="plus" (click)="openMenu()" [ngClass]="menuOpened ? 'rotate' : ''">
+    <span class="add">
+      <fa-icon [icon]="plusIcon"/>
+    </span>
+    </div>
+  </div>
+
+  <div *ngIf="menuOpened" class="menu">
+    TEST
+  </div>
+</ng-template>

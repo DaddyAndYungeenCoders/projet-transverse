@@ -1,2 +1,9 @@
-<app-main-map/>
+<div class="app-container">
+  <app-main-map/>
+  <div class="toolbar">
+    <app-tool *ngFor="let elem of toolPropsArray" [text]="elem.message" (onClick)="filter()" [image]="elem.imagePath"/>
+    <app-tool [isCreateButton]="true"/>
+  </div>
+</div>
+
 <router-outlet></router-outlet>
