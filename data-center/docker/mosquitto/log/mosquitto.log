@@ -1,0 +1,11 @@
+1702999966: mosquitto version 2.0.18 starting
+1702999966: Config loaded from /mosquitto/config/mosquitto.conf.
+1702999966: Starting in local only mode. Connections will only be possible from clients running on this machine.
+1702999966: Create a configuration file which defines a listener to allow remote access.
+1702999966: For more details see https://mosquitto.org/documentation/authentication-methods/
+1702999966: Opening ipv4 listen socket on port 1883.
+1702999966: Opening ipv6 listen socket on port 1883.
+1702999966: Error: Address not available
+1702999966: mosquitto version 2.0.18 running
+1703001245: mosquitto version 2.0.18 terminating
+1703001245: Saving in-memory database to /mosquitto/data//mosquitto.db.
