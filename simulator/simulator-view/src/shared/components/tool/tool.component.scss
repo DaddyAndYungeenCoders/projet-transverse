@@ -40,10 +40,3 @@
     // TODO
   }
 }
-
-@each $icon-name in $icon-names {
-  .#{$icon-name} {
-    width: 1rem;
-    min-height: 1rem;
-  }
-}
