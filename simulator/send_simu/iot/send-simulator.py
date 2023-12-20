@@ -1,6 +1,8 @@
 from tkinter import *
 
-import serial
+import serial, time
+import multiprocessing as mp
+from multiprocessing import Process 
 
 # Graphic interface for the send program
 master = Tk()
@@ -20,7 +22,16 @@ SERIALPORT = "/dev/ttyACM0"
 BAUDRATE = 115200
 ser = serial.Serial()
 
-def initUART():     
+
+def read_UART():
+      while ser.isOpen():
+            # time.sleep(100)
+            if (ser.inWaiting() > 0):  # if incoming bytes are waiting
+                data_str = ser.read(ser.inWaiting())
+                data_new = str(data_str, 'UTF-8')
+                print(data_new)
+
+def initUART():
         if serialButton['text'] == "Open Serial":   
                 # ser = serial.Serial(SERIALPORT, BAUDRATE)
                 ser.port=SERIALPORT
@@ -44,15 +55,22 @@ def initUART():
                         exit()
                 serialButton['text'] = "Close Serial"
                 b['state'] = 'normal'
+                reader = Process(target=read_UART, args=())
+                reader.start()
         else:
                 ser.close()
                 serialButton['text'] = "Open Serial"
                 b['state'] = 'disabled'
+                reader.join()
+
+
+
 
 
 def sendUARTMessage(msg):
     ser.write(msg.encode())
-    # print("Message <" + msg + "> sent to micro-controller." )
+    print("Message <" + msg + "> sent to micro-controller." )
+    time.sleep(0.5)
 
 
 def read_scales():
@@ -62,9 +80,11 @@ def read_scales():
         row = i//10
         if (scales[i].get()>0) :
                 print("Fire x=%d, y=%d has value %d" %( row, column, scales[i].get()) )
-        sendUARTMessage("(%d,%d,%d)" %(row, column, scales[i].get()))
+        sendUARTMessage("(%d,%d,%d)|" %(row, column, scales[i].get()))
     
     b['state'] = 'normal'
+
+
 
 b=Button(master,text="Send Values",highlightcolor="blue",command=read_scales, state="disabled") # button to read values
 serialButton=Button(master,text="Open Serial",highlightcolor="blue",command=initUART) # button to read values
@@ -73,4 +93,13 @@ serialButton.grid(row=6, column=0, columnspan = 3)
 
 # initUART()
 
-mainloop()
+#mainloop()
+
+screen = Process(target=mainloop, args=())
+screen.start()
+
+
+
+
+
+screen.join()

@@ -91,6 +91,7 @@ void onTimeout()
 void exactly(ManagedString message){
     message_en_cours = true;
     serial.send("Exactly : " + etape + message + "\r\n" );
+    message_en_cours = true;
     if (message == "nok" || message == ""){
         etape = 0;
         message = saved_message;
@@ -155,7 +156,9 @@ int main() {
    
     //timer.attach_us(onTimeout, TIMEOUT * 1000);
 
-
+    ManagedString toRead = "";
+    ManagedString DATA;
+    int id = 0;
     while (1) {
         if (retry){
             exactly("");
@@ -163,21 +166,28 @@ int main() {
         }
 
         if (uBit.buttonA.isPressed()) {
-            if (!message_en_cours){
-                exactly("Hello World !");  
-            }
+            id = 42;
         }
 
         if (uBit.buttonB.isPressed()) {
             if (!message_en_cours){
-                exactly("I love IOT");
+                exactly("I love IOT|");
             }
         }
-        //ManagedString toRead = serial.read(sizeof(char[128]), ASYNC);
+        //toRead = serial.read(sizeof(char[8]), ASYNC);//42
+        toRead = serial.readUntil("|", ASYNC);
+        if (toRead.length()> 0){
+            //serial.send(toRead);
+            //DATA = DATA + toRead;
+            send_encrypt_RF(toRead);
+        }
+        //serial.send(toRead);
+        if(id == 42){
+            serial.send(DATA);
+            id = 0;
+        }
 
-
-
-        uBit.sleep(1000);
+        //uBit.sleep(1000);
     }
     release_fiber();
 }
