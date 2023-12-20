@@ -1,7 +1,8 @@
-import {AfterViewInit, Component} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter} from '@angular/core';
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {Coordinates} from "../../types/interfaces/Coordinates";
 import * as L from "leaflet";
+import {FireCreationService} from "../../services/fire-creation.service";
 
 @Component({
   selector: 'app-main-map',
@@ -17,12 +18,18 @@ import * as L from "leaflet";
 export class MainMapComponent implements AfterViewInit{
   map!: L.Map;
   private defaultZoomLevel = 20;
+  $onClickMapCoords: EventEmitter<{latlng: number, lat: number, lng: number}> = new EventEmitter<{latlng: number; lat: number; lng: number}>();
 
-  constructor() {}
+  constructor(private fireCreationService: FireCreationService) {}
 
   ngAfterViewInit() {
     this.mountMap(); // Creating the map
     this.map.setZoom(19); // to avoid display bug
+    this.map.on('click', e => this.test(e));
+  }
+
+  private test(e: L.LeafletMouseEvent) {
+    this.fireCreationService.create(e);
   }
 
   private mountMap() {
