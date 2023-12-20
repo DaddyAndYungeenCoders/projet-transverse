@@ -1,32 +1,20 @@
 import datetime
+import sys
 import os
 import requests
 import paho.mqtt.client as mqtt
 import json
-import influxdb
-from influxdb_client import InfluxDBClient, Point, WritePrecision
-from influxdb_client.client.write_api import SYNCHRONOUS
+import yaml
 from dotenv import load_dotenv
 from database_manager import DatabaseManager
 
+sys.path.insert(0, '../../utils')
+from utils import load_config, init_mqtt_broker
 
-def init_mqtt_broker(client_name):
-    broker_ip = os.getenv("BROKER_IP")
-    broker_port = int(os.getenv("BROKER_PORT"))
-    user = os.getenv("BROKER_USER")
-    pw = os.getenv("BROKER_PW")
-
-    client = mqtt.Client(client_name)
-    client.username_pw_set(username=user, password=pw)
-    client.connect(broker_ip, broker_port)
-
-    print("subscribe to topics : project/fire-event and project/intervention")
-    client.subscribe("project/fire-event")
-    client.subscribe("project/intervention")
-
-    client.on_message = on_message
-    client.loop_start()
-    return client
+topics_path = "../../utils/config/topics.yaml"
+client_name = "translator-service"
+topic_rf2_fire_event = "rf2.fire_event"
+topic_manager_intervention = "manager.intervention"
 
 
 def init_influxdb_client():
@@ -36,7 +24,7 @@ def init_influxdb_client():
         "value": "123",
         "timestamp": datetime.datetime.now()
     }
-    db.insert_data(data, {"label": "tagtest", "value": "tagvalue"})
+    # db.insert_data(data, {"label": "tagtest", "value": "tagvalue"})
     pass
 
 
@@ -46,37 +34,61 @@ def save_data_in_db(rec):
 
 
 def on_message(client, userdata, message):
-    print("Received message (mqtt): {}".format(message.payload.decode("utf-8")))
+    print("Received message from {} : {}".format(message.topic, message.payload.decode("utf-8")))
     # print("message topic: {}".format(message.topic))
     # print("message qos: {}".format(message.qos))
     # print("message retain flag: {}".format(message.retain))
-    if message.topic == "project/fire-event":
+    if message.topic == topics.get(topic_rf2_fire_event):
         try:
-            rec = json.loads(message.payload.decode("utf-8"))
-            print(rec["x"])
-            print(rec["y"])
-            print(rec["intensity"])
-            print(rec["timestamp"])
+            fire_event = json.loads(message.payload.decode("utf-8"))
 
-            save_data_in_db(rec)
+            print(fire_event["coords"])
+            print(fire_event["intensity"])
+            print(fire_event["startDate"])
+            print(fire_event["endDate"])
+            print(fire_event["validationStatus"])
+            print(fire_event["idInterventionTeam"])
+
+            save_data_in_db(fire_event)
 
         except json.JSONDecodeError as e:
             print(f"Error decoding message: {e}")
 
-    elif message.topic == "project/intervention":
+    elif message.topic == topics.get(topic_manager_intervention):
         try:
-            rec = json.loads(message.payload.decode("utf-8"))
-            print(rec["id_team"])
-            print(rec["id_fire-event"])
+            intervention = json.loads(message.payload.decode("utf-8"))
+            print(intervention["sensorId"])
+            print(intervention["fireEventId"])
+            print(intervention["datetime"])
+            print(intervention["intensite"])
+
+            save_data_in_db(intervention)
+
         except json.JSONDecodeError as e:
             print(f"Error decoding message: {e}")
 
 
 def main():
-    init_mqtt_broker("translator-service")
-    init_influxdb_client()
+    pass
 
 
 if __name__ == '__main__':
-    load_dotenv()
-    main()
+    try:
+        load_dotenv()
+        topics = load_config(topics_path, "topics")
+        client = init_mqtt_broker(client_name)
+
+        print("subscribe to topics : " + topics.get(topic_rf2_fire_event) + " and "
+                                        + topics.get(topic_manager_intervention))
+        client.subscribe(topics.get(topic_rf2_fire_event))
+        client.subscribe(topics.get(topic_manager_intervention))
+        client.on_message = on_message
+
+        db = DatabaseManager()
+        init_influxdb_client()
+        print('Press Ctrl-C to quit.')
+        while True:
+            main()
+
+    except KeyboardInterrupt:
+        exit()

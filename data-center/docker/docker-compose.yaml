@@ -5,7 +5,7 @@ services:
     container_name: mqtt
     restart: always
     volumes:
-      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/utils:/mosquitto/utils
       - ./mosquitto/data:/mosquitto/data
       - ./mosquitto/log:/mosquitto/log
     ports:
@@ -20,7 +20,7 @@ services:
     volumes:
       - ./influxdb/influxdb:/var/lib/influxdb
       - ./influxdb/influxdb2:/var/lib/influxdb2
-      - ./influxdb/influxdb2-config:/etc/influxdb2
+      - ./influxdb/influxdb2-utils:/etc/influxdb2
       - ./influxdb/influxdb.conf:/etc/influxdb/influxdb.conf
     environment:
       - DOCKER_INFLUXDB_INIT_MODE=setup

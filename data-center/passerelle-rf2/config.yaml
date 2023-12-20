@@ -1,14 +1,15 @@
-"database":
-  "host": "127.0.0.1",
-  "user": "root",
-  "password": "admin",
-  "database_name": "microbit"
+---
+database:
+  host: "127.0.0.1",
+  user: "root",
+  password: "admin",
+  database_name: "microbit"
 
-"serial":
-  "baudrate": "115200",
-  "serial_port": "/dev/ttyACM0"
+serial:
+  baudrate: "115200",
+  serial_port: "/dev/ttyACM0"
 
-"http":
-  "api_url": "http://localhost",
-  "last_fire": "/api/v1/lastFire"
+http:
+  api_url: "http://localhost",
+  last_fire: "/api/v1/lastFire"
 

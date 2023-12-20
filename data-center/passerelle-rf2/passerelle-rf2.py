@@ -5,17 +5,24 @@
 import time
 import serial
 import os
+import sys
 import requests
 from dotenv import load_dotenv
 from datetime import datetime
 import paho.mqtt.client as mqtt
 import json
 
+sys.path.insert(0, '../../utils')
+from utils import load_config, init_mqtt_broker
+
 # send serial message
 SERIALPORT = "/dev/ttyACM0"
 BAUDRATE = 115200
 ser = serial.Serial()
 
+client_name = "passerelle-rf2"
+topics_path = "../../utils/config/topics.yaml"
+topic_rf2_fire_event = "rf2.fire_event"
 
 def init_uart():
     # ser = serial.Serial(SERIALPORT, BAUDRATE)
@@ -37,43 +44,6 @@ def init_uart():
     except serial.SerialException:
         print("Serial {} port not available".format(SERIALPORT))
         exit()
-
-
-def init_mqtt_broker(client_name):
-    broker_ip = os.getenv("BROKER_IP")
-    broker_port = int(os.getenv("BROKER_PORT"))
-    user = os.getenv("BROKER_USER")
-    pw = os.getenv("BROKER_PW")
-
-    client = mqtt.Client(client_name)
-    client.username_pw_set(username=user, password=pw)
-    client.connect(broker_ip, broker_port)
-
-    print("subscribe to topics : project/fire-event and project/intervention")
-    client.subscribe("project/fire-event")
-    client.subscribe("project/intervention")
-
-    client.on_message = on_message
-    client.loop_start()
-    return client
-
-
-# def on_connect(client, userdata, flags, rc):
-#     print("Connected flags ", str(flags), "result code ", str(rc))
-#
-
-def on_message(client, userdata, message):
-    print("Received message (mqtt): {}".format(message.payload.decode("utf-8")))
-    # print("message topic: {}".format(message.topic))
-    # print("message qos: {}".format(message.qos))
-    # print("message retain flag: {}".format(message.retain))
-    try:
-        rec = json.loads(message.payload.decode("utf-8"))
-        print(rec["x"])
-        print(rec["y"])
-        print(rec["intensity"])
-    except json.JSONDecodeError as e:
-        print(f"Error decoding message: {e}")
 
 
 def send_uart_message(msg):
@@ -105,7 +75,6 @@ def extract_data_from_serial(data):
 def main():
     # Init UART connection to microbit
     init_uart()
-    client = init_mqtt_broker("passerelle-rf2")
     # Init database connection
     # db = DatabaseManager()
     # db.connect()
@@ -147,9 +116,9 @@ def main():
                     "timestamp": datetime.now().isoformat()
                 }
                 print("publish to topic", "coucou")
-                client.publish("test/message", "coucou")
+                client.publish(topics.get(topic_rf2_fire_event), "coucou")
                 time.sleep(3)
-                client.publish("test/message", json.dumps(to_send))
+                client.publish(topic_rf2_fire_event, json.dumps(to_send))
                 a = 1
 
             # post data to webserver
@@ -169,4 +138,6 @@ def main():
 
 if __name__ == "__main__":
     load_dotenv()
+    topics = load_config(topics_path, "topics")
+    client = init_mqtt_broker(client_name)
     main()

@@ -21,3 +21,19 @@ class DatabaseManager:
         p = Point("test").tag(tag["label"], tag["value"]).field(data["field"], data["value"])
         self.write_api.write(bucket=self.bucket, record=p)
 
+# for item in json_data:
+#     json_body = [
+#         {
+#             "measurement": "your_measurement",
+#             "tags": {
+#                 "tag1": "value1",
+#                 "tag2": "value2"
+#             },
+#             "time": item['timestamp'],  # Adjust this based on your JSON structure
+#             "fields": {
+#                 "field1": item['field1'],
+#                 "field2": item['field2'],
+#                 # Add more fields as needed
+#             }
+#         }
+#     ]
