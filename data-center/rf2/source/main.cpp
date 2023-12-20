@@ -105,9 +105,9 @@ void onData(MicroBitEvent) {
     if (check_cdjms(buf)) {
         ManagedString test = decode_RF(buf);
         ManagedString decrypted = decrypt_RF(decode_RF(buf));
-        // serial.send(decrypted + "\n\r");
-        check_qos(decrypted);
-        // serial.send("--------------\n\r");
+        serial.send(decrypted + "\n\r");
+        // check_qos(decrypted);
+        serial.send("--------------\n\r");
     }
 }
 

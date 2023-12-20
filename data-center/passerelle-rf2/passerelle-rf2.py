@@ -4,7 +4,9 @@
 
 import time
 import serial
+import os
 import requests
+from dotenv import load_dotenv
 from datetime import datetime
 import paho.mqtt.client as mqtt
 import json
@@ -37,18 +39,19 @@ def init_uart():
         exit()
 
 
-def init_mqtt_broker():
-    client = mqtt.Client("passerelle-rf2")
+def init_mqtt_broker(client_name):
+    broker_ip = os.getenv("BROKER_IP")
+    broker_port = int(os.getenv("BROKER_PORT"))
+    user = os.getenv("BROKER_USER")
+    pw = os.getenv("BROKER_PW")
 
-    broker_ip = "127.0.0.1"
-    broker_port = 1883
-
-    # client.on_connect = on_connect
-    client.username_pw_set(username="admin", password="admin")
+    client = mqtt.Client(client_name)
+    client.username_pw_set(username=user, password=pw)
     client.connect(broker_ip, broker_port)
 
-    print("subscribe to topic", "test/message")
-    client.subscribe("test/message")
+    print("subscribe to topics : project/fire-event and project/intervention")
+    client.subscribe("project/fire-event")
+    client.subscribe("project/intervention")
 
     client.on_message = on_message
     client.loop_start()
@@ -85,23 +88,24 @@ def send_uart_message(msg):
 def extract_data_from_serial(data):
     try:
         # Exemple de chaîne de données
-        # T:23.45;L:500
+        # x:2;y:1;int:6
         parts = data.split(';')
 
-        temperature = float(parts[0].split(':')[1])
-        lux = float(parts[1].split(':')[1])
+        x = float(parts[0].split(':')[1])
+        y = float(parts[1].split(':')[1])
+        intensity = float(parts[2].split(':')[1])
 
-        return temperature, lux
-    # If there is an error while extracting data, we return -1, -1 to keep a trace
+        return x, y, intensity
+    # If there is an error while extracting data, we return -1, -1, -1 to keep a trace
     except (ValueError, IndexError) as e:
         print(f"Erreur lors de l'extraction des données: {e}")
-        return -1, -1
+        return -1, -1, -1
 
 
 def main():
     # Init UART connection to microbit
     init_uart()
-    client = init_mqtt_broker()
+    client = init_mqtt_broker("passerelle-rf2")
     # Init database connection
     # db = DatabaseManager()
     # db.connect()
@@ -133,13 +137,14 @@ def main():
                     #         print("Data inserted in database :", temp, lux, datetime.now())
                     #     else:
                     #         print("Error while inserting data in database")
-            # send data to MQTT topic
 
+            # send data to MQTT topic
             while a == 0:
                 to_send = {
                     "x": "10",
                     "y": "5",
-                    "intensity": "2"
+                    "intensity": "2",
+                    "timestamp": datetime.now().isoformat()
                 }
                 print("publish to topic", "coucou")
                 client.publish("test/message", "coucou")
@@ -162,15 +167,6 @@ def main():
         exit()
 
 
-def get_new_fire():
-    # GET from the API with requests
-    pass
-
-
-def send_fire_event(fire_event):
-    # Send the values trough UART
-    pass
-
-
 if __name__ == "__main__":
+    load_dotenv()
     main()
