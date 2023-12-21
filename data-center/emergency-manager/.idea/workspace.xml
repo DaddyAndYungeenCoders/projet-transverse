@@ -6,11 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b4e2b0ba-9645-4e0a-9c4f-e1ab902a49ee" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mqtt/MQTTClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mqtt/MQTTClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../passerelle-rf2/passerelle-rf2.py" beforeDir="false" afterPath="$PROJECT_DIR$/../passerelle-rf2/passerelle-rf2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../passerelle-rf2/shared/database_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/../passerelle-rf2/shared/database_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../passerelle-rf2/shared/project_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/../passerelle-rf2/shared/project_utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +63,7 @@
       <workItem from="1702032496011" duration="30000" />
       <workItem from="1703107597903" duration="562000" />
       <workItem from="1703108182810" duration="1669000" />
-      <workItem from="1703161787797" duration="2465000" />
+      <workItem from="1703161787797" duration="3592000" />
     </task>
     <servers />
   </component>

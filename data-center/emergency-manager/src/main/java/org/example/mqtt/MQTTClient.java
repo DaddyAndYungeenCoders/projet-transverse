@@ -12,15 +12,15 @@ import java.util.Map;
 
 public final class MQTTClient {
     private static MQTTClient client;
-    public String brokerUrl;
-    public String clientId;
+    private final String brokerUrl;
+    private final String clientId;
 
-     private MQTTClient(String brokerUrl, String clientId) throws MqttException {
+    private MQTTClient(String brokerUrl, String clientId) throws MqttException {
          this.brokerUrl = brokerUrl;
          this.clientId = clientId;
      }
 
-     public static MQTTClient getClient(String brokerUrl, String clientId) throws MqttException {
+     public static synchronized MQTTClient getClient(String brokerUrl, String clientId) throws MqttException {
          if (client == null) {
              client = new MQTTClient(brokerUrl, clientId);
          }
@@ -76,5 +76,13 @@ public final class MQTTClient {
             e.printStackTrace();
             throw new RuntimeException("Error loading topics from config file.", e);
         }
+    }
+
+    public String getBrokerUrl() {
+        return brokerUrl;
+    }
+
+    public String getClientId() {
+        return clientId;
     }
 }
