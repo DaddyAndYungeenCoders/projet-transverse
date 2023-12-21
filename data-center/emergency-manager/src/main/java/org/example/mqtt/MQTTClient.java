@@ -10,15 +10,30 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
-public class MQTTClient {
-    private final MQTTClient client;
+public final class MQTTClient {
+    private static MQTTClient client;
+    public String brokerUrl;
+    public String clientId;
 
-     public MQTTClient(String brokerUrl, String clientId) throws MqttException {
-         this.client = new MQTTClient(brokerUrl, clientId);
+     private MQTTClient(String brokerUrl, String clientId) throws MqttException {
+         this.brokerUrl = brokerUrl;
+         this.clientId = clientId;
+     }
+
+     public static MQTTClient getClient(String brokerUrl, String clientId) throws MqttException {
+         if (client == null) {
+             client = new MQTTClient(brokerUrl, clientId);
+         }
+         return client;
      }
 
      public void connect() throws MqttException {
          MqttConnectOptions options = new MqttConnectOptions();
+         // options to define if needed
+         char[] pw = "admin".toCharArray();
+         String username = "admin";
+         options.setUserName(username);
+         options.setPassword(pw);
 
          client.connect();
      }

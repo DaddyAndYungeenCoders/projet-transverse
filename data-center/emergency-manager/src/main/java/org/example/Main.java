@@ -13,11 +13,10 @@ public class Main {
         String brokerUrl = "127.0.0.1:1883";
         String topics_yaml = "/config/topics.yaml";
         try {
-            MQTTClient mqttClient = new MQTTClient(brokerUrl, clientName);
+            MQTTClient mqttClient = MQTTClient.getClient(brokerUrl, clientName);
             mqttClient.connect();
 
             Map<String, String> topics = mqttClient.loadTopicsFromConfig(topics_yaml);
-
 
             mqttClient.publish(topics.get("manager.intervention"), "intervention lancée !");
 

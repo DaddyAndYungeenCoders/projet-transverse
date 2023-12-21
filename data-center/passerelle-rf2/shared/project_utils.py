@@ -26,9 +26,5 @@ def init_mqtt_broker(client_name):
     client.username_pw_set(username=user, password=pw)
     client.connect(broker_ip, broker_port)
 
-    # print("subscribe to topics : " + topics.get("rf2.fire_event"))
-    # client.subscribe(topics.get("rf2.fire_event"))
-    #
-    # client.on_message = on_message
     client.loop_start()
     return client

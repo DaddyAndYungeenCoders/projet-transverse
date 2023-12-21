@@ -12,11 +12,7 @@ from datetime import datetime
 import paho.mqtt.client as mqtt
 import json
 
-from shared.database_manager import DatabaseManager
 from shared.project_utils import load_config, init_mqtt_broker
-
-# import shared.database_manager as database_manager
-# import shared.project_utils as utils
 
 # send serial message
 SERIALPORT = "/dev/ttyACM0"
