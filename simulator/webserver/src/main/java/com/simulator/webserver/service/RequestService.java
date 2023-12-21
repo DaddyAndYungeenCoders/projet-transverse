@@ -48,5 +48,7 @@ public class RequestService {
             return "Erreur lors de la conversion en JSON";
         }
     }
+
+    //public String send_Fire_Event(String url, )
     
 }

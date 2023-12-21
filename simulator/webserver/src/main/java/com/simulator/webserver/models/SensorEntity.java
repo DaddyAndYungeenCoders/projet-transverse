@@ -1,27 +1,30 @@
 package com.simulator.webserver.models;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 
 public class SensorEntity {
+    
     private String id;
-    private float intensity;
+    private CoordsEntity coordsEntity;
 
-    public SensorEntity(String id, float intensity) {
+    public DetecsEntity(String id, CoordsEntity coordsEntity) {
         this.id = id;
-        this.intensity = intensity;
-    }
-
-    public String toJson() throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(this);
+        this.coordsEntity = coordsEntity;
     }
 
     public String getId() {
         return id;
     }
 
-    public float getIntensity() {
-        return intensity;
+    public void setId(String id) {
+        this.id = id;
     }
+
+    public CoordsEntity getCoordsEntity() {
+        return coordsEntity;
+    }
+
+    public void setCoordsEntity(CoordsEntity coordsEntity) {
+        this.coordsEntity = coordsEntity;
+    }
+
+
 }
