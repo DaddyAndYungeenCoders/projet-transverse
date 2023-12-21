@@ -18,17 +18,15 @@ import {FireCreationService} from "../../services/fire-creation.service";
 export class MainMapComponent implements AfterViewInit{
   map!: L.Map;
   private defaultZoomLevel = 20;
-  $onClickMapCoords: EventEmitter<{latlng: number, lat: number, lng: number}> = new EventEmitter<{latlng: number; lat: number; lng: number}>();
-
   constructor(private fireCreationService: FireCreationService) {}
 
   ngAfterViewInit() {
     this.mountMap(); // Creating the map
     this.map.setZoom(19); // to avoid display bug
-    this.map.on('click', e => this.test(e));
+    this.map.on('click', e => this.createFireEvent(e));
   }
 
-  private test(e: L.LeafletMouseEvent) {
+  private createFireEvent(e: L.LeafletMouseEvent) {
     this.fireCreationService.create(e);
   }
 

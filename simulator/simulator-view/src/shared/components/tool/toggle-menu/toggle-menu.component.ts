@@ -1,11 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {faDroplet, faFire, faSmoking} from "@fortawesome/free-solid-svg-icons";
-import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {NgClass, NgForOf} from "@angular/common";
 import {FireCreationService} from "../../../services/fire-creation.service";
 import {Subscription} from "rxjs";
 import {CdkDrag} from "@angular/cdk/drag-drop";
+import {RealFireEventTypeDTO} from "../../../types/implementations/RealFireEventTypeDTO";
+import {FakeFireEventTypeDTO} from "../../../types/implementations/FakeFireEventTypeDTO";
+import {AbstractFireEventTypes} from "../../../types/implementations/AbstractFireEventTypesImpl";
 
 @Component({
   selector: 'app-toggle-menu',
@@ -20,25 +21,13 @@ import {CdkDrag} from "@angular/cdk/drag-drop";
   styleUrl: './toggle-menu.component.scss'
 })
 export class ToggleMenuComponent implements OnInit, OnDestroy {
-  fireIcon: IconDefinition = faFire;
-  smokingIcon: IconDefinition = faSmoking;
   isValid: boolean = false;
   intensity: number = 1;
   $intensitySubscription: Subscription = new Subscription();
 
-  elements = [
-    {
-      message: "'real' fire",
-      selected: false,
-      icon: this.fireIcon,
-      id: 0
-    },
-    {
-      message: "'fake' fire",
-      selected: false,
-      icon: this.smokingIcon,
-      id: 1
-    }
+  elements: AbstractFireEventTypes[] = [
+    new RealFireEventTypeDTO(0),
+    new FakeFireEventTypeDTO(0)
   ];
 
   constructor(private fireCreationService: FireCreationService) {}
@@ -57,9 +46,9 @@ export class ToggleMenuComponent implements OnInit, OnDestroy {
   toggleSelected(id: number): void {
       this.elements.forEach(elem => elem.selected = false);
 
-      if (this.elements[id]) {
-      this.elements[id].selected = !this.elements[id].selected;
-    }
+      if (this.elements[id - 1]) {
+        this.elements[id - 1].selected = !this.elements[id - 1].selected;
+      }
 
       this.isValid = this.isFormValid();
   }
@@ -75,8 +64,8 @@ export class ToggleMenuComponent implements OnInit, OnDestroy {
   }
 
   validate(): void {
-    this.fireCreationService.type = this.elements.find(item => item.selected);
-    this.fireCreationService.isSettingNewElement = true;
+    const selectedElements: AbstractFireEventTypes | undefined = this.elements.find(item => item.selected);
+    selectedElements ? this.fireCreationService.validate(selectedElements) : console.error("error during fireEvent creation");
   }
 
   private isFormValid(): boolean {
