@@ -2,19 +2,19 @@ package com.simulator.webserver.models;
 
 public class SensorEntity {
     
-    private String id;
+    private int id;
     private CoordsEntity coordsEntity;
 
-    public DetecsEntity(String id, CoordsEntity coordsEntity) {
+    public SensorEntity(int id, CoordsEntity coordsEntity) {
         this.id = id;
         this.coordsEntity = coordsEntity;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

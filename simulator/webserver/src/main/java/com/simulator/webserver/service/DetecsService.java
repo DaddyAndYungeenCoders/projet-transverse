@@ -8,12 +8,14 @@ import com.simulator.webserver.models.FireEventEntity;
 @Service
 public class DetecsService {
 
+    public DetecsService(){
+        
+    }
+
     public sendDetection(DetecsEntity detecsEntity){
-        String json = objectMapper.writeValueAsString(detecsEntity.toDTO());
         try {
-            SensorEntity sensorEntity = new SensorEntity(id, intensity);
-            String json = objectMapper.writeValueAsString(sensorEntity);
-    
+            String json = objectMapper.writeValueAsString(detecsEntity.toDTO());
+
             HttpEntity<String> requestEntity = new HttpEntity<>(json, headers);
             String response = restTemplate.exchange(url + "/new", HttpMethod.POST, requestEntity, String.class).getBody();
     
