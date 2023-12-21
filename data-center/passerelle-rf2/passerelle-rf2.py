@@ -12,8 +12,11 @@ from datetime import datetime
 import paho.mqtt.client as mqtt
 import json
 
-sys.path.insert(0, '../../utils')
-from utils import load_config, init_mqtt_broker
+from shared.database_manager import DatabaseManager
+from shared.project_utils import load_config, init_mqtt_broker
+
+# import shared.database_manager as database_manager
+# import shared.project_utils as utils
 
 # send serial message
 SERIALPORT = "/dev/ttyACM0"
@@ -21,7 +24,7 @@ BAUDRATE = 115200
 ser = serial.Serial()
 
 client_name = "passerelle-rf2"
-topics_path = "../../utils/config/topics.yaml"
+topics_path = "shared/config/topics.yaml"
 topic_rf2_fire_event = "rf2.fire_event"
 
 
@@ -47,13 +50,13 @@ def init_uart():
         exit()
 
 
-def send_uart_message(msg):
-    try:
-        ser.write(msg.encode('utf-8'))
-        print("Message <" + msg + "> sent to micro-controller.")
-    except serial.SerialException as e:
-        print("Error while sending message to micro-controller.")
-        print(e)
+# def send_uart_message(msg):
+#     try:
+#         ser.write(msg.encode('utf-8'))
+#         print("Message <" + msg + "> sent to micro-controller.")
+#     except serial.SerialException as e:
+#         print("Error while sending message to micro-controller.")
+#         print(e)
 
 
 def extract_data_from_serial(data):
@@ -75,10 +78,8 @@ def extract_data_from_serial(data):
 
 def main():
     # Init UART connection to microbit
-    init_uart()
-    # Init database connection
-    # db = DatabaseManager()
-    # db.connect()
+    # init_uart()
+
     print('Press Ctrl-C to quit.')
 
     buffer = b""
@@ -99,8 +100,6 @@ def main():
 
                     print("(SERIAL) received: " + message_str)
 
-                    # If message is not TL or LT, it's data from microbit, so we insert it in database
-                    # if message_str not in MICRO_COMMANDS:
                     #     temp, lux = extractDataFromSerial(message_str)
                     #     # Insert data in database
                     #     if db.insert_data(temp, lux, datetime.now()):
@@ -116,7 +115,6 @@ def main():
                     "intensity": "2",
                     "timestamp": datetime.now().isoformat()
                 }
-                print("publish to topic", "coucou")
                 client.publish(topics.get(topic_rf2_fire_event), "coucou")
                 time.sleep(3)
                 client.publish(topic_rf2_fire_event, json.dumps(to_send))
@@ -129,11 +127,8 @@ def main():
             # x = requests.post(url, json = myobj)
 
     except (KeyboardInterrupt, SystemExit):
-        # db.print_last_ten_values()
         # db.close()
-        # server.shutdown()
-        # server.server_close()
-        ser.close()
+        # ser.close()
         exit()
 
 
@@ -141,4 +136,5 @@ if __name__ == "__main__":
     load_dotenv()
     topics = load_config(topics_path, "topics")
     client = init_mqtt_broker(client_name)
-    main()
+
+    # main()

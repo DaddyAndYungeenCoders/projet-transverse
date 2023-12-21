@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import sys
 import os
 import requests
@@ -6,12 +6,10 @@ import paho.mqtt.client as mqtt
 import json
 import yaml
 from dotenv import load_dotenv
-from database_manager import DatabaseManager
+from shared.database_manager import DatabaseManager
+from shared.project_utils import load_config, init_mqtt_broker
 
-sys.path.insert(0, '../../utils')
-from utils import load_config, init_mqtt_broker
-
-topics_path = "../../utils/config/topics.yaml"
+topics_path = "shared/config/topics.yaml"
 client_name = "translator-service"
 topic_rf2_fire_event = "rf2.fire_event"
 topic_manager_intervention = "manager.intervention"
@@ -22,15 +20,30 @@ def init_influxdb_client():
     data = {
         "field": "testtest",
         "value": "123",
-        "timestamp": datetime.datetime.now()
+        "timestamp": datetime.now()
     }
     # db.insert_data(data, {"label": "tagtest", "value": "tagvalue"})
-    pass
+    return db
 
 
 def save_data_in_db(rec):
     # save data in influx db
-    pass
+    db.insert_data(rec)
+
+    data_sensor = db.get_data("sensor_new_value")
+    data_fire = db.get_data("fire_event")
+    print(data_sensor)
+    print(data_fire)
+    results = []
+    resultss = []
+    for item in data_sensor:
+        for record in item.records:
+            results.append((record.get_field(), record.get_value()))
+    for item in data_fire:
+        for record in item.records:
+            resultss.append((record.get_field(), record.get_value()))
+    print(results)
+    print(resultss)
 
 
 def on_message(client, userdata, message):
@@ -77,18 +90,37 @@ if __name__ == '__main__':
         load_dotenv()
         topics = load_config(topics_path, "topics")
         client = init_mqtt_broker(client_name)
+        db = DatabaseManager()
+        init_influxdb_client()
+
+        print('Press Ctrl-C to quit.')
 
         print("subscribe to topics : " + topics.get(topic_rf2_fire_event) + " and "
-                                        + topics.get(topic_manager_intervention))
+              + topics.get(topic_manager_intervention))
         client.subscribe(topics.get(topic_rf2_fire_event))
         client.subscribe(topics.get(topic_manager_intervention))
         client.on_message = on_message
 
-        db = DatabaseManager()
-        init_influxdb_client()
-        print('Press Ctrl-C to quit.')
-        while True:
-            main()
+        json_body = [
+            {
+                "measurement": "fire_event",
+                "tags": {
+                    "fire": "true",
+                    "sensor": "sensor1"
+                },
+                "time": datetime.utcnow().isoformat() + "Z",  # Adjust this based on your JSON structure
+                "fields": {
+                    "x": 1,
+                    "y": 2,
+                    "intensity": 1
+                    # Add more fields as needed
+                }
+            }
+        ]
+        save_data_in_db(json_body)
+
+        # while True:
+        #     main()
 
     except KeyboardInterrupt:
         exit()
