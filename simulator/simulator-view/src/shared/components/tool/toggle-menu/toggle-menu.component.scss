@@ -1,0 +1,182 @@
+$input-width: 150px;
+$input-height: 30px;
+$button-bg-color: #2ea44f;
+$button-hover-bg-color: #2c974b;
+$button-focus-shadow-color: rgba(46, 164, 79, .4);
+$button-disabled-bg-color: #94d3a2;
+$button-disabled-border-color: rgba(27, 31, 35, .1);
+$button-disabled-text-color: rgba(255, 255, 255, .8);
+$button-active-bg-color: #298e46;
+$button-active-box-shadow-color: rgba(20, 70, 32, .2);
+
+.toggle-menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 20rem;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgba(60,64,67,0.4), 0 1px 3px 1px rgba(60,64,67,0.25);
+
+  .toggle-menu-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+    padding-bottom: 1rem;
+    margin-bottom: 0.25rem;
+    border-bottom: 0.5px solid #EEE;
+  }
+
+  .toggle-menu-body {
+    display: flex;
+    flex-direction: column;
+
+    .title {
+      color: #333;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .is-real-choice {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-bottom: 1rem;
+
+      .selected {
+        background-color: #00b4d8;
+        color: white;
+      }
+
+      div {
+        border-radius: 10px;
+
+        padding: 0.25rem 0.5rem;
+
+        &:hover {
+          border-bottom: 0.5px solid #EEE;
+          box-shadow: 0 1px 2px rgba(60,64,67,0.4), 0 1px 3px 1px rgba(60,64,67,0.25);
+        }
+      }
+
+      .fake-fire {
+      }
+      .real-fire {
+
+      }
+    }
+
+    .intensity-choice {
+      margin: auto;
+
+      .input-wrapper {
+        width: $input-width;
+        height: $input-height;
+        display: flex;
+        border-radius: 50%;
+
+        .numberInput {
+          &::-webkit-inner-spin-button,
+          &::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            appearance: none;
+            margin: 0;
+          }
+
+          -moz-appearance: textfield;
+          padding: 10px;
+          text-align: center;
+        }
+
+        * {
+          border: none;
+          width: 50px;
+          flex: 1;
+        }
+
+        button {
+          cursor: pointer;
+          background-color: #DDD;
+
+          &:hover {
+            background-color: #EEE;
+          }
+
+          &:first-child {
+            border-radius: 50% 0 0 50%;
+            color: red;
+            font-size: 1.25rem;
+          }
+
+          &:last-child {
+            border-radius: 0 50% 50% 0;
+            color: green;
+            font-size: 1.25rem;
+            text-align: center;
+          }
+        }
+      }
+    }
+
+    .create {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 1rem 0;
+    }
+
+    .button3 {
+      appearance: none;
+      background-color: $button-bg-color;
+      border: 1px solid rgba(27, 31, 35, .15);
+      border-radius: 6px;
+      box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+      box-sizing: border-box;
+      color: #fff;
+      cursor: pointer;
+      display: inline-block;
+      font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 20px;
+      padding: 6px 16px;
+      position: relative;
+      text-align: center;
+      text-decoration: none;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      vertical-align: middle;
+      white-space: nowrap;
+
+      &:focus:not(:focus-visible):not(.focus-visible) {
+        box-shadow: none;
+        outline: none;
+      }
+
+      &:hover {
+        background-color: $button-hover-bg-color;
+      }
+
+      &:focus {
+        box-shadow: $button-focus-shadow-color 0 0 0 3px;
+        outline: none;
+      }
+
+      &:disabled {
+        background-color: $button-disabled-bg-color;
+        border-color: $button-disabled-border-color;
+        color: $button-disabled-text-color;
+        cursor: default;
+      }
+
+      &:active {
+        background-color: $button-active-bg-color;
+        box-shadow: $button-active-box-shadow-color 0 1px 0 inset;
+      }
+    }
+  }
+}

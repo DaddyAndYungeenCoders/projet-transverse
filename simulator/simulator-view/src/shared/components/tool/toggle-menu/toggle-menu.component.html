@@ -1,0 +1,31 @@
+<div class="toggle-menu-container">
+  <div class="toggle-menu-header">
+    ⚙️ Configuration du Fire Event ⚙️
+  </div>
+
+  <div class="toggle-menu-body">
+    <h3 class="title">Type de fire event:</h3>
+
+    <div class="is-real-choice">
+      <div *ngFor="let elem of elements" class="element"
+           [ngClass]="elem.selected ? 'selected' : ''"
+           [title]="elem.message"
+           (click)="toggleSelected(elem.id)">
+        <fa-icon [icon]="elem.icon"/>
+      </div>
+    </div>
+
+    <div class="intensity-choice">
+      <h3 class="title">Choisir l'intensité</h3>
+      <span class="input-wrapper">
+        <button id="decrement" (click)="decrement()">-</button>
+        <input class="numberInput" type="number" [value]="intensity" id="quantity" />
+        <button id="increment" (click)="increment()">+</button>
+      </span>
+    </div>
+
+    <div class="create">
+      <button class="button3" role="button" (click)="validate()" [disabled]="!isValid">VALIDER</button>
+    </div>
+  </div>
+</div>
