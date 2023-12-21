@@ -1,0 +1,10 @@
+fastapi==0.105.0
+paho-mqtt==1.6.1
+pydantic==2.5.2
+pydantic-settings==2.1.0
+pydantic_core==2.14.5
+python-dotenv==1.0.0
+PyYAML==6.0.1
+requests==2.31.0
+simplejson==3.19.2
+uvicorn==0.25.0
