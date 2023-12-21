@@ -74,7 +74,7 @@ export class ToolComponent {
   }
 
   handle(): void {
-    this.onClick.emit();
+    this.isCreateButton ? this.openMenu() : this.onClick.emit();
   }
 
   openMenu(): void {
