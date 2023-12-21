@@ -37,7 +37,8 @@ export class MainMapComponent implements AfterViewInit {
         },
       ],
       this.map,
-      IconMarkerTypes.FIRESTATION
+      IconMarkerTypes.FIRESTATION,
+      'black'
     );
   }
 
