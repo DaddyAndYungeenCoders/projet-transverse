@@ -1,31 +1,15 @@
 package com.simulator.webserver.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class DetecsDTO {
-    private int id;
+    private String id;
     private float intensity;
-
-    public DetecsDTO(int id, float intensity) {
-        this.id = id;
-        this.intensity = intensity;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public float getIntensity() {
-        return intensity;
-    }
-
-    public void setIntensity(float intensity) {
-        this.intensity = intensity;
-    }
-
-
 }

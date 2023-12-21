@@ -1,30 +1,16 @@
 package com.simulator.webserver.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class SensorEntity {
     
-    private int id;
+    private String id;
     private CoordsEntity coordsEntity;
-
-    public SensorEntity(int id, CoordsEntity coordsEntity) {
-        this.id = id;
-        this.coordsEntity = coordsEntity;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public CoordsEntity getCoordsEntity() {
-        return coordsEntity;
-    }
-
-    public void setCoordsEntity(CoordsEntity coordsEntity) {
-        this.coordsEntity = coordsEntity;
-    }
-
-
 }
