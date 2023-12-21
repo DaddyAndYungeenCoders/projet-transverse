@@ -6,19 +6,30 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.simulator.webserver.models.FireEventEntity;
-import com.simulator.webserver.models.SensorEntity;
-import com.simulator.webserver.service.DetecsService;
+import com.simulator.webserver.models.UserEntity;
+import com.simulator.webserver.service.DBService;
 
 @RestController
 public class Controller {
     String url = "http://localhost:8000/";
+    private final DBService dbService;
 
-    private final DetecsService detecsService;
+    //private final DetecsService detecsService;
 
     @Autowired
-    public Controller(DetecsService detecsService) {
-        this.detecsService = detecsService;
+    public Controller(DBService dbService) {
+        this.dbService = dbService;
+    }
+
+    @GetMapping("/read-from-db")
+    public String readFromDB(){
+        Integer rowCount = dbService.read();
+
+        if (rowCount != null) {
+            return "Nombre de lignes dans la table : " + rowCount;
+        } else {
+            return "Erreur lors de la lecture depuis la base de données";
+        }
     }
 
     @GetMapping("/")
@@ -26,18 +37,10 @@ public class Controller {
         return "Hello World!";
     }
 
-    @GetMapping("/test")
-    public String test(){
-        SensorEntity sensorEntity = new SensorEntity();
-        return detecsService.sendDetection(null);
-        //return requestService.send(url, "test requete");
-
+    @GetMapping("/all")
+    public String finadll(){
+        return dbService.findAll().get(0).getUsername();
     }
 
-    @GetMapping("/{id}/{intensity}")
-    public String sensor(@PathVariable String id, @PathVariable Long intensity){
-        return detecsService.sendDetection(null);
-
-    }
 
 }

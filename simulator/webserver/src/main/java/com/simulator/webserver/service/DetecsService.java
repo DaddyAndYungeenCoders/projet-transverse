@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 
 import com.simulator.webserver.models.DetecsEntity;
 import com.simulator.webserver.models.FireEventEntity;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 @Service
 public class DetecsService {
@@ -11,7 +13,7 @@ public class DetecsService {
     public DetecsService(){
 
     }
-
+/*
     public String sendDetection(DetecsEntity detecsEntity){
         try {
             String json = objectMapper.writeValueAsString(detecsEntity.toDTO());
@@ -29,4 +31,5 @@ public class DetecsService {
         }
 
     }
+    */
 }

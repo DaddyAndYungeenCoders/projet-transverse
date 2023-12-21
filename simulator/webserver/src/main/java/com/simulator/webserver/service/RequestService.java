@@ -30,7 +30,7 @@ public class RequestService {
         System.out.println("Réponse du serveur : " + response);
         return response;
     }
-
+/*
     public String send_sensor(String url, String id, float intensity) {
         try {
             SensorEntity sensorEntity = new SensorEntity(id, intensity);
@@ -48,7 +48,7 @@ public class RequestService {
             return "Erreur lors de la conversion en JSON";
         }
     }
-
+*/
     //public String send_Fire_Event(String url, )
     
 }
