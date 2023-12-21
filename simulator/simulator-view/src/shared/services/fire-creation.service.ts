@@ -15,12 +15,12 @@ export class FireCreationService {
   constructor() { }
 
   increment(): void {
-    this.intensity++;
+    this.intensity < 10 ? this.intensity++ : this.intensity;
     this.$intensity.emit(this.intensity);
   }
 
   decrement(): void {
-    this.intensity--;
+    this.intensity > 0 ? this.intensity-- : this.intensity;
     this.$intensity.emit(this.intensity);
   }
 
