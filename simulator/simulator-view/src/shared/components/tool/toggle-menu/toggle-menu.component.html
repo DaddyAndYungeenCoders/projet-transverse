@@ -10,8 +10,7 @@
       <div *ngFor="let elem of elements" class="element"
            [ngClass]="elem.selected ? 'selected' : ''"
            [title]="elem.message"
-           (click)="toggleSelected(elem.id)"
-           cdkDrag>
+           (click)="toggleSelected(elem.id)">
         <fa-icon [icon]="elem.icon"/>
       </div>
     </div>

@@ -3,7 +3,6 @@ import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {NgClass, NgForOf} from "@angular/common";
 import {FireCreationService} from "../../../services/fire-creation.service";
 import {Subscription} from "rxjs";
-import {CdkDrag} from "@angular/cdk/drag-drop";
 import {RealFireEventTypeDTO} from "../../../types/implementations/RealFireEventTypeDTO";
 import {FakeFireEventTypeDTO} from "../../../types/implementations/FakeFireEventTypeDTO";
 import {AbstractFireEventTypes} from "../../../types/implementations/AbstractFireEventTypesImpl";
@@ -14,8 +13,7 @@ import {AbstractFireEventTypes} from "../../../types/implementations/AbstractFir
   imports: [
     FaIconComponent,
     NgForOf,
-    NgClass,
-    CdkDrag
+    NgClass
   ],
   templateUrl: './toggle-menu.component.html',
   styleUrl: './toggle-menu.component.scss'
