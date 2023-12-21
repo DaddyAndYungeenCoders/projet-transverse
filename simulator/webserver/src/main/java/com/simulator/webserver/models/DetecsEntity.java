@@ -14,7 +14,7 @@ public class DetecsEntity {
     }
 
     public DetecsDTO toDTO(){
-        return DetecsDTO(this.sensorEntity.getId(), this.intensity);
+        return new DetecsDTO(this.sensorEntity.getId(), this.intensity);
     }
 
     public SensorEntity getSensorEntity() {
