@@ -9,10 +9,10 @@ import com.simulator.webserver.models.FireEventEntity;
 public class DetecsService {
 
     public DetecsService(){
-        
+
     }
 
-    public sendDetection(DetecsEntity detecsEntity){
+    public String sendDetection(DetecsEntity detecsEntity){
         try {
             String json = objectMapper.writeValueAsString(detecsEntity.toDTO());
 

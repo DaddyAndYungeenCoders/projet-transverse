@@ -68,45 +68,6 @@ public class FireEventEntity {
         this.is_real = is_real;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public int getReal_intensity() {
-        return real_intensity;
-    }
-
-    public void setReal_intensity(int real_intensity) {
-        this.real_intensity = real_intensity;
-    }
-
-    public Date getStart_date() {
-        return start_date;
-    }
-
-    public void setStart_date(Date start_date) {
-        this.start_date = start_date;
-    }
-
-    public Date getEnd_date() {
-        return end_date;
-    }
-
-    public void setEnd_date(Date end_date) {
-        this.end_date = end_date;
-    }
-
-    public boolean getIs_real() {
-        return is_real;
-    }
-
-    public void setIs_real(boolean is_real) {
-        this.is_real = is_real;
-    }
-
+    
 
 }

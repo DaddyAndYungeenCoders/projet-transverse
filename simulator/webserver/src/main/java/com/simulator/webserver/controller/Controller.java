@@ -28,7 +28,7 @@ public class Controller {
 
     @GetMapping("/test")
     public String test(){
-        SensorEntity sensorEntity = new SensorEntity()
+        SensorEntity sensorEntity = new SensorEntity();
         return detecsService.sendDetection(null);
         //return requestService.send(url, "test requete");
 
