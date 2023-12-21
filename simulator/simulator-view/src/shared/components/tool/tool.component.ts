@@ -3,6 +3,7 @@ import {NgClass, NgIf, NgTemplateOutlet} from "@angular/common";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {faFire, faTruck, faSmoking, faDroplet, faHome, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
+import {ToggleMenuComponent} from "./toggle-menu/toggle-menu.component";
 
 @Component({
   selector: 'app-tool',
@@ -11,7 +12,8 @@ import {IconProp} from "@fortawesome/fontawesome-svg-core";
     NgIf,
     FaIconComponent,
     NgTemplateOutlet,
-    NgClass
+    NgClass,
+    ToggleMenuComponent
   ],
   templateUrl: './tool.component.html',
   styleUrl: './tool.component.scss'
@@ -29,7 +31,6 @@ export class ToolComponent {
 
   @Input() set image(value: string) {
     this.imagePath = value;
-    console.log(value);
     switch (value) {
       case 'fire': {
         this._image = faFire;
@@ -58,21 +59,22 @@ export class ToolComponent {
     }
   };
 
-  get image(): IconProp {
-    return this._image;
-  }
 
   @Output() onClick: EventEmitter<null> = new EventEmitter<null>();
 
   private _text: string = '';
   _image: IconProp = faFire;
 
+  get image(): IconProp {
+    return this._image;
+  }
+
   get text(): string {
     return this._text;
   }
 
   handle(): void {
-    this.onClick.emit();
+    this.isCreateButton ? this.openMenu() : this.onClick.emit();
   }
 
   openMenu(): void {
