@@ -53,19 +53,3 @@ export class MarkerService {
     });
   }
 }
-// createMarkers(coords: Coordinates[], map: L.Map, type: IconMarkerTypes) {
-//   // changer l'icone en fonction du type passé en param
-//   // let icon = ...
-//   coords.forEach((coord) => {
-//     new L.Marker([coord.lat, coord.lng], {
-//       icon: L.divIcon({
-//         html: `<fa-icon class="fa ${this.getIconMarker(type)} fa-4x" />`,
-//         iconSize: [20, 20],
-//         className: 'myDivIcon',
-//       }),
-//     })
-//       .addTo(map)
-//       .bindPopup(type);
-//   });
-// }
-// }
