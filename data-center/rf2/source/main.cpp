@@ -85,6 +85,7 @@ void check_qos(ManagedString s) {
         if (s == "ACKBACK" + received_message) {
             send_encrypt_RF("ACKDONE");
             // serial.send("--DONE--" + received_message + "--DONE--\n\r");
+            serial.send(received_message + "|");
         } else {
             send_encrypt_RF("nok");
         }
@@ -100,13 +101,13 @@ void check_qos(ManagedString s) {
 void onData(MicroBitEvent) {
     // PacketBuffer buf(BUF_SIZE);
     ManagedString buf = uBit.radio.datagram.recv();
-    serial.send("Received data : ");
+    // serial.send("Received data : ");
     if (check_cdjms(buf)) {
         ManagedString test = decode_RF(buf);
         ManagedString decrypted = decrypt_RF(decode_RF(buf));
-        // serial.send(decrypted + "\n\r");
-        check_qos(decrypted);
-        // serial.send("--------------\n\r");
+        serial.send(decrypted + "\n\r");
+        // check_qos(decrypted);
+        serial.send("--------------\n\r");
     }
 }
 
