@@ -24,6 +24,7 @@ client_name = "passerelle-rf2"
 topics_path = "../../utils/config/topics.yaml"
 topic_rf2_fire_event = "rf2.fire_event"
 
+
 def init_uart():
     # ser = serial.Serial(SERIALPORT, BAUDRATE)
     ser.port = SERIALPORT

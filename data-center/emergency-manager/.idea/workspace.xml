@@ -4,7 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b4e2b0ba-9645-4e0a-9c4f-e1ab902a49ee" name="Changes" comment="" />
+    <list default="true" id="b4e2b0ba-9645-4e0a-9c4f-e1ab902a49ee" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/mqtt_topics.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mqtt/MQTTClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mqtt/TopicsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/projet-transverse.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/projet-transverse.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../passerelle-rf2/passerelle-rf2.py" beforeDir="false" afterPath="$PROJECT_DIR$/../passerelle-rf2/passerelle-rf2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rf2/yotta_modules/nrf51-sdk" beforeDir="false" afterPath="$PROJECT_DIR$/../rf2/yotta_modules/nrf51-sdk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rf2/yotta_modules/nrf51-sdk/script/pick_nrf51_files.py" beforeDir="false" afterPath="$PROJECT_DIR$/../rf2/yotta_modules/nrf51-sdk/script/pick_nrf51_files.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,12 +30,19 @@
   <component name="ComposerSettings">
     <execution />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2ZFzCoatVaIGaKEYENpmy8MxHy3" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -28,9 +52,17 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/Sandro/Documents/CPE/projet-transverse",
+    "git-widget-placeholder": "CSC-26-DATA-CENTER-SERIAL-COMMUNICATION",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/damien/Documents/Ecole/s7/projet-transverse/data-center/emergency-manager",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "settings.sync",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -43,6 +75,8 @@
       <option name="presentableId" value="Default" />
       <updated>1702032494983</updated>
       <workItem from="1702032496011" duration="30000" />
+      <workItem from="1703107597903" duration="562000" />
+      <workItem from="1703108182810" duration="1669000" />
     </task>
     <servers />
   </component>
