@@ -5,6 +5,7 @@ services:
     container_name: mqtt
     restart: always
     volumes:
+      - ./mosquitto/config:/mosquitto/config
       - ./mosquitto/utils:/mosquitto/utils
       - ./mosquitto/data:/mosquitto/data
       - ./mosquitto/log:/mosquitto/log
