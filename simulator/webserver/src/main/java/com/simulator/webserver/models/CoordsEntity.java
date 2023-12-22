@@ -16,7 +16,6 @@ import lombok.Setter;
 
 @Data
 @AllArgsConstructor
-@Embeddable
 public class CoordsEntity implements Serializable{
 
     private double latitude;

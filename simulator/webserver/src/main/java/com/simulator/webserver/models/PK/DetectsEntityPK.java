@@ -8,11 +8,13 @@ import com.simulator.webserver.models.FireEventEntity;
 import com.simulator.webserver.models.SensorEntity;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DetecsEntityPK implements Serializable {
+public class DetectsEntityPK implements Serializable {
     private SensorEntity sensorEntity;
     private FireEventEntity fireEventEntity;
 
@@ -20,7 +22,7 @@ public class DetecsEntityPK implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DetecsEntityPK that = (DetecsEntityPK) o;
+        DetectsEntityPK that = (DetectsEntityPK) o;
         return Objects.equals(sensorEntity, that.sensorEntity) &&
                Objects.equals(fireEventEntity, that.fireEventEntity);
     }

@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simulator.webserver.models.FireEventEntity;
 import com.simulator.webserver.models.SensorEntity;
-import com.simulator.webserver.service.DetecsService;
+import com.simulator.webserver.service.DetectsService;
 
 import com.simulator.webserver.models.CoordsEntity;
-import com.simulator.webserver.models.DetecsEntity;
+import com.simulator.webserver.models.DetectsEntity;
 import com.simulator.webserver.models.FireEventEntity;
 import com.simulator.webserver.models.SensorEntity;
 import org.springframework.web.client.RestTemplate;
@@ -24,10 +24,10 @@ import org.springframework.web.client.RestTemplate;
 public class SensorController {
     String url = "http://localhost:8000/";
 
-    private final DetecsService detecsService;
+    private final DetectsService detectsService;
 
-    public SensorController(DetecsService detecsService) {
-        this.detecsService = detecsService;
+    public SensorController(DetectsService detectsService) {
+        this.detectsService = detectsService;
     }
 
     @GetMapping("/")
@@ -39,8 +39,8 @@ public class SensorController {
     public String test(){
         CoordsEntity coordsEntity = new CoordsEntity(0, 0);
         SensorEntity sensorEntity = new SensorEntity(32L, coordsEntity);
-        DetecsEntity detecsEntity = new DetecsEntity(sensorEntity, null, 10);
-        return detecsService.sendDetection(url, detecsEntity);
+        DetectsEntity detectsEntity = new DetectsEntity(sensorEntity, null, 10);
+        return detectsService.sendDetection(url, detectsEntity);
         //return requestService.send(url, "test requete");
 
     }
@@ -49,8 +49,8 @@ public class SensorController {
     public String sensor(@PathVariable Long id, @PathVariable Long intensity){
         CoordsEntity coordsEntity = new CoordsEntity(0, 0);
         SensorEntity sensorEntity = new SensorEntity(id, coordsEntity);
-        DetecsEntity detecsEntity = new DetecsEntity(sensorEntity, null, intensity);
-        return detecsService.sendDetection(url,detecsEntity);
+        DetectsEntity detectsEntity = new DetectsEntity(sensorEntity, null, intensity);
+        return detectsService.sendDetection(url,detectsEntity);
 
     }
 

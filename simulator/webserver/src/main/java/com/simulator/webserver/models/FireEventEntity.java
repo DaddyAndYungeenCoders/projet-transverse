@@ -16,6 +16,7 @@ import lombok.Setter;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table (name = "FireEvent")
 public class FireEventEntity implements Serializable{

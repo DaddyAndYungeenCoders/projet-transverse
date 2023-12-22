@@ -2,8 +2,8 @@ package com.simulator.webserver.models;
 
 import java.io.Serializable;
 
-import com.simulator.webserver.dto.DetecsDTO;
-import com.simulator.webserver.models.PK.DetecsEntityPK;
+import com.simulator.webserver.dto.DetectsDTO;
+import com.simulator.webserver.models.PK.DetectsEntityPK;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
@@ -18,17 +18,17 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@IdClass(DetecsEntityPK.class)
+@IdClass(DetectsEntityPK.class)
 @Table (name = "detects")
-public class DetecsEntity {
+public class DetectsEntity {
     @Id
     private SensorEntity sensorEntity;
     @Id
     private FireEventEntity fireEventEntity;
     private float intensity;
 
-    public DetecsDTO toDTO(){
-        return new DetecsDTO(this.sensorEntity.getId(), this.intensity);
+    public DetectsDTO toDTO(){
+        return new DetectsDTO(this.sensorEntity.getId(), this.intensity);
     }    
 }
 
