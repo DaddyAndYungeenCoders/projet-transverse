@@ -1,38 +1,21 @@
-import paho.mqtt.client as mqtt
-import os
-import dotenv
+from app.core.config import load_config
 
-dotenv.load_dotenv()
+topics = load_config("app/config/topics.yaml", "topics")
 
 
-def init_mqtt_broker(client_name):
-    broker_ip = os.getenv("BROKER_IP")
-    broker_port = int(os.getenv("BROKER_PORT"))
-    user = os.getenv("BROKER_USER")
-    pw = os.getenv("BROKER_PW")
+def on_message(client, userdata, message):
+    print(f"Message received from {message.topic} : {message.payload.decode('utf-8')}")
 
-    client = mqtt.Client(client_name)
-    client.username_pw_set(username=user, password=pw)
-    client.on_connect = on_connect
-    client.on_publish = on_publish
+    if message.topic == topics.get("simulator.auto-fire-event"):
+        # post to webserver
+        pass
 
-    client.connect(broker_ip, broker_port)
-
-    client.loop_start()
-    return client
+    if message.topic == topics.get("simulator-view.sensor-changed"):
+        # post to webserver
+        pass
 
 
-def on_connect(client, userdata, flags, rc):
-    print(f"Connected to {client} with result code {rc}")
-
-
-def on_publish(client, userdata, mid):
-    print(f"Message published (mid={mid})")
-
-
-def publish_message(client, topic, message):
-    # Publish the message
-    result = client.publish(topic, message)
-
-
-
+def is_topic_valid(topic_param: str) -> bool:
+    if topic_param in topics:
+        return True
+    return False

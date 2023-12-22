@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from pydantic_settings import BaseSettings
 
 load_dotenv()
+mqtt_client_name = "relay-mqtt-webserver"
 
 
 # Load topics yaml file
