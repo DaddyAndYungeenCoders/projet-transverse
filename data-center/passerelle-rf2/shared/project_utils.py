@@ -2,6 +2,7 @@ import yaml
 import paho.mqtt.client as mqtt
 import os
 from dotenv import load_dotenv
+from paho.mqtt import MQTTException
 
 load_dotenv()
 
@@ -21,10 +22,12 @@ def init_mqtt_broker(client_name):
     broker_port = int(os.getenv("BROKER_PORT"))
     user = os.getenv("BROKER_USER")
     pw = os.getenv("BROKER_PW")
+    try:
+        client = mqtt.Client(client_name)
+        client.username_pw_set(username=user, password=pw)
+        client.connect(broker_ip, broker_port)
 
-    client = mqtt.Client(client_name)
-    client.username_pw_set(username=user, password=pw)
-    client.connect(broker_ip, broker_port)
-
-    client.loop_start()
-    return client
+        client.loop_start()
+        return client
+    except MQTTException as e:
+        print(f"Error while connecting to Broker : {e}")

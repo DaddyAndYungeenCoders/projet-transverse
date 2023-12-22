@@ -4,12 +4,9 @@
 
 import time
 import serial
-import os
-import sys
 import requests
 from dotenv import load_dotenv
 from datetime import datetime
-import paho.mqtt.client as mqtt
 import json
 
 from shared.project_utils import load_config, init_mqtt_broker
@@ -74,7 +71,7 @@ def extract_data_from_serial(data):
 
 def main():
     # Init UART connection to microbit
-    # init_uart()
+    init_uart()
 
     print('Press Ctrl-C to quit.')
 
@@ -92,7 +89,7 @@ def main():
                 while delimiter in buffer:
                     # Extract data from buffer until delimiter
                     message, buffer = buffer.split(delimiter, 1)
-                    message_str = message.decode('utf-8')
+                    message_str = message.decode()
 
                     print("(SERIAL) received: " + message_str)
 
@@ -112,8 +109,10 @@ def main():
                     "timestamp": datetime.now().isoformat()
                 }
                 client.publish(topics.get(topic_rf2_fire_event), "coucou")
-                time.sleep(3)
-                client.publish(topic_rf2_fire_event, json.dumps(to_send))
+                print(f"Publish to {topics.get(topic_rf2_fire_event)} : coucou")
+                # time.sleep(3)
+                # client.publish(topic_rf2_fire_event, json.dumps(to_send))
+                # print(f"Publish to {topics.get(topic_rf2_fire_event)} : {json.dumps(to_send)}")
                 a = 1
 
             # post data to webserver
@@ -133,4 +132,4 @@ if __name__ == "__main__":
     topics = load_config(topics_path, "topics")
     client = init_mqtt_broker(client_name)
 
-    # main()
+    main()

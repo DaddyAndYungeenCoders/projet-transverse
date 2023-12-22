@@ -15,7 +15,7 @@ def hello_world():
 def publish_message_to_mqtt(topic: str, payload: MQTTMessage):
     try:
         # publish_message(mqtt_client, topic, message)
-        message = payload.content
+        message = payload
         print(f"publishing message to {topic} : {message}")
         return {"status": "Message published to MQTT"}
     except Exception as e:
