@@ -38,7 +38,7 @@ public class Controller {
     }
 
     @GetMapping("/all")
-    public String finadll(){
+    public String findall(){
         return dbService.findAll().get(0).getUsername();
     }
 
