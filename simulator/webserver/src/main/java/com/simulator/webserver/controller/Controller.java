@@ -53,6 +53,9 @@ public class Controller {
         return dbService.save(userEntity).getUsername();
     }
     
-
+    @GetMapping("/del")
+    public void deleteuser(){
+        dbService.deleteById(1L);
+    }
 
 }

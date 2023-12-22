@@ -40,4 +40,8 @@ public class DBService {
     public UserEntity save(UserEntity userEntity){
         return usersRepository.save(userEntity);
     }
+
+    public void deleteById(Long id) {
+        usersRepository.deleteById(id);
+    }
 }
