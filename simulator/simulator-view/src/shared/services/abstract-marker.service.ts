@@ -3,11 +3,12 @@ import { IconMarkerTypes } from '../types/enum/IconType';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Coordinates } from '../types/interfaces/Coordinates';
 import L from 'leaflet';
+import { MarkersTypes } from '../types/interfaces/MarkersTypes';
 
 @Injectable({
   providedIn: 'root',
 })
-export abstract class AbstractMarkerService<T> {
+export abstract class AbstractMarkerService<T extends MarkersTypes> {
   private object!: T;
   constructor() {}
 

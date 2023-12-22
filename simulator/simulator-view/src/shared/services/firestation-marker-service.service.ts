@@ -4,15 +4,12 @@ import { IconDefinition, faHome } from '@fortawesome/free-solid-svg-icons';
 import { IconMarkerTypes } from '../types/enum/IconType';
 import { Coordinates } from '../types/interfaces/Coordinates';
 import { Map } from 'leaflet';
+import { FireStationMarkerType } from '../types/interfaces/MarkersTypes';
 
-type FireStationMarker = {
-  name: string;
-  color: string;
-};
 @Injectable({
   providedIn: 'root',
 })
-export class FirestationMarkerService extends AbstractMarkerService<FireStationMarker> {
+export class FirestationMarkerService extends AbstractMarkerService<FireStationMarkerType> {
   constructor() {
     super();
   }
@@ -20,7 +17,7 @@ export class FirestationMarkerService extends AbstractMarkerService<FireStationM
   getIconMarker(type: IconMarkerTypes): IconDefinition {
     return faHome;
   }
-  getObjectInfo(): FireStationMarker {
+  getObjectInfo(): FireStationMarkerType {
     return {
       name: 'FireStation',
       color: 'Blue',

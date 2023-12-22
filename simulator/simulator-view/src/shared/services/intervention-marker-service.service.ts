@@ -7,6 +7,7 @@ import {
 import { IconMarkerTypes } from '../types/enum/IconType';
 import { Coordinates } from '../types/interfaces/Coordinates';
 import { Map } from 'leaflet';
+import { InterventionMarkerType } from '../types/interfaces/MarkersTypes';
 
 type InterventionMarker = {
   name: string;
@@ -15,7 +16,7 @@ type InterventionMarker = {
 @Injectable({
   providedIn: 'root',
 })
-export class InterventionMarkerService extends AbstractMarkerService<InterventionMarker> {
+export class InterventionMarkerService extends AbstractMarkerService<InterventionMarkerType> {
   constructor() {
     super();
   }
@@ -23,7 +24,7 @@ export class InterventionMarkerService extends AbstractMarkerService<Interventio
   getIconMarker(type: IconMarkerTypes): IconDefinition {
     return faWaterLadder;
   }
-  getObjectInfo(): InterventionMarker {
+  getObjectInfo(): InterventionMarkerType {
     return {
       name: 'Intervention',
       color: 'Black',
