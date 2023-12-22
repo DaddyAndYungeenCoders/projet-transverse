@@ -13,12 +13,10 @@ ser = serial.Serial()
 
 
 
-""" class Sensor(BaseModel):
-    id: str
+class Sensor(BaseModel):
+    id: int
     intensity: float
 
-class Body(BaseModel):
-    content : str """
 
 def read_UART():
     while ser.isOpen():
@@ -51,6 +49,7 @@ def initUART():
         exit()
 
 def sendUARTMessage(msg):
+    msg = msg.replace(" ", "")
     ser.write(msg.encode())
     print("Message <" + msg + "> sent to micro-controller.")
 
@@ -70,15 +69,15 @@ def read_root():
     sendUARTMessage("test")
     return {"Hello": "World"}
 
-""" @app.post("/new")
-def new(sensor: Sensor):
-    sendUARTMessage("(" + sensor.id +"," + str(sensor.intensity)+")")
-    return{"code": "200"}
- """
 @app.post("/new")
+def new(sensor: Sensor):
+    sendUARTMessage("id:" + str(sensor.id) +",in:" + str(sensor.intensity))
+    return {"id" : sensor.id, "intensity": sensor.intensity}
+
+""" @app.post("/new")
 def new(body: dict):
     print(str(body))
     sendUARTMessage(str(body) + "|")
-    return{"code": "ok"}
+    return body """
 
 """ reader.join() """
