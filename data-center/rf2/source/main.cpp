@@ -85,7 +85,7 @@ void check_qos(ManagedString s) {
         if (s == "ACKBACK" + received_message) {
             send_encrypt_RF("ACKDONE");
             // serial.send("--DONE--" + received_message + "--DONE--\n\r");
-            serial.send(received_message + "|");
+            serial.send(received_message);
         } else {
             send_encrypt_RF("nok");
         }
@@ -99,49 +99,42 @@ void check_qos(ManagedString s) {
 
 //Quand on reçoit des données en RF cryptées => on les decrypte
 void onData(MicroBitEvent) {
-    // PacketBuffer buf(BUF_SIZE);
-    ManagedString buf = uBit.radio.datagram.recv();
     // serial.send("Received data : ");
+    ManagedString buf = uBit.radio.datagram.recv();
+    // serial.send(buf + "\n\r");
     if (check_cdjms(buf)) {
         ManagedString test = decode_RF(buf);
         ManagedString decrypted = decrypt_RF(decode_RF(buf));
-        serial.send(decrypted + "\n\r");
-        // check_qos(decrypted);
-        serial.send("--------------\n\r");
+        // serial.send(decrypted + "\n\r");
+        check_qos(decrypted);
+        // serial.send("------------\n\r");
     }
 }
 
-void onTimeout(){
-    // traitement
-    // serial.send("Timeout\n\r");
-    timer.detach();
-}
 
 int main() {
     // Initialise the micro:bit runtime.
     uBit.init();
     uBit.serial.baud(115200);
-    
-    uBit.radio.setGroup(57);
     uBit.messageBus.listen(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, onData);
+    
+    uBit.radio.setGroup(169);
     uBit.radio.enable();
     
-    // timer.attach_us(onTimeout, TIMEOUT * 1000);
-    // serial.send("Start");
-
 
     while (1) {
         if (uBit.buttonA.isPressed()) {
             // for testing purpose
-            // serial.send("btnA");
-            send_encrypt_RF("Hello world!");
+            serial.send("Hello from microbit Serial!|");
+            uBit.sleep(200);
         }
         if (uBit.buttonB.isPressed()) {
             // for testing purpose
             // serial.send("btnB");
-            send_encrypt_RF("Hello from000000000000000");
+            send_encrypt_RF("CDJMS:Hello");
+            uBit.sleep(200);
         }
-        uBit.sleep(1000);
+        uBit.sleep(200);
     }
 
     release_fiber();
