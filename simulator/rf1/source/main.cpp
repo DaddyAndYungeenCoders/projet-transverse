@@ -6,9 +6,9 @@
 #include "aes.c"
 #include "projet.h"
 
-#define MAX_TEXT_LENGTH 32
+#define MAX_TEXT_LENGTH 128
 #define MAX_RETRY 5
-#define TIMEOUT 5000 //en ms
+#define TIMEOUT 1000 //en ms
 
 ManagedString CODE = "CDJMS:";
 ManagedString saved_message;
@@ -77,7 +77,6 @@ void onTimeout()
         serial.send("ABANDON \r\n");
         tries =0;
         message_en_cours = false;
-        return ;
     }else {
         etape = 0;
         retry = true;
@@ -96,6 +95,10 @@ void exactly(ManagedString message){
         etape = 0;
         message = saved_message;
     }
+    if (tries == MAX_RETRY){
+        tries = 0;
+        return;
+    }
     if (etape == 0){
         timer.attach_us(onTimeout, TIMEOUT * 1000);
         send_encrypt_RF(message);
@@ -103,12 +106,13 @@ void exactly(ManagedString message){
         saved_message = message;
     } else if (etape == 1 ){
         if (message == "ACK" + saved_message){
-            send_encrypt_RF("ACKBACK" + saved_message);
-            etape = 2;
             timer.attach_us(onTimeout, TIMEOUT * 1000);
+            send_encrypt_RF("ACKB" + saved_message);
+            etape = 2;
         }else {
             etape = 0;
             send_encrypt_RF("nok");
+            tries ++;
             exactly(saved_message);
         }
     } else if (etape == 2){
@@ -118,10 +122,10 @@ void exactly(ManagedString message){
             timer.detach();
             tries = 0;
             message_en_cours = false;
-
         } else {
             etape = 0;
             send_encrypt_RF("nok");
+            tries ++;
             exactly(saved_message);
         }
     }
@@ -132,7 +136,7 @@ void onData(MicroBitEvent) {
     // PacketBuffer buf(BUF_SIZE);
     ManagedString buf = uBit.radio.datagram.recv();
     //serial.send("Received data");
-    //serial.send(buf);
+    //serial.send(buf + "\r\n");
     if (check_cdjms(buf))
     {
         ManagedString test = decode_RF(buf);
@@ -153,6 +157,10 @@ int main() {
 
     uBit.radio.setGroup(169);
     uBit.radio.enable();
+
+    serial.setTxBufferSize(sizeof(char[MAX_TEXT_LENGTH]));
+    serial.setRxBufferSize(sizeof(char[MAX_TEXT_LENGTH]));
+    
    
     //timer.attach_us(onTimeout, TIMEOUT * 1000);
 
@@ -166,8 +174,9 @@ int main() {
         }
 
         if (uBit.buttonA.isPressed()) {
-            id = 42;
-            send_encrypt_RF("TOTO|");
+            if (!message_en_cours){
+                exactly("'id':78,'in':23.0|");
+            }
         }
 
         if (uBit.buttonB.isPressed()) {
@@ -175,12 +184,17 @@ int main() {
                 exactly("I love IOT|");
             }
         }
-        //toRead = serial.read(sizeof(char[8]), ASYNC);//42
-        toRead = serial.readUntil("|", ASYNC);
+        //toRead = serial.read(sizeof(char[64]));//42
+      
+        toRead = serial.read(sizeof(char[64]), ASYNC);
+        
+        //toRead = serial.readUntil("|");
+        uBit.sleep(100);
         if (toRead.length()> 0){
-            //serial.send(toRead);
+            serial.send(toRead);
             //DATA = DATA + toRead;
-            send_encrypt_RF(toRead);
+            exactly(toRead + "|");
+            serial.clearRxBuffer();
         }
         //serial.send(toRead);
         if(id == 42){
