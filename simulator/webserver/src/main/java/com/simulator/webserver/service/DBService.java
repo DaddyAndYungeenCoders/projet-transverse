@@ -36,4 +36,8 @@ public class DBService {
     public List<UserEntity> findAll(){
         return usersRepository.findAll();
     }
+
+    public UserEntity save(UserEntity userEntity){
+        return usersRepository.save(userEntity);
+    }
 }

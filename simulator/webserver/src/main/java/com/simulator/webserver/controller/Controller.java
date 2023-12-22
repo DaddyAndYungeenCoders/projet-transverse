@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simulator.webserver.models.UserEntity;
 import com.simulator.webserver.service.DBService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("/db")
@@ -43,6 +46,13 @@ public class Controller {
     public String findall(){
         return dbService.findAll().get(0).getUsername();
     }
+
+    @GetMapping("/new")
+    public String newuser() {
+        UserEntity userEntity = new UserEntity(1L, "Jean", "ffergf", null);
+        return dbService.save(userEntity).getUsername();
+    }
+    
 
 
 }
