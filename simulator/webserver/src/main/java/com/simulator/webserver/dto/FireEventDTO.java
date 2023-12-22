@@ -27,6 +27,7 @@ public class FireEventDTO {
     }
 
     public boolean hasNecessaryValuesToCreate() {
+        System.out.println("Is Valid ? " + this.endDate == null && this.realIntensity > 0  && this.startDate != null && !ObjectUtils.isEmpty(this.coords));
         return (
                 this.endDate == null
                         && this.realIntensity > 0
