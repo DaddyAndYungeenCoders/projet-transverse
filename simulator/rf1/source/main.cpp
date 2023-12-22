@@ -46,7 +46,7 @@ void send_RF(ManagedString s){
 }
 
 void send_encrypt_RF(ManagedString s){
-    serial.send(" send : " + s + "\r\n");
+    //serial.send(" send : " + s + "\r\n");
     uint8_t message[MAX_TEXT_LENGTH];
     memcpy(message, (const uint8_t*)s.toCharArray(), MAX_TEXT_LENGTH);
 
@@ -70,7 +70,7 @@ ManagedString decode_RF(ManagedString s){
 
 void onTimeout()
 {
-    serial.send(" TIMEOUT " + ManagedString(tries)+ "\r\n");
+    //serial.send(" TIMEOUT " + ManagedString(tries)+ "\r\n");
     timer.detach();
     
     if (tries >= MAX_RETRY){
@@ -90,7 +90,7 @@ void onTimeout()
 
 void exactly(ManagedString message){
     message_en_cours = true;
-    serial.send("Exactly : " + etape + message + "\r\n" );
+    //serial.send("Exactly : " + etape + message + "\r\n" );
     message_en_cours = true;
     if (message == "nok" || message == ""){
         etape = 0;
@@ -139,7 +139,7 @@ void onData(MicroBitEvent) {
         //serial.send("Decoded data");
         // serial.send(test);
         ManagedString decrypted = decrypt_RF(decode_RF(buf));
-        serial.send("Reçu : " + decrypted + "\r\n");
+        //serial.send("Reçu : " + decrypted + "\r\n");
         exactly(decrypted);
     }
 }
@@ -167,6 +167,7 @@ int main() {
 
         if (uBit.buttonA.isPressed()) {
             id = 42;
+            serial.send("test");
         }
 
         if (uBit.buttonB.isPressed()) {
@@ -174,12 +175,15 @@ int main() {
                 exactly("I love IOT|");
             }
         }
-        //toRead = serial.read(sizeof(char[8]), ASYNC);//42
-        toRead = serial.readUntil("|", ASYNC);
+        //toRead = serial.read(sizeof(char[128]));//42
+        toRead = serial.readUntil("|");
         if (toRead.length()> 0){
-            //serial.send(toRead);
+            
+            serial.send(toRead);
+            exactly(toRead);
+
+            
             //DATA = DATA + toRead;
-            send_encrypt_RF(toRead);
         }
         //serial.send(toRead);
         if(id == 42){
