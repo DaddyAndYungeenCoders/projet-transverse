@@ -16,7 +16,6 @@ import com.simulator.webserver.models.CoordsEntity;
 import com.simulator.webserver.models.DetecsEntity;
 import com.simulator.webserver.models.FireEventEntity;
 import com.simulator.webserver.models.SensorEntity;
-import com.simulator.webserver.service.DetecsService;
 import org.springframework.web.client.RestTemplate;
 
 

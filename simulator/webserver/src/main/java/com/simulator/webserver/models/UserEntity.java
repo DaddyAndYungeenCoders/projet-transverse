@@ -1,9 +1,11 @@
 package com.simulator.webserver.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,8 +17,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@IdClass(UserEntity.class)
 @Table(name = "Users")
-public class UserEntity {
+public class UserEntity implements Serializable {
     @Id
     private int id;
     private String username;
