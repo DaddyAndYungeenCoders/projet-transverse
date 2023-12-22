@@ -1,30 +1,26 @@
 package com.simulator.webserver.models;
 
-public class SensorEntity {
+import java.io.Serializable;
+
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "Sensor")
+public class SensorEntity implements Serializable{
     
-    private int id;
+    @Id
+    private Long id;
     private CoordsEntity coordsEntity;
-
-    public SensorEntity(int id, CoordsEntity coordsEntity) {
-        this.id = id;
-        this.coordsEntity = coordsEntity;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public CoordsEntity getCoordsEntity() {
-        return coordsEntity;
-    }
-
-    public void setCoordsEntity(CoordsEntity coordsEntity) {
-        this.coordsEntity = coordsEntity;
-    }
-
-
 }

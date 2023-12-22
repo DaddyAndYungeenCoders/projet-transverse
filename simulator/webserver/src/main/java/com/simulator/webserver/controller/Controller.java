@@ -5,20 +5,36 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.simulator.webserver.models.FireEventEntity;
-import com.simulator.webserver.models.SensorEntity;
-import com.simulator.webserver.service.DetecsService;
+import com.simulator.webserver.models.UserEntity;
+import com.simulator.webserver.service.DBService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
+@RequestMapping("/db")
 public class Controller {
     String url = "http://localhost:8000/";
+    
+    private final DBService dbService;
 
-    private final DetecsService detecsService;
+    //private final DetecsService detecsService;
+    public Controller(DBService dbService) {
+        this.dbService = dbService;
+    }
 
-    @Autowired
-    public Controller(DetecsService detecsService) {
-        this.detecsService = detecsService;
+    @GetMapping("/read-from-db")
+    public String readFromDB(){
+        Integer rowCount = dbService.read();
+
+        if (rowCount != null) {
+            return "Nombre de lignes dans la table : " + rowCount;
+        } else {
+            return "Erreur lors de la lecture depuis la base de données";
+        }
     }
 
     @GetMapping("/")
@@ -26,18 +42,17 @@ public class Controller {
         return "Hello World!";
     }
 
-    @GetMapping("/test")
-    public String test(){
-        SensorEntity sensorEntity = new SensorEntity();
-        return detecsService.sendDetection(null);
-        //return requestService.send(url, "test requete");
-
+    @GetMapping("/all")
+    public String findall(){
+        return dbService.findAll().get(0).getUsername();
     }
 
-    @GetMapping("/{id}/{intensity}")
-    public String sensor(@PathVariable String id, @PathVariable Long intensity){
-        return detecsService.sendDetection(null);
-
+    @GetMapping("/new")
+    public String newuser() {
+        UserEntity userEntity = new UserEntity(1L, "Jean", "ffergf", null);
+        return dbService.save(userEntity).getUsername();
     }
+    
+
 
 }

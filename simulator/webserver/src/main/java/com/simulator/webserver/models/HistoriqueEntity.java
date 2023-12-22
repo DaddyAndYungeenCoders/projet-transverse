@@ -1,41 +1,28 @@
 package com.simulator.webserver.models;
 
 import java.util.Date;
+import com.simulator.webserver.models.PK.HistoriqueEntityPK;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
+import jakarta.persistence.Table;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@IdClass(HistoriqueEntityPK.class)
+@Table(name = "Historique")
 public class HistoriqueEntity {
+    @Id
     private UserEntity user;
+    @Id
     private FireEventEntity fire_event;
     private Date created_date;
-
-    public HistoriqueEntity(UserEntity user, FireEventEntity fire_event, Date created_date){
-        this.user = user;
-        this.fire_event = fire_event;
-     
-    }
-    
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
-
-    public FireEventEntity getFire_event() {
-        return fire_event;
-    }
-
-    public void setFire_event(FireEventEntity fire_event) {
-        this.fire_event = fire_event;
-    }
-
-    public Date getCreated_date() {
-        return created_date;
-    }
-
-    public void setCreated_date(Date created_date) {
-        this.created_date = created_date;
-    }
-
-
 }
+

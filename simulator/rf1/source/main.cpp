@@ -97,10 +97,10 @@ void exactly(ManagedString message){
         message = saved_message;
     }
     if (etape == 0){
+        timer.attach_us(onTimeout, TIMEOUT * 1000);
         send_encrypt_RF(message);
         etape = 1;
         saved_message = message;
-        timer.attach_us(onTimeout, TIMEOUT * 1000);
     } else if (etape == 1 ){
         if (message == "ACK" + saved_message){
             send_encrypt_RF("ACKBACK" + saved_message);
@@ -151,8 +151,8 @@ int main() {
     uBit.serial.baud(115200);
     uBit.messageBus.listen(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, onData);
 
+    uBit.radio.setGroup(169);
     uBit.radio.enable();
-    uBit.radio.setGroup(57);
    
     //timer.attach_us(onTimeout, TIMEOUT * 1000);
 
@@ -167,6 +167,7 @@ int main() {
 
         if (uBit.buttonA.isPressed()) {
             id = 42;
+            send_encrypt_RF("TOTO|");
         }
 
         if (uBit.buttonB.isPressed()) {
@@ -187,7 +188,7 @@ int main() {
             id = 0;
         }
 
-        //uBit.sleep(1000);
+        uBit.sleep(500);
     }
     release_fiber();
 }

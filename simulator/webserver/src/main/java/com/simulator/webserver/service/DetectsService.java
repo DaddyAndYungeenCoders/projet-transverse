@@ -1,54 +1,47 @@
 package com.simulator.webserver.service;
 
+
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.simulator.webserver.models.DetectsEntity;
+import com.simulator.webserver.models.FireEventEntity;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.simulator.webserver.models.SensorEntity;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Service
-public class RequestService {
+@Slf4j
+public class DetectsService {
 
     private RestTemplate restTemplate = new RestTemplate();
     private HttpHeaders headers = new HttpHeaders();
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    public RequestService() {
+
+    public DetectsService(){
         headers.setContentType(MediaType.APPLICATION_JSON);
     }
 
-    public String send(String url, String text) {
-        String requestBody = "{\"text\":\"" + text + "\"}";
-        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
-        String response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class).getBody();
-
-        // Affiche la réponse
-        System.out.println("Réponse du serveur : " + response);
-        return response;
-    }
-
-    public String send_sensor(String url, String id, float intensity) {
+    public String sendDetection(String url, DetectsEntity detectsEntity){
         try {
-            SensorEntity sensorEntity = new SensorEntity(id, intensity);
-            String json = objectMapper.writeValueAsString(sensorEntity);
-    
+            String json = objectMapper.writeValueAsString(detectsEntity.toDTO());
+
             HttpEntity<String> requestEntity = new HttpEntity<>(json, headers);
             String response = restTemplate.exchange(url + "/new", HttpMethod.POST, requestEntity, String.class).getBody();
     
             // Affiche la réponse
-            System.out.println("Réponse du serveur : " + response);
+            log.debug("Réponse du serveur : {}", response);
             return response;
         } catch (JsonProcessingException e) {
             // Gérer l'exception, par exemple en l'affichant
             e.printStackTrace();
             return "Erreur lors de la conversion en JSON";
         }
-    }
 
-    //public String send_Fire_Event(String url, )
-    
+    }
 }
