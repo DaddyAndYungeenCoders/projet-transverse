@@ -21,12 +21,12 @@ class Body(BaseModel):
     content : str """
 
 def read_UART():
-      while ser.isOpen():
-            # time.sleep(100)
-            if (ser.inWaiting() > 0):  # if incoming bytes are waiting
-                data_str = ser.read(ser.inWaiting())
-                data_new = str(data_str, 'UTF-8')
-                print("receive : " + data_new)
+    while ser.isOpen():
+        # time.sleep(100)
+        if (ser.inWaiting() > 0):  # if incoming bytes are waiting
+            data_str = ser.read(ser.inWaiting())
+            data_new = str(data_str, 'UTF-8')
+            print("receive : " + data_new)
 
 def initUART():
     # ser = serial.Serial(SERIALPORT, BAUDRATE)

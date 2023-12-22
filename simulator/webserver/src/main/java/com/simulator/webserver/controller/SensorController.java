@@ -26,7 +26,6 @@ public class SensorController {
 
     private final DetecsService detecsService;
 
-    @Autowired
     public SensorController(DetecsService detecsService) {
         this.detecsService = detecsService;
     }
@@ -39,15 +38,15 @@ public class SensorController {
     @GetMapping("/test")
     public String test(){
         CoordsEntity coordsEntity = new CoordsEntity(0, 0);
-        SensorEntity sensorEntity = new SensorEntity("32", coordsEntity);
+        SensorEntity sensorEntity = new SensorEntity(32L, coordsEntity);
         DetecsEntity detecsEntity = new DetecsEntity(sensorEntity, null, 10);
-        return detecsService.sendDetection(url,detecsEntity);
+        return detecsService.sendDetection(url, detecsEntity);
         //return requestService.send(url, "test requete");
 
     }
 
     @GetMapping("/{id}/{intensity}")
-    public String sensor(@PathVariable String id, @PathVariable Long intensity){
+    public String sensor(@PathVariable Long id, @PathVariable Long intensity){
         CoordsEntity coordsEntity = new CoordsEntity(0, 0);
         SensorEntity sensorEntity = new SensorEntity(id, coordsEntity);
         DetecsEntity detecsEntity = new DetecsEntity(sensorEntity, null, intensity);

@@ -26,8 +26,8 @@ public class DetecsService {
     public DetecsService(){
         headers.setContentType(MediaType.APPLICATION_JSON);
     }
-/*
-    public String sendDetection(DetecsEntity detecsEntity){
+
+    public String sendDetection(String url, DetecsEntity detecsEntity){
         try {
             String json = objectMapper.writeValueAsString(detecsEntity.toDTO());
 
@@ -44,5 +44,4 @@ public class DetecsService {
         }
 
     }
-    */
 }

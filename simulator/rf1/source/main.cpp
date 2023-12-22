@@ -46,7 +46,7 @@ void send_RF(ManagedString s){
 }
 
 void send_encrypt_RF(ManagedString s){
-    //serial.send(" send : " + s + "\r\n");
+    serial.send(" send : " + s + "\r\n");
     uint8_t message[MAX_TEXT_LENGTH];
     memcpy(message, (const uint8_t*)s.toCharArray(), MAX_TEXT_LENGTH);
 
@@ -70,7 +70,7 @@ ManagedString decode_RF(ManagedString s){
 
 void onTimeout()
 {
-    //serial.send(" TIMEOUT " + ManagedString(tries)+ "\r\n");
+    serial.send(" TIMEOUT " + ManagedString(tries)+ "\r\n");
     timer.detach();
     
     if (tries >= MAX_RETRY){
@@ -90,17 +90,17 @@ void onTimeout()
 
 void exactly(ManagedString message){
     message_en_cours = true;
-    //serial.send("Exactly : " + etape + message + "\r\n" );
+    serial.send("Exactly : " + etape + message + "\r\n" );
     message_en_cours = true;
     if (message == "nok" || message == ""){
         etape = 0;
         message = saved_message;
     }
     if (etape == 0){
+        timer.attach_us(onTimeout, TIMEOUT * 1000);
         send_encrypt_RF(message);
         etape = 1;
         saved_message = message;
-        timer.attach_us(onTimeout, TIMEOUT * 1000);
     } else if (etape == 1 ){
         if (message == "ACK" + saved_message){
             send_encrypt_RF("ACKBACK" + saved_message);
@@ -139,7 +139,7 @@ void onData(MicroBitEvent) {
         //serial.send("Decoded data");
         // serial.send(test);
         ManagedString decrypted = decrypt_RF(decode_RF(buf));
-        //serial.send("Reçu : " + decrypted + "\r\n");
+        serial.send("Reçu : " + decrypted + "\r\n");
         exactly(decrypted);
     }
 }
@@ -151,8 +151,8 @@ int main() {
     uBit.serial.baud(115200);
     uBit.messageBus.listen(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, onData);
 
+    uBit.radio.setGroup(169);
     uBit.radio.enable();
-    uBit.radio.setGroup(57);
    
     //timer.attach_us(onTimeout, TIMEOUT * 1000);
 
@@ -167,7 +167,7 @@ int main() {
 
         if (uBit.buttonA.isPressed()) {
             id = 42;
-            serial.send("test");
+            send_encrypt_RF("TOTO|");
         }
 
         if (uBit.buttonB.isPressed()) {
@@ -175,15 +175,12 @@ int main() {
                 exactly("I love IOT|");
             }
         }
-        //toRead = serial.read(sizeof(char[128]));//42
-        toRead = serial.readUntil("|");
+        //toRead = serial.read(sizeof(char[8]), ASYNC);//42
+        toRead = serial.readUntil("|", ASYNC);
         if (toRead.length()> 0){
-            
-            serial.send(toRead);
-            exactly(toRead);
-
-            
+            //serial.send(toRead);
             //DATA = DATA + toRead;
+            send_encrypt_RF(toRead);
         }
         //serial.send(toRead);
         if(id == 42){
@@ -191,7 +188,7 @@ int main() {
             id = 0;
         }
 
-        //uBit.sleep(1000);
+        uBit.sleep(500);
     }
     release_fiber();
 }

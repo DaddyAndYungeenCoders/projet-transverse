@@ -5,18 +5,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simulator.webserver.models.UserEntity;
 import com.simulator.webserver.service.DBService;
 
 @RestController
+@RequestMapping("/db")
 public class Controller {
     String url = "http://localhost:8000/";
+    
     private final DBService dbService;
 
     //private final DetecsService detecsService;
-
-    @Autowired
     public Controller(DBService dbService) {
         this.dbService = dbService;
     }

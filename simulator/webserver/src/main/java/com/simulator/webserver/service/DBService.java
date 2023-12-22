@@ -16,10 +16,9 @@ import java.util.List;
 @Service
 @Slf4j
 public class DBService {
-
+    
     private final UsersRepository usersRepository;
 
-    @Autowired
     public DBService(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
