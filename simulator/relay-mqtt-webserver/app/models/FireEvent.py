@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-# to beb completed
+# to be completed
 class FireEvent(BaseModel):
     id: int
     int: int
