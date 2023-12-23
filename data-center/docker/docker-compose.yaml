@@ -4,6 +4,8 @@ services:
     image: eclipse-mosquitto:latest
     container_name: mqtt
     restart: always
+    network_mode: "host"
+      #user: 1000:1000
     volumes:
       - ./mosquitto/config:/mosquitto/config
       - ./mosquitto/utils:/mosquitto/utils
@@ -30,6 +32,8 @@ services:
       - DOCKER_INFLUXDB_INIT_ORG=${INFLUXDB_V2_ORG}
       - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUXDB_V2_BUCKET}
 volumes:
-  config:
-  data:
-  log:
+  #config:
+  #data:
+  #log:
+  mosquitto:
+  influxdb:
