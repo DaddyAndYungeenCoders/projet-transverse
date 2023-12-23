@@ -1,12 +1,11 @@
 from fastapi import APIRouter, HTTPException
 from app.models.FireEvent import FireEvent
 from app.core.mqtt_client import MqttClient
-from app.core.config import mqtt_client_name, load_config
+from app.core.config import MQTT_CLIENT_NAME, topics
 from app.service.mqtt_service import is_topic_valid
 
 router = APIRouter()
-mqtt_client = MqttClient(mqtt_client_name)
-topics = load_config("app/config/topics.yaml", "topics")
+mqtt_client = MqttClient(MQTT_CLIENT_NAME)
 
 
 @router.post("/publish/{topic}")
