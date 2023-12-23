@@ -1,3 +1,5 @@
+import logging
+import time
 import paho.mqtt.client as mqtt
 import os
 import dotenv
@@ -7,6 +9,16 @@ from app.core.config import load_config
 
 dotenv.load_dotenv()
 topics = load_config("app/config/topics.yaml", "topics")
+
+FIRST_RECONNECT_DELAY = 1
+RECONNECT_RATE = 2
+MAX_RECONNECT_COUNT = 12
+MAX_RECONNECT_DELAY = 60
+MAX_SUB_RETRY = 30
+
+logger = logging.getLogger()
+logging.basicConfig(format='%(asctime)s : %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+logger.setLevel(logging.INFO)
 
 
 def on_message(client, userdata, message):
@@ -32,11 +44,34 @@ def on_message(client, userdata, message):
 
 
 def on_connect(client, userdata, flags, rc):
-    print(f"Connected to {client} with result code {rc}")
+    if rc == 0:
+        logger.info("Successfully connected to Broker %s:%s", os.getenv('BROKER_IP'), os.getenv('BROKER_PORT'))
+    else:
+        logger.error("Error while attempting to connect to Broker, return code : %d", rc)
+
+
+def on_disconnect(client, userdata, rc):
+    logger.info("Disconnected with result code: %s", rc)
+    reconnect_count, reconnect_delay = 0, FIRST_RECONNECT_DELAY
+    while reconnect_count < MAX_RECONNECT_COUNT:
+        logger.info("Reconnecting in %d seconds...", reconnect_delay)
+        time.sleep(reconnect_delay)
+
+        try:
+            client.reconnect()
+            logger.info("Reconnected successfully!")
+            return
+        except Exception as err:
+            logger.error("%s. Reconnect failed. Retrying...", err)
+
+        reconnect_delay *= RECONNECT_RATE
+        reconnect_delay = min(reconnect_delay, MAX_RECONNECT_DELAY)
+        reconnect_count += 1
+    logger.info("Reconnect failed after %s attempts. Exiting...", reconnect_count)
 
 
 def on_publish(client, userdata, mid):
-    print(f"Message published (mid={mid})")
+    logger.info(f"Message published (mid={mid})")
 
 
 class MqttClient:
@@ -55,12 +90,21 @@ class MqttClient:
         self.pw = os.getenv("BROKER_PW")
 
         self.client = mqtt.Client(client_name)
+        # self.client.tls_set(
+        #     ca_certs='./server-ca.crt',
+        #     certfile='./client.crt',
+        #     keyfile='./client.key'
+        # )
         self.client.username_pw_set(username=self.user, password=self.pw)
         self.client.on_connect = on_connect
+        self.client.on_disconnect = on_disconnect
         self.client.on_publish = on_publish
         self.client.on_message = on_message
 
-        self.client.connect(self.broker_ip, self.broker_port)
+        try:
+            self.client.connect(self.broker_ip, self.broker_port)
+        except ConnectionError as e:
+            logger.error("It appears that there was an error while connecting to the Broker : %s", e)
         self.subscribe_to_topics()
         self.client.loop_start()
 
@@ -70,7 +114,21 @@ class MqttClient:
         print(f"publishing message to {topic} : {message} (response code: {result})")
 
     def subscribe_to_topics(self):
-        self.client.subscribe(topics.get("simulator.auto-fire-event"))
-        self.client.subscribe(topics.get("simulator.new-sensor-value"))
-        self.client.subscribe(topics.get("simulator-view.sensor-changed"))
-        print("subscribed to topics", topics.get("simulator.auto-fire-event"))
+        res = ""
+        current_tries = 0
+        while res != "MQTT_ERR_CONN" and current_tries < MAX_SUB_RETRY:
+            current_tries += 1
+            topics_to_subscribe = [
+                (topics.get("simulator.auto-fire-event"), 1),
+                (topics.get("simulator.new-sensor-value"), 1),
+                (topics.get("simulator-view.sensor-changed"), 1)
+            ]
+            res = self.client.subscribe(topics_to_subscribe)
+            if res[0] == 0:
+                logger.info("Successfully subscribed to topics")
+                break
+            else:
+                logger.info("It seems that there was an error (error code: %s), reattempting... %d tries left",
+                            str(res),
+                            MAX_SUB_RETRY - current_tries)
+            time.sleep(1)

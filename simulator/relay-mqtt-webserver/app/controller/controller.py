@@ -9,11 +9,6 @@ mqtt_client = MqttClient(mqtt_client_name)
 topics = load_config("app/config/topics.yaml", "topics")
 
 
-@router.get("/test")
-def hello_world():
-    return {"message": "Hello World"}
-
-
 @router.post("/publish/{topic}")
 async def publish_message_to_mqtt(topic: str, payload: FireEvent):
     try:
