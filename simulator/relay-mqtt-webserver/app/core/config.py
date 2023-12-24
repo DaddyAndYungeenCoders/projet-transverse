@@ -39,7 +39,7 @@ logger.setLevel(logging.INFO)
 
 
 # -------- API CONFIGURATION -------- #
-API_URL = os.getenv("API_URL") + os.getenv("API_PORT")
+API_URL = os.getenv("API_URL") + ":" + os.getenv("API_PORT")
 # ----------------------------------- #
 
 # -------- MQTT CONFIGURATION -------- #
