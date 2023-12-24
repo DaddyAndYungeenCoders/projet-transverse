@@ -1,4 +1,5 @@
 import json
+from typing import Dict
 
 import serial
 
@@ -48,16 +49,17 @@ def process_serial_data():
                 logger.info("(SERIAL) received: " + message_str)
 
                 # send data to MQTT topic
-                fire_event_json = extract_data_from_serial(message_str)
-                print(f"id: {fire_event_json['id']}, intensity: {fire_event_json['intensity']}")
-                client.publish_new_fire_event(json.dumps(fire_event_json))
+                fire_event = extract_data_from_serial(message_str)
+                fire_event_json = json.dumps(fire_event)
+                print(f"id: {fire_event['id']}, intensity: {fire_event['intensity']}")
+                client.publish_new_fire_event(fire_event_json)
 
                 # post data to webserver
                 # endpoint = url + "/newFireEvent"
                 # x = requests.post(endpoint, json=fire_event_json)
 
 
-def extract_data_from_serial(data):
+def extract_data_from_serial(data) -> dict[str, int]:
     try:
         # Exemple de chaîne de données
         # id :2,intensity :1
