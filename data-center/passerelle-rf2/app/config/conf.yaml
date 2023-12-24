@@ -7,3 +7,7 @@ topics:
   rf2.fire_event: "/rf2/fire_event"
   actor.fire_validation: "/actor/fire_validation"
   manager.intervention: "/manager/intervention"
+
+serial:
+  baudrate: "115200"
+  serial_port: "/dev/ttyACM0"
