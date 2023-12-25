@@ -17,18 +17,13 @@ import lombok.Setter;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @IdClass(DetectsEntityPK.class)
 @Table (name = "detects")
 public class DetectsEntity {
     @Id
-    private SensorEntity sensorEntity;
+    private Long sensorId;
     @Id
-    private FireEventEntity fireEventEntity;
-    private float intensity;
-
-    public DetectsDTO toDTO(){
-        return new DetectsDTO(this.sensorEntity.getId(), this.intensity);
-    }    
+    private Long fireEventId;
+    private int intensity;
 }
 

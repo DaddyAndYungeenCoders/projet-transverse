@@ -28,23 +28,10 @@ public class SensorController {
         return "Hello World!";
     }
 
-    @GetMapping("/test")
-    public String test(){
-        Coords coordsEntity = new Coords(0, 0);
-        SensorEntity sensorEntity = new SensorEntity(32L, coordsEntity);
-        DetectsEntity detectsEntity = new DetectsEntity(sensorEntity, null, 10);
-        return detectsService.sendDetection(url, detectsEntity);
-        //return requestService.send(url, "test requete");
-
-    }
-
-    @GetMapping("/{id}/{intensity}")
-    public String sensor(@PathVariable Long id, @PathVariable Long intensity){
-        Coords coordsEntity = new Coords(0, 0);
-        SensorEntity sensorEntity = new SensorEntity(id, coordsEntity);
-        DetectsEntity detectsEntity = new DetectsEntity(sensorEntity, null, intensity);
+    @GetMapping("/{id}}")
+    public String getSensor(@PathVariable Long id){
+        DetectsEntity detectsEntity = new DetectsEntity();
         return detectsService.sendDetection(url,detectsEntity);
-
     }
 
 }

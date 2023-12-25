@@ -7,11 +7,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -31,5 +30,24 @@ public class FireEventController {
                     .map(fire -> ResponseEntity.ok().body(fire))
                     .orElseGet(() -> ResponseEntity.notFound().build());
         }
+    }
+
+    // pour l'instant, create fire event from view est strictement identique a fromView, à voir si on le supprime ou
+    // S'il est nécessaire de séparer les deux cas d'usage.
+    @PostMapping("/create/generator")
+    public ResponseEntity<FireEventEntity> createFireEventFromGenerator(@RequestBody FireEventDTO fireEvent) throws BadRequestException {
+        System.out.println("[REST] - Request to create a fire " + fireEvent);
+        if (!fireEvent.hasNecessaryValuesToCreate()) {
+            throw new BadRequestException();
+        } else {
+            return this.fireEventHandlerService.createFireEvent(fireEvent)
+                    .map(fire -> ResponseEntity.ok().body(fire))
+                    .orElseGet(() -> ResponseEntity.notFound().build());
+        }
+    }
+
+    @GetMapping("/fetch-all")
+    public Optional<List<FireEventEntity>> getAllFires() throws BadRequestException {
+        return fireEventHandlerService.getAllFireEvents();
     }
 }

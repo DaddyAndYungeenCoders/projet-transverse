@@ -3,6 +3,7 @@ package com.simulator.webserver.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.simulator.webserver.dto.DetectsDTO;
 import com.simulator.webserver.models.DetectsEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
@@ -27,13 +28,12 @@ public class DetectsService {
 
     public String sendDetection(String url, DetectsEntity detectsEntity){
         try {
-            String json = objectMapper.writeValueAsString(detectsEntity.toDTO());
+            String json = objectMapper.writeValueAsString(new DetectsDTO());
 
             HttpEntity<String> requestEntity = new HttpEntity<>(json, headers);
             String response = restTemplate.exchange(url + "/new", HttpMethod.POST, requestEntity, String.class).getBody();
     
             // Affiche la réponse
-            log.debug("Réponse du serveur : {}", response);
             return response;
         } catch (JsonProcessingException e) {
             // Gérer l'exception, par exemple en l'affichant
