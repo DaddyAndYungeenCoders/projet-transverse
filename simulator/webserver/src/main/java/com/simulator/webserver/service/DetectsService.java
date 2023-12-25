@@ -1,18 +1,17 @@
 package com.simulator.webserver.service;
 
 
-import org.springframework.http.*;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.simulator.webserver.dto.DetectsDTO;
 import com.simulator.webserver.models.DetectsEntity;
-import com.simulator.webserver.models.FireEventEntity;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 @Slf4j
@@ -29,13 +28,12 @@ public class DetectsService {
 
     public String sendDetection(String url, DetectsEntity detectsEntity){
         try {
-            String json = objectMapper.writeValueAsString(detectsEntity.toDTO());
+            String json = objectMapper.writeValueAsString(new DetectsDTO());
 
             HttpEntity<String> requestEntity = new HttpEntity<>(json, headers);
             String response = restTemplate.exchange(url + "/new", HttpMethod.POST, requestEntity, String.class).getBody();
     
             // Affiche la réponse
-            log.debug("Réponse du serveur : {}", response);
             return response;
         } catch (JsonProcessingException e) {
             // Gérer l'exception, par exemple en l'affichant
