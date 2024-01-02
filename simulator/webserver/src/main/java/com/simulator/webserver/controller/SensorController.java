@@ -26,7 +26,7 @@ public class SensorController {
         this.sensorService = sensorService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/hello")
     public String home(){
         return "Hello World!";
     }
@@ -49,12 +49,12 @@ public class SensorController {
         return detectsService.sendDetection(url,detectsEntity);
 
     }
-    @GetMapping("/getAll")
+    @GetMapping("/")
     public List<SensorEntity> getAll(){
         return sensorService.findAll();
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     public SensorEntity getSensor(@PathVariable Long id){
         return sensorService.getSensor(id);
     }
