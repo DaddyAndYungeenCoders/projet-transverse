@@ -3,11 +3,7 @@ package com.simulator.webserver.models;
 import java.io.Serializable;
 import java.sql.Date;
 
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -22,6 +18,7 @@ import lombok.Setter;
 public class FireEventEntity implements Serializable{
     @Id
     private Long id;
+    @Embedded
     private CoordsEntity coords;
     private int real_intensity;
     private Date start_date;
