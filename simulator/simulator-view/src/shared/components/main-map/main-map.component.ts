@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter } from '@angular/core';
+import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
 import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { Coordinates } from '../../types/interfaces/Coordinates';
 import * as L from 'leaflet';
@@ -7,6 +7,14 @@ import { FireCreationService } from '../../services/fire-creation.service';
 import { FireMarkerService } from '../../services/fire-marker-service.service';
 import { InterventionMarkerService } from '../../services/intervention-marker-service.service';
 import { FirestationMarkerService } from '../../services/firestation-marker-service.service';
+import { Subscription } from 'rxjs';
+import {
+  MatSnackBar,
+  MatSnackBarActions,
+  MatSnackBarLabel,
+  MatSnackBarRef,
+} from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-main-map',
@@ -15,8 +23,11 @@ import { FirestationMarkerService } from '../../services/firestation-marker-serv
   templateUrl: './main-map.component.html',
   styleUrl: './main-map.component.scss',
 })
-export class MainMapComponent implements AfterViewInit {
+export class MainMapComponent implements OnInit, AfterViewInit {
   map!: L.Map;
+  isInMenuCreationMode: boolean = false;
+  $intensitySubscription: Subscription = new Subscription();
+
   private defaultZoomLevel = 20;
   constructor(
     private fireCreationService: FireCreationService,
@@ -25,6 +36,16 @@ export class MainMapComponent implements AfterViewInit {
     private fireStationMarkerService: FirestationMarkerService
   ) {}
 
+  ngOnInit(): void {
+    this.isInMenuCreationMode = this.fireCreationService.isSettingNewElement;
+    this.$intensitySubscription =
+      this.fireCreationService.$isInCreationState.subscribe((isCreating) => {
+        this.isInMenuCreationMode = isCreating;
+        if (isCreating) {
+          console.log('OKOKOKOKOKOKOK');
+        }
+      });
+  }
   ngAfterViewInit() {
     this.mountMap(); // Creating the map
     this.map.setZoom(19); // to avoid display bug

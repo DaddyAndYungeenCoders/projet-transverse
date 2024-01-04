@@ -1,5 +1,10 @@
 <div class="map-container">
-  <div class="map-border">
-    <div id="map"></div>
+  <div class="map-border" [ngClass]="isInMenuCreationMode ? 'creation' : ''">
+    <div class="map-contour">
+      <ng-template [ngIf]="isInMenuCreationMode">
+      <div class="creation-toaster"><p>CREATION MODE</p></div>
+      </ng-template>
+      <div id="map"></div>
+    </div>
   </div>
 </div>
