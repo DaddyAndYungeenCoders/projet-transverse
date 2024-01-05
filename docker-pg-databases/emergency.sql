@@ -13,8 +13,8 @@ CREATE TABLE FireEvent (
     id SERIAL PRIMARY KEY,
     coords INT[2],
     intensity INT,
-    start_date DATE,
-    end_date DATE,
+    start_date TIMESTAMP,
+    end_date TIMESTAMP,
     validation_status validation_status,
     id_equipe_intervention INT
 );
@@ -23,7 +23,7 @@ CREATE TABLE FireEvent (
 CREATE TABLE historique (
     sensor_id INT,
     fire_event_id INT,
-    date_time DATE,
+    date_time TIMESTAMP,
     intensite INT,
     FOREIGN KEY (sensor_id) REFERENCES Sensor(id),
     FOREIGN KEY (fire_event_id) REFERENCES FireEvent(id)

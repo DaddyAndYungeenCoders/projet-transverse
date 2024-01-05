@@ -9,6 +9,9 @@ public class UserEntity implements Serializable {
     private String password;
     private Date created_date;
 
+    public UserEntity() {
+    }
+
     public UserEntity(Long id, String username, String password, Date created_date) {
         this.id = id;
         this.username = username;

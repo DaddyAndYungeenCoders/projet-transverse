@@ -9,6 +9,9 @@ public class DetectsEntity {
 //        return new DetectsDTO(this.sensorEntity.getId(), this.intensity);
 //    }
 
+    public DetectsEntity() {
+    }
+
     public DetectsEntity(SensorEntity sensorEntity, FireEventEntity fireEventEntity, float intensity) {
         this.sensorEntity = sensorEntity;
         this.fireEventEntity = fireEventEntity;

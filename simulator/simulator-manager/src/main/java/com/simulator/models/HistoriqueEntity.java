@@ -8,6 +8,9 @@ public class HistoriqueEntity {
     private FireEventEntity fire_event;
     private Date created_date;
 
+    public HistoriqueEntity() {
+    }
+
     public HistoriqueEntity(UserEntity user, FireEventEntity fire_event, Date created_date) {
         this.user = user;
         this.fire_event = fire_event;
