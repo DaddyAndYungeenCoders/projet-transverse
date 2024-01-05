@@ -5,23 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b5261d2-5c17-495a-bad8-6c9555e0d2e4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/CoordsEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/DetectsEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/FireEventEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/HistoriqueEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/PK/DetectsEntityPK.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/PK/HistoriqueEntityPK.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/SensorEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/UserEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/repository/SensorRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/service/BddService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/FireStationEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/InterventionEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/TeamEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/repository/DetectsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/repository/FireEventRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/repository/FireStationRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/repository/HistoriqueRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/repository/InterventionRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/repository/TeamRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/repository/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/models/DetectsEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/DetectsEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/models/FireEventEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/FireEventEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/models/HistoriqueEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/HistoriqueEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/models/SensorEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/SensorEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/models/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/UserEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/repository/SensorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/repository/SensorRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/service/BddService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/service/BddService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,10 +44,16 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
   <component name="ProjectId" id="2ZFyz2hWkPIxGK98vHyOwQCPwBN" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -54,8 +63,10 @@
     "Application.Main.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
+    "extract.method.default.visibility": "private",
+    "git-widget-placeholder": "CSC-53-SIMULATOR-arborescence",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "G:/Projet/Projet-transverse/simulator/simulator-manager/src/main/java/com/simulator/models",
     "node.js.detected.package.eslint": "true",

@@ -33,4 +33,30 @@ public class BddService {
         }
         return null;
     }
+
+    public void Query(String query, Object... args) {
+        try {
+            Connection connection = DriverManager.getConnection(URL + DB_NAME, USER, PASSWORD);
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                // Remplacer les paramètres dans la requête avec les valeurs correspondantes
+                for (int i = 0; i < args.length; i++) {
+                    statement.setObject(i + 1, args[i]);
+                }
+                // Exécuter la requête
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                if (connection != null) {
+                    try {
+                        connection.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -1,7 +1,11 @@
 package com.simulator.models;
 
+import com.simulator.repository.DetectsRepository;
+import com.simulator.repository.InterventionRepository;
+
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 public class FireEventEntity implements Serializable{
     private Long id;
@@ -10,6 +14,12 @@ public class FireEventEntity implements Serializable{
     private Date start_date;
     private Date end_date;
     private boolean is_real;
+
+    InterventionRepository interventionRepository = new InterventionRepository();
+    DetectsRepository DetectsRepository = new DetectsRepository();
+
+    public FireEventEntity() {
+    }
 
     public FireEventEntity(Long id, CoordsEntity coords, int real_intensity, Date start_date, Date end_date, boolean is_real) {
         this.id = id;
@@ -66,5 +76,13 @@ public class FireEventEntity implements Serializable{
 
     public void setIs_real(boolean is_real) {
         this.is_real = is_real;
+    }
+
+    public List<InterventionEntity> getIntervention() {
+       return interventionRepository.getInterventionsByFireEventId(this.id);
+    }
+
+    public DetectsEntity getDetecs() {
+        return DetectsRepository.getDetectsByFireEventId(this.id);
     }
 }
