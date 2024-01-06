@@ -9,19 +9,21 @@ CREATE TABLE Users (
 
 CREATE TABLE Sensor (
     id SERIAL PRIMARY KEY,
-    coords INT[2]
+    latitude FLOAT,
+    longitude FLOAT
 );
 
 CREATE TABLE FireEvent (
     id SERIAL PRIMARY KEY,
-    coords FLOAT[2],
+    latitude FLOAT,
+    longitude FLOAT,
     real_intensity INT,
     start_date DATE,
     end_date DATE,
     is_real BOOLEAN
 );
 
-CREATE TABLE defects (
+CREATE TABLE detects (
     id_sensor INT,
     id_fire_event INT,
     intensity FLOAT,
@@ -43,7 +45,8 @@ CREATE TABLE FireStation (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50),
     address VARCHAR(50),
-    coords INT[2]
+    latitude FLOAT,
+    longitude FLOAT
 );
 
 CREATE TABLE Team (

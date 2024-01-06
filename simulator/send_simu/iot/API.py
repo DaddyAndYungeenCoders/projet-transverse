@@ -2,6 +2,8 @@ from typing import Union
 
 from fastapi import FastAPI
 import serial
+import multiprocessing as mp
+from multiprocessing import Process 
 
 from pydantic import BaseModel
 
@@ -12,8 +14,17 @@ ser = serial.Serial()
 
 
 class Sensor(BaseModel):
-    id: str
+    id: int
     intensity: float
+
+
+def read_UART():
+    while ser.isOpen():
+        # time.sleep(100)
+        if (ser.inWaiting() > 0):  # if incoming bytes are waiting
+            data_str = ser.read(ser.inWaiting())
+            data_new = str(data_str, 'UTF-8')
+            print("receive : " + data_new)
 
 def initUART():
     # ser = serial.Serial(SERIALPORT, BAUDRATE)
@@ -38,13 +49,16 @@ def initUART():
         exit()
 
 def sendUARTMessage(msg):
-    ser.write(bytes(msg, 'UTF-8'))
+    msg = msg.replace(" ", "")
+    ser.write(msg.encode())
     print("Message <" + msg + "> sent to micro-controller.")
 
 
 
 
 initUART()
+reader = Process(target=read_UART, args=())
+reader.start()
 
 app = FastAPI()
 
@@ -57,5 +71,13 @@ def read_root():
 
 @app.post("/new")
 def new(sensor: Sensor):
-    sendUARTMessage("(" + sensor.id +"," + str(sensor.intensity)+")")
-    return{"code": "200"}
+    sendUARTMessage("id:" + str(sensor.id) +",in:" + str(sensor.intensity))
+    return {"id" : sensor.id, "intensity": sensor.intensity}
+
+""" @app.post("/new")
+def new(body: dict):
+    print(str(body))
+    sendUARTMessage(str(body) + "|")
+    return body """
+
+""" reader.join() """
