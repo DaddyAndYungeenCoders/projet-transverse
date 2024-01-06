@@ -12,4 +12,5 @@ public interface FireEventHandlerService {
     Optional<FireEventEntity> createFireEvent(@RequestBody FireEventDTO fireEventDTO);
     Optional<FireEventEntity> createFireEventFromView(@RequestBody FireEventDTO fireEventDTO);
     Optional<List<FireEventEntity>> getAllFireEvents();
+    Optional<FireEventEntity> updateFireEvent(Long id, int intensity);
 }

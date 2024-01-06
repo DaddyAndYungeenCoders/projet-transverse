@@ -15,7 +15,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/fire-event")
 public class FireEventController {
 
     private final FireEventHandlerService fireEventHandlerService;
@@ -47,7 +47,16 @@ public class FireEventController {
     }
 
     @GetMapping("/fetch-all")
-    public Optional<List<FireEventEntity>> getAllFires() throws BadRequestException {
-        return fireEventHandlerService.getAllFireEvents();
+    public ResponseEntity<List<FireEventEntity>> getAllFires() throws BadRequestException {
+        return fireEventHandlerService.getAllFireEvents()
+                .map(fire -> ResponseEntity.ok().body(fire))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+    
+    @PutMapping("/update/{id}/{intensity}")
+    public ResponseEntity<FireEventEntity> updateFireIntensityFromId(@PathVariable Long id, @PathVariable int intensity) {
+        return this.fireEventHandlerService.updateFireEvent(id, intensity)
+                .map(fire -> ResponseEntity.ok().body(fire))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

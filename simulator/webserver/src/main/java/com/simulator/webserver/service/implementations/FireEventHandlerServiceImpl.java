@@ -4,7 +4,6 @@ import com.simulator.webserver.dto.FireEventDTO;
 import com.simulator.webserver.models.FireEventEntity;
 import com.simulator.webserver.repository.FireEventRepository;
 import com.simulator.webserver.service.FireEventHandlerService;
-import com.simulator.webserver.service.interfaces.mappers.FireEventMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +34,17 @@ public class FireEventHandlerServiceImpl implements FireEventHandlerService {
     @Override
     public Optional<List<FireEventEntity>> getAllFireEvents() {
         return Optional.of(fireEventRepository.findAll());
+    }
+
+    @Override
+    public Optional<FireEventEntity> updateFireEvent(Long id, int intensity) {
+        Optional<FireEventEntity> fireToUpdate = this.fireEventRepository.findById(id);
+        if (fireToUpdate.isEmpty()) {
+            return Optional.empty();
+        }
+        
+        FireEventEntity fire = fireToUpdate.get();
+        fire.setReal_intensity(intensity);
+        return Optional.of(this.fireEventRepository.save(fire));
     }
 }
