@@ -47,7 +47,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .creation-toaster {
   position: fixed; 
-  bottom: 0px; 
+  bottom: 0; 
   left: 50%; 
   
   transform: translate(-50%, -50%); /* Adjust to perfectly center */

@@ -27,6 +27,7 @@ export class MainMapComponent implements OnInit, AfterViewInit {
   map!: L.Map;
   isInMenuCreationMode: boolean = false;
   $intensitySubscription: Subscription = new Subscription();
+  $isInCreationSubscription: Subscription = new Subscription();
 
   private defaultZoomLevel = 20;
   constructor(
@@ -38,11 +39,10 @@ export class MainMapComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.isInMenuCreationMode = this.fireCreationService.isSettingNewElement;
-    this.$intensitySubscription =
+    this.$isInCreationSubscription =
       this.fireCreationService.$isInCreationState.subscribe((isCreating) => {
         this.isInMenuCreationMode = isCreating;
         if (isCreating) {
-          console.log('OKOKOKOKOKOKOK');
         }
       });
   }
