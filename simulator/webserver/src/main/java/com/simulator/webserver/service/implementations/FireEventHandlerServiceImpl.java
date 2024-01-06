@@ -47,4 +47,23 @@ public class FireEventHandlerServiceImpl implements FireEventHandlerService {
         fire.setReal_intensity(intensity);
         return Optional.of(this.fireEventRepository.save(fire));
     }
+
+    @Override
+    public Optional<FireEventEntity> updateFireEvent(Long id, FireEventDTO fireEventDTO) {
+        Optional<FireEventEntity> fireToUpdate = this.fireEventRepository.findById(id);
+        if (fireToUpdate.isEmpty()) {
+            return Optional.empty();
+        }
+        FireEventEntity fire = fireToUpdate.get();
+        updateFireEventData(fireEventDTO, fire);
+        return Optional.of(this.fireEventRepository.save(fire));
+    }
+    
+    //TODO Mapper with MapStruct instead of this function
+    private void updateFireEventData(FireEventDTO fireEventDTO, FireEventEntity fireEventEntity) {
+        fireEventEntity.setReal_intensity(fireEventDTO.getRealIntensity());
+        fireEventEntity.set_real(fireEventDTO.isReal());
+        fireEventEntity.setStart_date(fireEventDTO.getStartDate());
+        fireEventEntity.setCoords(fireEventDTO.getCoords());
+    }
 }

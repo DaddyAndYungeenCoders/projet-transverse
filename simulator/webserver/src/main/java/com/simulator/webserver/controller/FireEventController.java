@@ -59,4 +59,11 @@ public class FireEventController {
                 .map(fire -> ResponseEntity.ok().body(fire))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<FireEventEntity> updateFireIntensityFromId(@PathVariable Long id, @RequestBody FireEventDTO fireEventDTO) {
+        return this.fireEventHandlerService.updateFireEvent(id, fireEventDTO)
+                .map(fire -> ResponseEntity.ok().body(fire))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }
