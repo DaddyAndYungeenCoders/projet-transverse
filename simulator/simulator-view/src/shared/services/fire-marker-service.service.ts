@@ -1,13 +1,11 @@
 import {Injectable} from '@angular/core';
 import {AbstractMarkerService} from './abstract-marker.service';
-import {faFire, IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {IconMarkerTypes} from '../types/enum/IconType';
 import {Map} from 'leaflet';
 import {FireMarkerType, MarkerParameter} from '../types/interfaces/MarkersTypes';
 import {HttpClient} from '@angular/common/http';
 import {WEBSERVER_PORT} from '../types/constants/shared-constants';
 import {FireEventDTO} from '../types/DTOs/FireEventDTO';
-import {Coords} from '../types/DTOs/Coords';
 
 @Injectable({
   providedIn: 'root',

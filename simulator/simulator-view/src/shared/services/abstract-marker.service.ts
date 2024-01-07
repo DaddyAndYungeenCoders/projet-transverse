@@ -1,17 +1,14 @@
 import { Injectable } from '@angular/core';
 import { IconMarkerTypes } from '../types/enum/IconType';
 import {faDroplet, faFire, faHome, faSmoking, IconDefinition} from '@fortawesome/free-solid-svg-icons';
-import { Coordinates } from '../types/interfaces/Coordinates';
 import L from 'leaflet';
 import {MarkerParameter, MarkersTypes} from '../types/interfaces/MarkersTypes';
 import { Map } from 'leaflet';
-import {Coords} from '../types/DTOs/Coords';
 
 @Injectable({
   providedIn: 'root',
 })
 export abstract class AbstractMarkerService<T extends MarkersTypes> {
-  private object!: T;
   protected constructor() {}
 
   getIconMarker(type: IconMarkerTypes): IconDefinition {
@@ -44,7 +41,9 @@ export abstract class AbstractMarkerService<T extends MarkersTypes> {
         }),
       })
         .addTo(map)
-        .bindPopup(JSON.stringify(this.getObjectInfo(marker.intensity)));
+        .bindPopup("<span>Intensité du feu:" + marker.intensity?.toString() + "</span><br/><button style=\"margin: 0.25rem auto auto; background-color: #870000; color: #ffffff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;\">\n" +
+          "  SUPPRIMER\n" +
+          "</button>");
     });
   }
 

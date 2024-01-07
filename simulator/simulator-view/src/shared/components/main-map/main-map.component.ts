@@ -2,11 +2,8 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { Coordinates } from '../../types/interfaces/Coordinates';
 import * as L from 'leaflet';
-import { IconMarkerTypes } from '../../types/enum/IconType';
 import { FireCreationService } from '../../services/fire-creation.service';
 import { FireMarkerService } from '../../services/fire-marker-service.service';
-import { InterventionMarkerService } from '../../services/intervention-marker-service.service';
-import { FirestationMarkerService } from '../../services/firestation-marker-service.service';
 import { Subscription } from 'rxjs';
 
 @Component({
