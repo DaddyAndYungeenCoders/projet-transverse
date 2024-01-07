@@ -1,6 +1,6 @@
 package com.simulator.webserver.controller;
 
-import com.simulator.webserver.models.CoordsEntity;
+import com.simulator.webserver.models.Coords;
 import com.simulator.webserver.models.DetectsEntity;
 import com.simulator.webserver.models.SensorEntity;
 import com.simulator.webserver.service.DetectsService;
@@ -33,7 +33,7 @@ public class SensorController {
 
     @GetMapping("/test")
     public String test(){
-        CoordsEntity coordsEntity = new CoordsEntity(0, 0);
+        Coords coordsEntity = new Coords(0, 0);
         SensorEntity sensorEntity = new SensorEntity(32L, coordsEntity);
         DetectsEntity detectsEntity = new DetectsEntity(sensorEntity, null, 10);
         return detectsService.sendDetection(url, detectsEntity);
@@ -43,7 +43,7 @@ public class SensorController {
 
     @GetMapping("/{id}/{intensity}")
     public String sensor(@PathVariable Long id, @PathVariable Long intensity){
-        CoordsEntity coordsEntity = new CoordsEntity(0, 0);
+        Coords coordsEntity = new Coords(0, 0);
         SensorEntity sensorEntity = new SensorEntity(id, coordsEntity);
         DetectsEntity detectsEntity = new DetectsEntity(sensorEntity, null, intensity);
         return detectsService.sendDetection(url,detectsEntity);

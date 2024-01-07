@@ -6,20 +6,19 @@ import java.sql.Date;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table (name = "FireEvent")
+@Table (name = "fireevent")
 public class FireEventEntity implements Serializable{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Embedded
-    private CoordsEntity coords;
+    private Coords coords;
     private int real_intensity;
     private Date start_date;
     private Date end_date;
