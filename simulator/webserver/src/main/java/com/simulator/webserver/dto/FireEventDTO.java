@@ -2,6 +2,7 @@
 package com.simulator.webserver.dto;
 
 import com.simulator.webserver.models.Coords;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.util.ObjectUtils;
 
@@ -9,8 +10,9 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 @Data
+@AllArgsConstructor
 public class FireEventDTO {
-    private int id;
+    private Long id;
     private Coords coords;
     private int realIntensity;
     private Date startDate;

@@ -3,6 +3,7 @@ package com.simulator.webserver.models;
 import java.io.Serializable;
 import java.sql.Date;
 
+import com.simulator.webserver.dto.FireEventDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,4 +24,8 @@ public class FireEventEntity implements Serializable{
     private Date start_date;
     private Date end_date;
     private boolean is_real;
+    
+    public FireEventDTO toDTO() {
+        return new FireEventDTO(this.id, this.coords, this.real_intensity, this.start_date, this.end_date, this.is_real);
+    }
 }

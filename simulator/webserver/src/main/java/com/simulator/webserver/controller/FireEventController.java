@@ -9,8 +9,11 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -47,10 +50,14 @@ public class FireEventController {
     }
 
     @GetMapping("/fetch-all")
-    public ResponseEntity<List<FireEventEntity>> getAllFires() throws BadRequestException {
-        return fireEventHandlerService.getAllFireEvents()
-                .map(fire -> ResponseEntity.ok().body(fire))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<List<FireEventDTO>> getAllFires() {
+        List<FireEventDTO> fireEventDTOList = fireEventHandlerService.getAllFireEvents()
+                .map(fireEventEntities -> fireEventEntities.stream()
+                        .map(FireEventEntity::toDTO)
+                        .collect(Collectors.toList()))
+                .orElse(Collections.emptyList());
+
+        return ResponseEntity.ok(fireEventDTOList.isEmpty() ? null : fireEventDTOList);
     }
     
     @PutMapping("/update/{id}/{intensity}")
