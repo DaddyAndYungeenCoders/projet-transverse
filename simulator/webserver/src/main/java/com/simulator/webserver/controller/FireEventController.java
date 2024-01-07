@@ -10,8 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -49,16 +51,13 @@ public class FireEventController {
 
     @GetMapping("/fetch-all")
     public ResponseEntity<List<FireEventDTO>> getAllFires() {
-        List<FireEventDTO> fireEventDTOList = new ArrayList<>();
-        Optional<List<FireEventEntity>> response = fireEventHandlerService.getAllFireEvents();
-        
-        if (response.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
+        List<FireEventDTO> fireEventDTOList = fireEventHandlerService.getAllFireEvents()
+                .map(fireEventEntities -> fireEventEntities.stream()
+                        .map(FireEventEntity::toDTO)
+                        .collect(Collectors.toList()))
+                .orElse(Collections.emptyList());
 
-        response.get().forEach(fireEventEntity -> fireEventDTOList.add(fireEventEntity.toDTO()));
-        
-        return ResponseEntity.ok(fireEventDTOList);
+        return ResponseEntity.ok(fireEventDTOList.isEmpty() ? null : fireEventDTOList);
     }
     
     @PutMapping("/update/{id}/{intensity}")
