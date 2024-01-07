@@ -24,6 +24,7 @@ export abstract class AbstractMarkerService<T extends MarkersTypes> {
     }
   };
 
+  // TODO Fire station and intervention and sensor
   abstract fetchAll(map: Map): void;
 
   createMarkers(

@@ -5,6 +5,8 @@ import * as L from 'leaflet';
 import { FireCreationService } from '../../services/fire-creation.service';
 import { FireMarkerService } from '../../services/fire-marker-service.service';
 import { Subscription } from 'rxjs';
+import {InterventionMarkerService} from '../../services/intervention-marker-service.service';
+import {FirestationMarkerService} from '../../services/firestation-marker-service.service';
 
 @Component({
   selector: 'app-main-map',
@@ -21,7 +23,9 @@ export class MainMapComponent implements OnInit, AfterViewInit {
   private defaultZoomLevel = 20;
   constructor(
     private fireCreationService: FireCreationService,
-    private fireMarkerService: FireMarkerService,
+    private fireStationMarkerService: FirestationMarkerService,
+    private interventionMarkerService: InterventionMarkerService,
+    private fireMarkerService: FireMarkerService
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +42,13 @@ export class MainMapComponent implements OnInit, AfterViewInit {
     this.mountMap(); // Creating the map
     this.map.setZoom(19); // to avoid display bug
     this.map.on('click', (e) => this.createFireEvent(e));
+    this.fetchAll();
+  }
+
+  private fetchAll() {
     this.fireMarkerService.fetchAll(this.map);
+    this.fireStationMarkerService.fetchAll(this.map);
+    this.interventionMarkerService.fetchAll(this.map);
   }
 
   private createFireEvent(e: L.LeafletMouseEvent) {
