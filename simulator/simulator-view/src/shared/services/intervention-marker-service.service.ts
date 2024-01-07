@@ -8,6 +8,7 @@ import { IconMarkerTypes } from '../types/enum/IconType';
 import { Coordinates } from '../types/interfaces/Coordinates';
 import { Map } from 'leaflet';
 import { InterventionMarkerType } from '../types/interfaces/MarkersTypes';
+import {Coords} from '../types/DTOs/Coords';
 
 type InterventionMarker = {
   name: string;
@@ -21,21 +22,14 @@ export class InterventionMarkerService extends AbstractMarkerService<Interventio
     super();
   }
 
-  getIconMarker(type: IconMarkerTypes): IconDefinition {
-    return faWaterLadder;
-  }
   getObjectInfo(): InterventionMarkerType {
     return {
       name: 'Intervention',
       color: 'Black',
     };
   }
-  override createMarkers(
-    coords: Coordinates[],
-    map: Map,
-    type: IconMarkerTypes,
-    color: string
-  ): void {
-    super.createMarkers(coords, map, type, color);
+
+  override fetchAll() {
+    console.log("FETCH ALL");
   }
 }

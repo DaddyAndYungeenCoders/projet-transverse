@@ -5,6 +5,7 @@ import { IconMarkerTypes } from '../types/enum/IconType';
 import { Coordinates } from '../types/interfaces/Coordinates';
 import { Map } from 'leaflet';
 import { FireStationMarkerType } from '../types/interfaces/MarkersTypes';
+import {Coords} from '../types/DTOs/Coords';
 
 @Injectable({
   providedIn: 'root',
@@ -14,21 +15,14 @@ export class FirestationMarkerService extends AbstractMarkerService<FireStationM
     super();
   }
 
-  getIconMarker(type: IconMarkerTypes): IconDefinition {
-    return faHome;
-  }
-  getObjectInfo(): FireStationMarkerType {
+  override getObjectInfo(): FireStationMarkerType {
     return {
       name: 'FireStation',
       color: 'Blue',
     };
   }
-  override createMarkers(
-    coords: Coordinates[],
-    map: Map,
-    type: IconMarkerTypes,
-    color: string
-  ): void {
-    super.createMarkers(coords, map, type, color);
+
+  override fetchAll() {
+    console.log("FETCH ALL");
   }
 }

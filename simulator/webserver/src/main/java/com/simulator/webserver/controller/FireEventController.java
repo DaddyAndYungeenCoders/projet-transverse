@@ -9,6 +9,7 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,10 +48,17 @@ public class FireEventController {
     }
 
     @GetMapping("/fetch-all")
-    public ResponseEntity<List<FireEventEntity>> getAllFires() throws BadRequestException {
-        return fireEventHandlerService.getAllFireEvents()
-                .map(fire -> ResponseEntity.ok().body(fire))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<List<FireEventDTO>> getAllFires() {
+        List<FireEventDTO> fireEventDTOList = new ArrayList<>();
+        Optional<List<FireEventEntity>> response = fireEventHandlerService.getAllFireEvents();
+        
+        if (response.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        response.get().forEach(fireEventEntity -> fireEventDTOList.add(fireEventEntity.toDTO()));
+        
+        return ResponseEntity.ok(fireEventDTOList);
     }
     
     @PutMapping("/update/{id}/{intensity}")

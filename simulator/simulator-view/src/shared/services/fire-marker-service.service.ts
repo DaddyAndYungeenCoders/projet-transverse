@@ -1,35 +1,44 @@
-import { Injectable } from '@angular/core';
-import { AbstractMarkerService } from './abstract-marker.service';
-import { IconDefinition, faFire } from '@fortawesome/free-solid-svg-icons';
-import { IconMarkerTypes } from '../types/enum/IconType';
-import { Map } from 'leaflet';
-import { Coordinates } from '../types/interfaces/Coordinates';
-import { FireMarkerType } from '../types/interfaces/MarkersTypes';
+import {Injectable} from '@angular/core';
+import {AbstractMarkerService} from './abstract-marker.service';
+import {faFire, IconDefinition} from '@fortawesome/free-solid-svg-icons';
+import {IconMarkerTypes} from '../types/enum/IconType';
+import {Map} from 'leaflet';
+import {FireMarkerType, MarkerParameter} from '../types/interfaces/MarkersTypes';
+import {HttpClient} from '@angular/common/http';
+import {WEBSERVER_PORT} from '../types/constants/shared-constants';
+import {FireEventDTO} from '../types/DTOs/FireEventDTO';
+import {Coords} from '../types/DTOs/Coords';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FireMarkerService extends AbstractMarkerService<FireMarkerType> {
-  constructor() {
+  private BASE_URL = `http://localhost:${WEBSERVER_PORT}/api/fire-event/fetch-all`;
+  constructor(private _http: HttpClient) {
     super();
   }
 
-  getIconMarker(type: IconMarkerTypes): IconDefinition {
-    return faFire;
+  getObjectInfo(intensity: number): number {
+    return intensity
   }
-  getObjectInfo(): FireMarkerType {
-    return {
-      name: 'Fire',
-      color: 'DeepRed',
-      size: 10,
-    };
-  }
-  override createMarkers(
-    coords: Coordinates[],
-    map: Map,
-    type: IconMarkerTypes,
-    color: string
-  ): void {
-    super.createMarkers(coords, map, type, color);
+
+  override fetchAll(map: Map) {
+    let markerParams: MarkerParameter[] = [];
+
+    this._http.get<FireEventDTO[]>(this.BASE_URL).subscribe(
+      list => {
+        list.forEach(fire => {
+          console.log(fire);
+          let iconMarkerType: IconMarkerTypes = fire.real ? IconMarkerTypes.FIRE : IconMarkerTypes.FAKEFIRE;
+          markerParams.push({
+            coords: fire.coords,
+            type: iconMarkerType,
+            color: 'black',
+            intensity: fire.realIntensity
+          })
+        });
+        super.createMarkers(markerParams, map);
+      }
+    )
   }
 }
