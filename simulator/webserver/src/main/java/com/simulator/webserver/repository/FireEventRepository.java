@@ -13,5 +13,5 @@ public interface FireEventRepository extends JpaRepository<FireEventEntity, Long
     Integer countBy(); // Méthode pour lire depuis la base de données Simulateur
 
     @Override
-    Optional<FireEventEntity> findById(Long anId);
+    Optional<FireEventEntity> findById(Long id);
 }
