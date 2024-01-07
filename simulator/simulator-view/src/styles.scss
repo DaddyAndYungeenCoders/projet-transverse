@@ -2,7 +2,9 @@
 @import "shared/styles/main-style-system";
 
 #map {
-  height: 100vh;
+  height: 100vh ;
+  width: 100vw;
+
 }
 
 body {
@@ -18,3 +20,58 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background-color: transparent;
   border: none;
 }
+
+.creation{
+  html {
+    cursor: crosshair;
+  }
+  .map-contour{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: #870000;
+    transition: all 0.3s ease-in-out;
+  }
+  #map {
+    height: calc(100vh - 10px);
+    width: calc(100vw - 9px);
+    border-radius: 5px;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    cursor: crosshair;
+
+  }
+}
+
+.creation-toaster {
+  position: fixed; 
+  bottom: 0; 
+  left: 50%; 
+  
+  transform: translate(-50%, -50%); /* Adjust to perfectly center */
+  height: 2.5rem;
+  border-radius: 5px;
+  padding: 0 1rem;
+  z-index: 5000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #870000;
+  animation: popUp 0.5s ease-in-out;
+  p {
+    color: white;
+  }
+}
+@keyframes popUp {
+  from {
+    bottom: -100px; /* Start from below the bottom edge */
+    opacity: 0; /* Start from fully transparent */
+  }
+  to {
+    bottom: 0; /* End at the center of the screen */
+    opacity: 1; /* End at fully opaque */
+  }
+}
+

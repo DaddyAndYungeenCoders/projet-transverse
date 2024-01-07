@@ -59,7 +59,7 @@ CREATE TABLE Team (
 CREATE TABLE intervention (
     id_fire_event INT,
     id_team INT,
-    duration DATE,
+    duration INT,
     PRIMARY KEY (id_fire_event, id_team),
     FOREIGN KEY (id_fire_event) REFERENCES FireEvent(id),
     FOREIGN KEY (id_team) REFERENCES Team(id)
