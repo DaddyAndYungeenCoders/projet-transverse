@@ -52,7 +52,8 @@ MAX_SUB_RETRY = 30
 QOS = 1
 TOPICS_TO_SUBSCRIBE = [
     (topics.get("simulator.auto-fire-event"), QOS),
-    (topics.get("simulator.new-sensor-value"), QOS),
-    (topics.get("simulator-view.sensor-changed"), QOS)
+    (topics.get("simulator.new-sensor-value"), QOS)
 ]
+FIRE_EVENT_VIEW_TOPIC = topics.get("simulator-view.fire-event")
+SENSOR_CHANGE_VIEW_TOPIC = topics.get("simulator-view.sensor-changed")
 # -------------------------------------- #
