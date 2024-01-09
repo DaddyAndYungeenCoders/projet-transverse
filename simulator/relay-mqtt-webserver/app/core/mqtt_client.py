@@ -1,6 +1,9 @@
 import paho.mqtt.client as mqtt
+from dotenv import load_dotenv
 
 from app.service.mqtt_service import *
+
+load_dotenv()
 
 
 class MqttClient:
@@ -33,10 +36,12 @@ class MqttClient:
         try:
             self.client.connect(self.broker_ip, self.broker_port)
         except ConnectionError as e:
-            logger.error("It appears that there was an error while connecting to the Broker : %s", str(e))
+            logger.error(
+                "It appears that there was an error while connecting to the Broker, maybe the broker is down ? => %s",
+                str(e))
         self.client.loop_start()
 
     def publish_message(self, topic, message):
         # Publish the message
         result = self.client.publish(topic, message)
-        print(f"publishing message to {topic} : {message} (response code: {result})")
+        logger.info(f"publishing message to {topic} : {message} (response code: {result})")

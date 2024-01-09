@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException
-from app.models.FireEvent import FireEvent, SensorValue
+
+from app.core.config_vars import MQTT_CLIENT_NAME, FIRE_EVENT_VIEW_TOPIC, SENSOR_CHANGE_VIEW_TOPIC
 from app.core.mqtt_client import MqttClient
-from app.core.config import MQTT_CLIENT_NAME, topics, FIRE_EVENT_VIEW_TOPIC, SENSOR_CHANGE_VIEW_TOPIC
-from app.service.mqtt_service import is_topic_valid
+from app.models.FireEvent import FireEvent, SensorValue
 
 router = APIRouter()
 mqtt_client = MqttClient(MQTT_CLIENT_NAME)
@@ -32,4 +32,3 @@ async def sensor_change(payload: SensorValue):
             raise HTTPException(status_code=400, detail=f"Request body must contain a SensorChange object")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error publishing to MQTT Broker : {str(e)}")
-
