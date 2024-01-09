@@ -1,5 +1,6 @@
 import paho.mqtt.client as mqtt
 
+from app.core.config_utils import logger
 from app.service.mqtt_service import *
 
 

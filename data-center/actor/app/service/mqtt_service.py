@@ -1,6 +1,7 @@
 import time
 
 from app.controller.controller import publish_validation_message
+from app.core.config_utils import logger
 from app.core.config_vars import *
 from app.service.fire_service import *
 

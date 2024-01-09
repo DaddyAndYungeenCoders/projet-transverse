@@ -13,5 +13,5 @@ def is_fire_real(fire_event):
         else:
             return False
     else:
-        # if there is an error, we cannot know so we assume the fire is real
+        # if there is an error, we cannot know, so we assume the fire is real
         return True
