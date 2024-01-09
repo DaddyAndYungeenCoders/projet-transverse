@@ -1,5 +1,6 @@
 -- Création des tables
 
+
 CREATE TABLE Users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50),
@@ -18,8 +19,8 @@ CREATE TABLE FireEvent (
     latitude FLOAT,
     longitude FLOAT,
     real_intensity INT,
-    start_date DATE,
-    end_date DATE,
+    start_date TIMESTAMP,
+    end_date TIMESTAMP,
     is_real BOOLEAN
 );
 
@@ -35,7 +36,7 @@ CREATE TABLE detects (
 CREATE TABLE Historique (
     id_user INT,
     id_fire_event INT,
-    date_creation DATE,
+    date_creation TIMESTAMP,
     PRIMARY KEY (id_user, id_fire_event),
     FOREIGN KEY (id_user) REFERENCES Users(id),
     FOREIGN KEY (id_fire_event) REFERENCES FireEvent(id)
@@ -59,7 +60,7 @@ CREATE TABLE Team (
 CREATE TABLE intervention (
     id_fire_event INT,
     id_team INT,
-    duration INT,
+    duration INTERVAL,
     PRIMARY KEY (id_fire_event, id_team),
     FOREIGN KEY (id_fire_event) REFERENCES FireEvent(id),
     FOREIGN KEY (id_team) REFERENCES Team(id)
