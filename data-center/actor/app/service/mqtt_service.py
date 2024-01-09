@@ -1,7 +1,8 @@
 import time
-from app.core.config import *
-from app.service.db_service import *
+
 from app.controller.controller import publish_validation_message
+from app.core.config_vars import *
+from app.service.fire_service import *
 
 
 def is_topic_valid(topic_param: str) -> bool:
@@ -11,14 +12,16 @@ def is_topic_valid(topic_param: str) -> bool:
 
 
 def on_message(client, userdata, message):
-    print(f"Message received from {message.topic} : {message.payload.decode('utf-8')}")
+    logger.info(f"Message received from {message.topic} : {message.payload.decode('utf-8')}")
     data = message.payload.decode('utf-8')
 
     if message.topic == topics.get("manager.validation_demand"):
         # check if fire is real or not in simulator DB
-        fire_reality = is_fire_real()
+        fire_reality = is_fire_real(data)
         # pub if fire is real or not
-        publish_validation_message(fire_reality)
+        publish_validation_message(data, fire_reality)
+    else:
+        logger.error(f"Not a valid topic : {message.topic}")
 
 
 def on_connect(client, userdata, flags, rc):
@@ -33,7 +36,7 @@ def on_connect(client, userdata, flags, rc):
                 logger.info("Successfully subscribed to topics")
                 break
             else:
-                logger.info("It seems that there was an error (error code: %s), reattempting... %d tries left",
+                logger.warn("It seems that there was an error (error code: %s), reattempting... %d tries left",
                             str(res),
                             MAX_SUB_RETRY - current_tries)
             time.sleep(1)
@@ -58,7 +61,7 @@ def on_disconnect(client, userdata, rc):
         reconnect_delay *= RECONNECT_RATE
         reconnect_delay = min(reconnect_delay, MAX_RECONNECT_DELAY)
         reconnect_count += 1
-    logger.info("Reconnect failed after %s attempts. Exiting...", reconnect_count)
+    logger.error("Reconnect failed after %s attempts. Exiting...", reconnect_count)
 
 
 def on_publish(client, userdata, mid):

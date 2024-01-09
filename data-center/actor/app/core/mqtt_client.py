@@ -39,4 +39,4 @@ class MqttClient:
     def publish_message(self, topic, message):
         # Publish the message
         result = self.client.publish(topic, message)
-        print(f"publishing message to {topic} : {message} (response code: {result})")
+        logger.info(f"publishing message to {topic} : {message} (response code: {result})")
