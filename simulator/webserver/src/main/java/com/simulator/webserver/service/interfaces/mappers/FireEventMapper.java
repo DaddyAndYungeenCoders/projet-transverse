@@ -12,12 +12,12 @@ public interface FireEventMapper {
     @Mapping(source = "real_intensity", target = "realIntensity")
     @Mapping(source = "start_date", target = "startDate")
     @Mapping(source = "end_date", target = "endDate")
-    @Mapping(source = "is_real", target = "isReal")
+    @Mapping(source = "_real", target = "real")
     FireEventDTO toDTO(FireEventEntity fireEventEntity);
 
     @Mapping(source = "realIntensity", target = "real_intensity")
     @Mapping(source = "startDate", target = "start_date")
     @Mapping(source = "endDate", target = "end_date")
-    @Mapping(source = "isReal", target = "is_real")
+    @Mapping(source = "real", target = "_real")
     FireEventEntity toEntity(FireEventDTO fireEventDTO);
 }

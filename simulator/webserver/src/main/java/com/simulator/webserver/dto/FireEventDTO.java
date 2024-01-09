@@ -2,8 +2,7 @@
 package com.simulator.webserver.dto;
 
 import com.simulator.webserver.models.Coords;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 import org.springframework.util.ObjectUtils;
 
 import java.io.Serializable;
@@ -12,6 +11,9 @@ import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class FireEventDTO implements Serializable {
     private Long id;
     private Coords coords;
