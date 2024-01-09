@@ -7,7 +7,7 @@ from app.core.config_utils import load_config
 load_dotenv()
 
 # -------- API CONFIGURATION -------- #
-API_URL = os.getenv("API_URL") + ":" + os.getenv("API_PORT")
+API_URL = os.getenv("API_URL") + ":" + os.getenv("API_PORT") + "/api"
 # ----------------------------------- #
 
 # -------- MQTT CONFIGURATION -------- #
