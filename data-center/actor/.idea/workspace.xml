@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5dc87a6f-cac6-458a-abc9-b2f16bb8cc93" name="Changes" comment="Revert &quot;feat: endpoints and data structure missing&quot;&#10;&#10;This reverts commit 4e9bad7f">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/service/mqtt_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/service/mqtt_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,9 +23,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2agvM1Mrqfh3wGUuGqxSyWGZMvZ" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -36,7 +36,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "CSC-60-ACTOR-Start-MQTT-communication",
-    "last_opened_file_path": "/home/damien/Documents/Ecole/s7/projet-transverse/data-center/actor/app/core",
+    "last_opened_file_path": "/home/damien/Documents/Ecole/s7/projet-transverse/data-center/actor",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -68,7 +68,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1704752984508</updated>
-      <workItem from="1704752985569" duration="6611000" />
+      <workItem from="1704752985569" duration="6940000" />
+      <workItem from="1704835686361" duration="57000" />
     </task>
     <servers />
   </component>
