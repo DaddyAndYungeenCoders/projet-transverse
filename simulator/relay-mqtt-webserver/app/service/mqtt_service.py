@@ -29,7 +29,7 @@ def on_message(client, userdata, message):
         logger.info("Received new sensor value from Simulator")
         # post new values of sensor to webserver, that was given by simulation from simulator
         update_sensor_endpoint = format(NEW_SENSOR_VALUES, data["id"])
-        res = requests.post(API_URL + update_sensor_endpoint, data)
+        res = requests.put(API_URL + update_sensor_endpoint, data)
 
 
 def on_connect(client, userdata, flags, rc):

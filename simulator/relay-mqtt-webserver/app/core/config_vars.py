@@ -9,7 +9,7 @@ load_dotenv()
 # -------- API CONFIGURATION -------- #
 API_URL = os.getenv("API_URL") + ":" + os.getenv("API_PORT")
 NEW_AUTO_FIRE = "api/fire-event/create"
-NEW_SENSOR_VALUES = "api/sensor/%s"
+NEW_SENSOR_VALUES = "api/sensor/update/%s"
 # ----------------------------------- #
 
 # -------- MQTT CONFIGURATION -------- #
