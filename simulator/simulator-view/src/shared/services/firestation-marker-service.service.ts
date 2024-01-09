@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AbstractMarkerService } from './abstract-marker.service';
-import { IconDefinition, faHome } from '@fortawesome/free-solid-svg-icons';
-import { IconMarkerTypes } from '../types/enum/IconType';
-import { Coordinates } from '../types/interfaces/Coordinates';
 import { Map } from 'leaflet';
 import { FireStationMarkerType } from '../types/interfaces/MarkersTypes';
 
@@ -14,21 +11,14 @@ export class FirestationMarkerService extends AbstractMarkerService<FireStationM
     super();
   }
 
-  getIconMarker(type: IconMarkerTypes): IconDefinition {
-    return faHome;
-  }
-  getObjectInfo(): FireStationMarkerType {
+  override getObjectInfo(): FireStationMarkerType {
     return {
       name: 'FireStation',
       color: 'Blue',
     };
   }
-  override createMarkers(
-    coords: Coordinates[],
-    map: Map,
-    type: IconMarkerTypes,
-    color: string
-  ): void {
-    super.createMarkers(coords, map, type, color);
+
+  override fetchAll(map: Map) {
+    console.log("FETCH ALL");
   }
 }
