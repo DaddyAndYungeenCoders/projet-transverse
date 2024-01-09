@@ -23,17 +23,17 @@ public class SensorController {
     private final SensorHandlerService sensorHandlerService;
 
     @PostMapping("/create")
-    public ResponseEntity<SensorEntity> createSensorFromView(@RequestBody SensorDTO fireStation) {
-        System.out.println("[REST] - Request to create a fire-station " + fireStation);
-        return this.sensorHandlerService.createSensor(fireStation)
+    public ResponseEntity<SensorEntity> createSensorFromView(@RequestBody SensorDTO sensor) {
+        System.out.println("[REST] - Request to create a fire-station " + sensor);
+        return this.sensorHandlerService.createSensor(sensor)
                 .map(fire -> ResponseEntity.ok().body(fire))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/create/generator")
-    public ResponseEntity<SensorEntity> createSensorFromGenerator(@RequestBody SensorDTO fireStation) {
-        System.out.println("[REST] - Request to create a fireStation " + fireStation);
-        return this.sensorHandlerService.createSensor(fireStation)
+    public ResponseEntity<SensorEntity> createSensorFromGenerator(@RequestBody SensorDTO sensor) {
+        System.out.println("[REST] - Request to create a sensor " + sensor);
+        return this.sensorHandlerService.createSensor(sensor)
                 .map(fire -> ResponseEntity.ok().body(fire))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
