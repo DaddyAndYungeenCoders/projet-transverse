@@ -1,4 +1,4 @@
-package com.simulator.webserver.service;
+package com.simulator.webserver.service.interfaces;
 
 
 import com.simulator.webserver.dto.FireEventDTO;
@@ -14,4 +14,5 @@ public interface FireEventHandlerService {
     Optional<List<FireEventEntity>> getAllFireEvents();
     Optional<FireEventEntity> updateFireEvent(Long id, int intensity);
     Optional<FireEventEntity> updateFireEvent(Long id, FireEventDTO fireEventDTO);
+    Optional<Boolean> isFireReal(Long id);
 }

@@ -6,12 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.util.ObjectUtils;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
-public class FireEventDTO {
+public class FireEventDTO implements Serializable {
     private Long id;
     private Coords coords;
     private int realIntensity;

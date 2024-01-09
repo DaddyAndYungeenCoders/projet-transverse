@@ -3,7 +3,7 @@ package com.simulator.webserver.service.implementations;
 import com.simulator.webserver.dto.FireEventDTO;
 import com.simulator.webserver.models.FireEventEntity;
 import com.simulator.webserver.repository.FireEventRepository;
-import com.simulator.webserver.service.FireEventHandlerService;
+import com.simulator.webserver.service.interfaces.FireEventHandlerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,7 +58,13 @@ public class FireEventHandlerServiceImpl implements FireEventHandlerService {
         updateFireEventData(fireEventDTO, fire);
         return Optional.of(this.fireEventRepository.save(fire));
     }
-    
+
+    @Override
+    public Optional<Boolean> isFireReal(Long id) {
+        Optional<FireEventEntity> fireEventEntity = this.fireEventRepository.findById(id);
+        return fireEventEntity.map(FireEventEntity::is_real);
+    }
+
     //TODO Mapper with MapStruct instead of this function
     private void updateFireEventData(FireEventDTO fireEventDTO, FireEventEntity fireEventEntity) {
         fireEventEntity.setReal_intensity(fireEventDTO.getRealIntensity());
