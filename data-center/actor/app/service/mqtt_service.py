@@ -23,7 +23,11 @@ def on_message(client, userdata, message):
         # check if fire is real or not in simulator DB
         fire_reality = is_fire_real(data)
         # pub if fire is real or not
-        publish_validation_message(data, fire_reality)
+        if isinstance(fire_reality, bool):
+            publish_validation_message(data, fire_reality)
+        else:
+            logger.error(f"Status of fire could not be determined : fire_reality : {fire_reality}")
+            # maybe pub a message and let the manager handle it ?
     else:
         logger.error(f"Not a valid topic : {message.topic}")
 
