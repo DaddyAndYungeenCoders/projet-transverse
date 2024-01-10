@@ -1,4 +1,5 @@
 import logging
+from logging.handlers import TimedRotatingFileHandler
 
 import yaml
 from pydantic_settings import BaseSettings
@@ -15,8 +16,16 @@ settings = Settings()
 # ---------------------------------------- #
 # -------- LOGGER CONFIGURATION -------- #
 logger = logging.getLogger()
-logging.basicConfig(format='[%(levelname)s] %(asctime)s : %(message)s', datefmt='%d/%m/%Y %I:%M:%S %p')
 logger.setLevel(logging.INFO)
+formatter = logging.Formatter(fmt='[%(levelname)s] %(asctime)s : %(message)s', datefmt='%d/%m/%Y %I:%M:%S %p')
+
+file_handler = TimedRotatingFileHandler('logs/actor.log', when='D', interval=1, backupCount=10)
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
+
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(formatter)
+logger.addHandler(console_handler)
 
 
 # -------------------------------------- #
