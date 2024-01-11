@@ -46,11 +46,9 @@ def compute_uart_to_json(data):
 def extract_data_from_serial(data):
     try:
         # Exemple de chaîne de données
-        # id:0;int:11
+        # id:0,in:11
         parts = data.split(',')
 
-        # x = float(parts[0].split(':')[1])
-        # y = float(parts[1].split(':')[1])
         fire_event_id = int(parts[0].split(':')[1])
         intensity = float(parts[1].split(':')[1])
 

@@ -7,6 +7,8 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from dotenv import load_dotenv
 from core.config_utils import logger
 from core.config_vars import *
+from core.config_vars import MAX_SUB_RETRY, TOPICS_TO_SUBSCRIBE, FIRST_RECONNECT_DELAY, MAX_RECONNECT_COUNT, \
+    RECONNECT_RATE, MAX_RECONNECT_DELAY
 
 load_dotenv()
 
