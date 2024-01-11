@@ -1,15 +1,12 @@
 # This python program is designed to receive data from uBit through UART.
 # It sends these data through MQTT to the Mosquitto Broker
 # And it posts through HTTP to the WebServer in the Data Center
-
+import os
 import time
 import serial
-import os
-import sys
 import requests
 from dotenv import load_dotenv
 from datetime import datetime
-import paho.mqtt.client as mqtt
 import json
 
 from shared.project_utils import load_config, init_mqtt_broker
@@ -22,10 +19,10 @@ ser = serial.Serial()
 client_name = "passerelle-rf2"
 topics_path = "shared/config/topics.yaml"
 topic_rf2_fire_event = "rf2.fire_event"
+url = os.getenv("API_URL")
 
 
 def init_uart():
-    # ser = serial.Serial(SERIALPORT, BAUDRATE)
     ser.port = SERIALPORT
     ser.baudrate = BAUDRATE
     ser.bytesize = serial.EIGHTBITS  # number of bits per bytes
@@ -46,35 +43,26 @@ def init_uart():
         exit()
 
 
-# def send_uart_message(msg):
-#     try:
-#         ser.write(msg.encode('utf-8'))
-#         print("Message <" + msg + "> sent to micro-controller.")
-#     except serial.SerialException as e:
-#         print("Error while sending message to micro-controller.")
-#         print(e)
-
-
 def extract_data_from_serial(data):
     try:
         # Exemple de chaîne de données
-        # x:2;y:1;int:6
-        parts = data.split(';')
+        # id :2,intensity :1
+        parts = data.split(',')
+        print("parts" + str(parts))
 
-        x = float(parts[0].split(':')[1])
-        y = float(parts[1].split(':')[1])
-        intensity = float(parts[2].split(':')[1])
+        id = int(parts[0].split(':')[1])
+        intensity = float(parts[1].split(':')[1])
 
-        return x, y, intensity
-    # If there is an error while extracting data, we return -1, -1, -1 to keep a trace
-    except (ValueError, IndexError) as e:
+        return {"id": id, "intensity": intensity}
+    # If there is an error while extracting data, we return -1, -1  to keep a trace
+    except (ValueError, KeyError, IndexError) as e:
         print(f"Erreur lors de l'extraction des données: {e}")
-        return -1, -1, -1
+        return {"id": -1, "intensity": -1}
 
 
 def main():
     # Init UART connection to microbit
-    # init_uart()
+    init_uart()
 
     print('Press Ctrl-C to quit.')
 
@@ -92,39 +80,22 @@ def main():
                 while delimiter in buffer:
                     # Extract data from buffer until delimiter
                     message, buffer = buffer.split(delimiter, 1)
-                    message_str = message.decode('utf-8')
+                    message_str = message.decode()
 
                     print("(SERIAL) received: " + message_str)
 
-                    #     temp, lux = extractDataFromSerial(message_str)
-                    #     # Insert data in database
-                    #     if db.insert_data(temp, lux, datetime.now()):
-                    #         print("Data inserted in database :", temp, lux, datetime.now())
-                    #     else:
-                    #         print("Error while inserting data in database")
+                    # send data to MQTT topic
+                    fire_event_json = extract_data_from_serial(message_str)
+                    print(f"id: {fire_event_json['id']}, intensity: {fire_event_json['intensity']}")
+                    client.publish(topics.get(topic_rf2_fire_event), json.dumps(fire_event_json))
+                    print(f"Publish to {topics.get(topic_rf2_fire_event)} : {json.dumps(fire_event_json)}")
 
-            # send data to MQTT topic
-            while a == 0:
-                to_send = {
-                    "x": "10",
-                    "y": "5",
-                    "intensity": "2",
-                    "timestamp": datetime.now().isoformat()
-                }
-                client.publish(topics.get(topic_rf2_fire_event), "coucou")
-                time.sleep(3)
-                client.publish(topic_rf2_fire_event, json.dumps(to_send))
-                a = 1
-
-            # post data to webserver
-            # url = "http://localhost:3000"
-            # myobj = {'somekey': 'somevalue'}
-            #
-            # x = requests.post(url, json = myobj)
+                    # post data to webserver
+                    # endpoint = url + "/newFireEvent"
+                    # x = requests.post(endpoint, json=fire_event_json)
 
     except (KeyboardInterrupt, SystemExit):
-        # db.close()
-        # ser.close()
+        ser.close()
         exit()
 
 
@@ -133,4 +104,4 @@ if __name__ == "__main__":
     topics = load_config(topics_path, "topics")
     client = init_mqtt_broker(client_name)
 
-    # main()
+    main()

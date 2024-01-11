@@ -9,7 +9,7 @@
 
 #include "project.h"
 
-#define MAX_TEXT_LENGTH 32
+#define MAX_TEXT_LENGTH 128
 #define MAX_RETRY 5
 #define TIMEOUT 5000
 
@@ -42,7 +42,7 @@ bool check_cdjms(ManagedString s){
 void send_RF(ManagedString s){
     ManagedString tosend = CODE + s;
     uBit.radio.datagram.send(tosend);
-    // serial.send("sent\n\r");
+    // serial.send("sent : " + s + "\n\r");
 }
 
 void send_encrypt_RF(ManagedString s){
@@ -68,24 +68,34 @@ ManagedString decode_RF(ManagedString s){
    return s.substring(CODE.length(), s.length());
 }
 
+void onTimeout()
+{
+    timer.detach();    
+    etape = 0;
+}
+
 void check_qos(ManagedString s) {
     // si on recoit "nok" => on recommence au début du protocole
     if (s == "nok") {
         etape = 0;
+        serial.clearTxBuffer();
         // serial.send("--ERROR--" + s + "--ERROR--\n\r");
     }
     
-    if (etape == 0) {
+    else if (etape == 0) {
         // on enregistre le message reçu, on envoie un ACK et on passe à l'étape suivante
         received_message = s;
         send_encrypt_RF("ACK" + received_message);
+        // start timer to wait for ACKBACK
+        timer.attach_us(onTimeout, TIMEOUT * 1000);
         etape = 1;
     } else if (etape == 1) {
         // on vérifie que le message reçu est bien le même que celui envoyé, précédé d'un ACKBACK
-        if (s == "ACKBACK" + received_message) {
+        if (s == "ACKB" + received_message) {
             send_encrypt_RF("ACKDONE");
             // serial.send("--DONE--" + received_message + "--DONE--\n\r");
-            serial.send(received_message + "|");
+            // serial.send("------------\n\r");
+            serial.send(received_message);
         } else {
             send_encrypt_RF("nok");
         }
@@ -99,49 +109,43 @@ void check_qos(ManagedString s) {
 
 //Quand on reçoit des données en RF cryptées => on les decrypte
 void onData(MicroBitEvent) {
-    // PacketBuffer buf(BUF_SIZE);
-    ManagedString buf = uBit.radio.datagram.recv();
     // serial.send("Received data : ");
+    ManagedString buf = uBit.radio.datagram.recv();
+    // serial.send(buf + "\n\r");
     if (check_cdjms(buf)) {
         ManagedString test = decode_RF(buf);
         ManagedString decrypted = decrypt_RF(decode_RF(buf));
-        serial.send(decrypted + "\n\r");
-        // check_qos(decrypted);
-        serial.send("--------------\n\r");
+        // serial.send("Decrypted : " + decrypted + "\n\r");
+        check_qos(decrypted);
+        serial.clearTxBuffer();
     }
 }
 
-void onTimeout(){
-    // traitement
-    // serial.send("Timeout\n\r");
-    timer.detach();
-}
 
 int main() {
     // Initialise the micro:bit runtime.
     uBit.init();
     uBit.serial.baud(115200);
-    
-    uBit.radio.setGroup(57);
+    // uBit.serial.setTxBufferSize(sizeof(char[MAX_TEXT_LENGTH]));
     uBit.messageBus.listen(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, onData);
+    
+    uBit.radio.setGroup(169);
     uBit.radio.enable();
     
-    // timer.attach_us(onTimeout, TIMEOUT * 1000);
-    // serial.send("Start");
-
 
     while (1) {
         if (uBit.buttonA.isPressed()) {
             // for testing purpose
-            // serial.send("btnA");
-            send_encrypt_RF("Hello world!");
+            serial.send("id:0,intensite:11|");
+            uBit.sleep(200);
         }
         if (uBit.buttonB.isPressed()) {
             // for testing purpose
             // serial.send("btnB");
-            send_encrypt_RF("Hello from000000000000000");
+            send_encrypt_RF("CDJMS:Hello");
+            uBit.sleep(200);
         }
-        uBit.sleep(1000);
+        uBit.sleep(200);
     }
 
     release_fiber();
