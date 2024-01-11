@@ -5,6 +5,7 @@ from http import client
 from dotenv import load_dotenv
 from influxdb_client import InfluxDBClient, Point, WritePrecision, WriteOptions
 from influxdb_client.client.write_api import SYNCHRONOUS
+from core.config_utils import logger
 
 load_dotenv()
 
@@ -23,11 +24,11 @@ class DatabaseManager:
             self.write_api.write(self.bucket, self.org, json_data)
 
         except Exception as e:
-            print("Error writing to InfluxDB : ", e)
+            logger.error("Error writing to InfluxDB : ", e)
 
     def print_info(self):
-        print(self.bucket)
-        print(self.org)
+        logger.info(self.bucket)
+        logger.info(self.org)
 
     def get_data(self, measurement):
         query = 'from(bucket:"{}") |> range(start: -1h)' \
