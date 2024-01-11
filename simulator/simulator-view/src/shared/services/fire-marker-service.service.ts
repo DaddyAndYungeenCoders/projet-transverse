@@ -16,10 +16,6 @@ export class FireMarkerService extends AbstractMarkerService<FireMarkerType> {
     super();
   }
 
-  getObjectInfo(intensity: number): number {
-    return intensity
-  }
-
   override fetchAll(map: Map) {
     let markerParams: MarkerParameter[] = [];
 
