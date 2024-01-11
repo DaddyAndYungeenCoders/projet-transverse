@@ -4,6 +4,10 @@ services:
     image: eclipse-mosquitto:latest
     container_name: mqtt
     restart: always
+<<<<<<< Updated upstream
+=======
+    #    network_mode: "host"
+>>>>>>> Stashed changes
     user: 1000:1000
     volumes:
       - ./mosquitto/config:/mosquitto/config:rw
@@ -35,10 +39,21 @@ services:
     container_name: grafana
     restart: unless-stopped
     user: "0"
+<<<<<<< Updated upstream
+=======
+    # environment:
+    # - GF_DATABASE_TYPE=mysql
+    # - GF_DATABASE_HOST=db
+    # - GF_DATABASE_PORT=3306
+    # - GF_DATABASE_NAME=microbit
+    # - GF_DATABASE_USER=root
+    # - GF_DATABASE_PASSWORD=admin
+>>>>>>> Stashed changes
     ports:
       - '3000:3000'
     volumes:
       - ./grafana/data:/var/lib/grafana
+<<<<<<< Updated upstream
 
   # actor:
   #   image: daddyornot/actor:latest
@@ -56,9 +71,19 @@ services:
   #     - '8002:8000'
   #   volumes:
   #     - ./relay-mqtt-db/logs:/logs
+=======
+      # - ./grafana/conf:/etc/grafana
+    # networks:
+    #   iothub:
+    #     ipv4_address: "192.168.80.3"
+>>>>>>> Stashed changes
 volumes:
   mosquitto:
   influxdb:
+<<<<<<< Updated upstream
   grafana:
   # actor:
   # relay-mqtt-db:
+=======
+  grafana:
+>>>>>>> Stashed changes

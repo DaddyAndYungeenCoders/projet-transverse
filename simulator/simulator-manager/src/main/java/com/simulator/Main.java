@@ -1,9 +1,6 @@
 package com.simulator;
 
 import com.simulator.mqtt.MQTTClient;
-import com.simulator.repository.FireEventRepository;
-import com.simulator.repository.FireStationRepository;
-import com.simulator.repository.SensorRepository;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 
@@ -25,25 +22,30 @@ public class Main {
 //        System.out.println("test ulitme");
 //        System.out.println(fireStationRepository.getFireStationById(1L).getTeams().get(0).getIntervention().get(0).getFire_event().getDetecs().getSensorEntity().getCoordsEntity().getLatitude());
 
-        System.out.println("Emergency Manager Started !");
-        String clientName = "emergency_manager";
+        System.out.println("Emergency Simulator Started!");
+
+        String clientName = "emergency_simulator";
         String brokerUrl = "127.0.0.1:1883";
-        String topics_yaml = "/config/topics.yaml";
+        String topics_yaml = "config/mqtt_topics.yaml";
         try {
             MQTTClient mqttClient = MQTTClient.getClient(brokerUrl, clientName);
-            mqttClient.connect();
+            mqttClient.connectToBroker();
 
             Map<String, String> topics = mqttClient.loadTopicsFromConfig(topics_yaml);
 
-            mqttClient.publish(topics.get("manager.intervention"), "intervention lancée !");
+            mqttClient.publishToBroker(topics.get("manager.intervention"), "Intervention launched!");
 
-            mqttClient.subscribeToTopicsFromConfig("/config/mqtt_topics.yaml", (topic, message) -> {
+            mqttClient.subscribeToTopicsFromConfig(topics_yaml, (topic, message) -> {
                 System.out.println("Received message on topic " + topic + ": " + new String(message.getPayload()));
             });
+            mqttClient.publishToBroker(topics.get("manager.intervention"), "Intervention launched!");
+            while (mqttClient.isConnected()){
 
-            mqttClient.disconnect();
+            }
 
+            mqttClient.disconnectFromBroker();
         } catch (MqttException e) {
+            // Gérer l'exception de manière appropriée (journalisation, notification, etc.)
             e.printStackTrace();
         }
     }

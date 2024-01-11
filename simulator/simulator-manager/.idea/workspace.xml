@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b5261d2-5c17-495a-bad8-6c9555e0d2e4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/mqtt/MQTTClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/mqtt/TopicsConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d082f205-8c56-4f89-a387-4e30a51de2f3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d082f205-8c56-4f89-a387-4e30a51de2f3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/config/mqtt_topics.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../data-center/docker/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../../data-center/docker/docker-compose.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/mqtt/MQTTClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/mqtt/MQTTClient.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +53,7 @@
     "extract.method.default.visibility": "private",
     "git-widget-placeholder": "CSC-55-SIMULATOR-JAVA-MQTT",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "G:/Projet/Projet-transverse/simulator/simulator-manager/src/main/java/com/simulator",
+    "last_opened_file_path": "G:/Projet/Projet-transverse/simulator/simulator-manager",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -70,8 +69,16 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\Projet\Projet-transverse\simulator\simulator-manager" />
       <recent name="G:\Projet\Projet-transverse\simulator\simulator-manager\src\main\java\com\simulator" />
       <recent name="G:\Projet\Projet-transverse\simulator\simulator-manager\src\main\java\com\simulator\models" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="G:\Projet\Projet-transverse\simulator\simulator-manager\src\main\resources\config" />
+      <recent name="G:\Projet\Projet-transverse\simulator\simulator-manager\src\main\resources" />
+      <recent name="G:\Projet\Projet-transverse\simulator\simulator-manager" />
+      <recent name="G:\Projet\Projet-transverse\simulator\simulator-manager\src\main\java\com\simulator\mqtt\config" />
+      <recent name="G:\Projet\Projet-transverse\simulator\simulator-manager\src\main\java\com\simulator\mqtt" />
     </key>
   </component>
   <component name="RunManager">
