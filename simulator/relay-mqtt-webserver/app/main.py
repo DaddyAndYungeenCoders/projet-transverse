@@ -2,8 +2,6 @@ from fastapi import FastAPI
 
 from app.controller.controller import router
 from app.core.config_utils import settings, logger
-from app.core.config_vars import MQTT_CLIENT_NAME
-from app.core.mqtt_client import MqttClient
 
 app = FastAPI(
     title=settings.app_name,
@@ -14,6 +12,7 @@ app.include_router(router)
 
 def on_startup():
     logger.info(f"Application <{settings.app_name}> started ! :)")
+    logger.info(f"Running on http://{settings.host}:{settings.port}")
 
 
 def on_shutdown():

@@ -4,13 +4,12 @@ services:
     image: eclipse-mosquitto:latest
     container_name: mqtt
     restart: always
-#    network_mode: "host"
-      #user: 1000:1000
+    user: 1000:1000
     volumes:
-      - ./mosquitto/config:/mosquitto/config
-      - ./mosquitto/utils:/mosquitto/utils
-      - ./mosquitto/data:/mosquitto/data
-      - ./mosquitto/log:/mosquitto/log
+      - ./mosquitto/config:/mosquitto/config:rw
+      - ./mosquitto/utils:/mosquitto/utils:rw
+      - ./mosquitto/data:/mosquitto/data:rw
+      - ./mosquitto/log:/mosquitto/log:rw
     ports:
       - "1883:1883"
       - "9001:9001"
@@ -21,19 +20,45 @@ services:
     ports:
       - "8086:8086"
     volumes:
-      - ./influxdb/influxdb:/var/lib/influxdb
-      - ./influxdb/influxdb2:/var/lib/influxdb2
-      - ./influxdb/influxdb2-utils:/etc/influxdb2
-      - ./influxdb/influxdb.conf:/etc/influxdb/influxdb.conf
+      - ./influxdb/influxdb:/var/lib/influxdb:rw
+      - ./influxdb/influxdb2:/var/lib/influxdb2:rw
+      - ./influxdb/influxdb2-utils:/etc/influxdb2:rw
+      - ./influxdb/influxdb.conf:/etc/influxdb/influxdb.conf:rw
     environment:
       - DOCKER_INFLUXDB_INIT_MODE=setup
       - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_ADMIN_USERNAME}
       - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_ADMIN_PASSWORD}
       - DOCKER_INFLUXDB_INIT_ORG=${INFLUXDB_V2_ORG}
       - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUXDB_V2_BUCKET}
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    restart: unless-stopped
+    user: "0"
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./grafana/data:/var/lib/grafana
+
+  # actor:
+  #   image: daddyornot/actor:latest
+  #   container_name: actor
+  #   restart: unless-stopped
+  #   ports:
+  #     - '8001:8000'
+  #   volumes:
+  #     - ./actor/logs:/logs
+  # relay-mqtt-db:
+  #   image: daddyornot/relay-mqtt-db:latest
+  #   container_name: relay-mqtt-db
+  #   restart: unless-stopped
+  #   ports:
+  #     - '8002:8000'
+  #   volumes:
+  #     - ./relay-mqtt-db/logs:/logs
 volumes:
-  #config:
-  #data:
-  #log:
   mosquitto:
   influxdb:
+  grafana:
+  # actor:
+  # relay-mqtt-db:

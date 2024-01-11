@@ -1,7 +1,6 @@
 import os
 import time
 
-from app.controller.controller import post_new_fire_event, put_new_sensor_values
 from app.core.config_utils import *
 from app.core.config_vars import topics, MAX_SUB_RETRY, TOPICS_TO_SUBSCRIBE, FIRST_RECONNECT_DELAY, MAX_RECONNECT_COUNT, \
     RECONNECT_RATE, MAX_RECONNECT_DELAY, API_URL, NEW_AUTO_FIRE, NEW_SENSOR_VALUES, NEW_SENSOR_VALUES_TOPIC, \
@@ -13,6 +12,9 @@ def is_topic_valid(topic_param: str) -> bool:
 
 
 def on_message(client, userdata, message):
+    # avoid circular dependency
+    from app.service.http_service import post_new_fire_event, put_new_sensor_values
+
     logger.info(f"Message received from {message.topic} : {message.payload.decode('utf-8')}")
     data = message.payload.decode('utf-8')
 
