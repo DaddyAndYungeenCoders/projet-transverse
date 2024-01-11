@@ -18,7 +18,9 @@ export class SensorMarkerService extends AbstractMarkerService<SensorMarkerType>
   }
 
   override getObjectInfo(intensity?: number): any {
-    return intensity
+    return "<span>Intensité détéctée : " + intensity?.toString() + "</span><br/><button style=\"margin: 0.25rem auto auto; background-color: #870000; color: #ffffff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;\">\n" +
+    "  SUPPRIMER\n" +
+    "</button>"
   }
 
   override fetchAll(map: Map) {

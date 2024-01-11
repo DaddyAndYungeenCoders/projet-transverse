@@ -11,13 +11,6 @@ export class InterventionMarkerService extends AbstractMarkerService<Interventio
     super();
   }
 
-  getObjectInfo(): InterventionMarkerType {
-    return {
-      name: 'Intervention',
-      color: 'Black',
-    };
-  }
-
   override fetchAll(map: Map) {
     console.log("FETCH ALL");
   }
