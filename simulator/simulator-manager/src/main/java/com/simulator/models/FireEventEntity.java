@@ -1,8 +1,5 @@
 package com.simulator.models;
 
-import com.simulator.repository.DetectsRepository;
-import com.simulator.repository.InterventionRepository;
-
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
@@ -10,24 +7,22 @@ import java.util.List;
 public class FireEventEntity implements Serializable{
     private Long id;
     private CoordsEntity coords;
-    private int real_intensity;
-    private Date start_date;
-    private Date end_date;
-    private boolean is_real;
+    private int realIntensity;
+    private Date startDate;
+    private Date endDate;
+    private boolean isReal;
 
-    InterventionRepository interventionRepository = new InterventionRepository();
-    DetectsRepository DetectsRepository = new DetectsRepository();
 
     public FireEventEntity() {
     }
 
-    public FireEventEntity(Long id, CoordsEntity coords, int real_intensity, Date start_date, Date end_date, boolean is_real) {
+    public FireEventEntity(Long id, CoordsEntity coords, int realIntensity, Date startDate, Date endDate, boolean isReal) {
         this.id = id;
         this.coords = coords;
-        this.real_intensity = real_intensity;
-        this.start_date = start_date;
-        this.end_date = end_date;
-        this.is_real = is_real;
+        this.realIntensity = realIntensity;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.isReal = isReal;
     }
 
     public Long getId() {
@@ -46,43 +41,43 @@ public class FireEventEntity implements Serializable{
         this.coords = coords;
     }
 
-    public int getReal_intensity() {
-        return real_intensity;
+    public int getRealIntensity() {
+        return realIntensity;
     }
 
-    public void setReal_intensity(int real_intensity) {
-        this.real_intensity = real_intensity;
+    public void setRealIntensity(int realIntensity) {
+        this.realIntensity = realIntensity;
     }
 
-    public Date getStart_date() {
-        return start_date;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setStart_date(Date start_date) {
-        this.start_date = start_date;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public Date getEnd_date() {
-        return end_date;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setEnd_date(Date end_date) {
-        this.end_date = end_date;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
-    public boolean isIs_real() {
-        return is_real;
+    public boolean isReal() {
+        return isReal;
     }
 
-    public void setIs_real(boolean is_real) {
-        this.is_real = is_real;
+    public void setReal(boolean real) {
+        this.isReal = real;
     }
 
     public List<InterventionEntity> getIntervention() {
-       return interventionRepository.getInterventionsByFireEventId(this.id);
+return null;
     }
 
     public DetectsEntity getDetecs() {
-        return DetectsRepository.getDetectsByFireEventId(this.id);
+        return null;
     }
 }

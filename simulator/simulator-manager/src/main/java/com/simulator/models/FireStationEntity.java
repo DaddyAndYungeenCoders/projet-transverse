@@ -1,6 +1,5 @@
 package com.simulator.models;
 
-import com.simulator.repository.TeamRepository;
 
 import java.util.List;
 
@@ -10,7 +9,6 @@ public class FireStationEntity {
     private String address;
     private CoordsEntity coords;
 
-    TeamRepository teamRepository = new TeamRepository();
     public FireStationEntity() {
     }
 
@@ -54,6 +52,6 @@ public class FireStationEntity {
     }
 
     public List<TeamEntity> getTeams() {
-        return TeamRepository.getTeamsByFireStationId(this.id);
+        return null;
     }
 }

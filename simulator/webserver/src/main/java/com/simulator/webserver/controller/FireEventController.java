@@ -26,6 +26,8 @@ public class FireEventController {
     @PostMapping("/create")
     public ResponseEntity<FireEventEntity> createFireEventFromView(@RequestBody FireEventDTO fireEvent) throws BadRequestException {
         System.out.println("[REST] - Request to create a fire " + fireEvent);
+        System.out.println("[REST] - LES COORDS " + fireEvent.getCoords());
+
         if (!fireEvent.hasNecessaryValuesToCreate()) {
             throw new BadRequestException();
         } else {

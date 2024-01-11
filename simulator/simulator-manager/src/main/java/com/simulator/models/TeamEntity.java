@@ -1,6 +1,5 @@
 package com.simulator.models;
 
-import com.simulator.repository.InterventionRepository;
 
 import java.util.List;
 
@@ -9,7 +8,6 @@ public class TeamEntity {
     private Long stamina;
     private FireStationEntity fire_station;
 
-    InterventionRepository interventionRepository = new InterventionRepository();
     public TeamEntity() {
     }
 
@@ -44,6 +42,6 @@ public class TeamEntity {
     }
 
     public List<InterventionEntity> getIntervention() {
-        return InterventionRepository.getInterventionsByTeamId(this.id);
+        return null;
     }
 }

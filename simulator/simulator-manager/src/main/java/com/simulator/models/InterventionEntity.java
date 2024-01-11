@@ -1,6 +1,5 @@
 package com.simulator.models;
 
-import com.simulator.repository.DetectsRepository;
 
 import java.util.List;
 

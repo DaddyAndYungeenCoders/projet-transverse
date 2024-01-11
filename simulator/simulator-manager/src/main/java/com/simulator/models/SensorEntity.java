@@ -1,6 +1,5 @@
 package com.simulator.models;
 
-import com.simulator.repository.DetectsRepository;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,7 +9,6 @@ public class SensorEntity implements Serializable {
     private Long id;
     private CoordsEntity coordsEntity;
 
-    DetectsRepository detectsRepository = new DetectsRepository();
     public SensorEntity() {
     }
 
@@ -36,6 +34,6 @@ public class SensorEntity implements Serializable {
     }
 
     public List<DetectsEntity> getDetects() {
-        return detectsRepository.getDetectsBySensorId(this.id);
+        return null;
     }
 }
