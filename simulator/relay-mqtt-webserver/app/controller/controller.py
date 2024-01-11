@@ -24,7 +24,7 @@ async def user_fire_event(payload: FireEvent):
         raise HTTPException(status_code=500, detail=f"Error publishing to MQTT Broker : {str(e)}")
 
 
-@router.post("/api/view/sensorChange")
+@router.post("/api/view/sensor-changed")
 async def sensor_change(payload: SensorValue):
     # pub to simulator-view/sensor-changed
     try:
