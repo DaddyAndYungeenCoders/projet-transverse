@@ -8,7 +8,7 @@ load_dotenv()
 
 # -------- API CONFIGURATION -------- #
 API_URL = os.getenv("API_URL") + ":" + os.getenv("API_PORT") + "/api"
-NEW_AUTO_FIRE = "/fire-event/create"
+NEW_AUTO_FIRE = "/fire-event/create/generator"
 NEW_SENSOR_VALUES = "/sensor/update/%s"
 # ----------------------------------- #
 
