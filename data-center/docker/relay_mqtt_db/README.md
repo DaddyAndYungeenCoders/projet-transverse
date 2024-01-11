@@ -29,5 +29,5 @@ docker push <username>/<app-name>(:<tag>)
 
 ### Run image
 ```shell
-docker run -p 8001:8000 <app-name>
+docker run -p 8001:8001 <app-name>
 ```
