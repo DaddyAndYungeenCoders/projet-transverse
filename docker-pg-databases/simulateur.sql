@@ -1,5 +1,6 @@
 -- Création des tables
 
+
 CREATE TABLE Users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50),

@@ -1,9 +1,16 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {NgClass, NgIf, NgTemplateOutlet} from "@angular/common";
-import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {faFire, faTruck, faSmoking, faDroplet, faHome, faPlus} from "@fortawesome/free-solid-svg-icons";
-import {IconProp} from "@fortawesome/fontawesome-svg-core";
-import {ToggleMenuComponent} from "./toggle-menu/toggle-menu.component";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import {
+  faFire,
+  faTruck,
+  faSmoking,
+  faDroplet,
+  faHome,
+  faPlus,
+} from '@fortawesome/free-solid-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { ToggleMenuComponent } from './toggle-menu/toggle-menu.component';
 
 @Component({
   selector: 'app-tool',
@@ -13,10 +20,10 @@ import {ToggleMenuComponent} from "./toggle-menu/toggle-menu.component";
     FaIconComponent,
     NgTemplateOutlet,
     NgClass,
-    ToggleMenuComponent
+    ToggleMenuComponent,
   ],
   templateUrl: './tool.component.html',
-  styleUrl: './tool.component.scss'
+  styleUrl: './tool.component.scss',
 })
 export class ToolComponent {
   imagePath: string = '';
@@ -57,11 +64,9 @@ export class ToolComponent {
         break;
       }
     }
-  };
-
+  }
 
   @Output() onClick: EventEmitter<null> = new EventEmitter<null>();
-
   private _text: string = '';
   _image: IconProp = faFire;
 
