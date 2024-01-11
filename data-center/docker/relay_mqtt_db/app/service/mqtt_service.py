@@ -10,7 +10,8 @@ from core.config_utils import logger
 from core.config_vars import *
 from core.config_vars import MAX_SUB_RETRY, TOPICS_TO_SUBSCRIBE, FIRST_RECONNECT_DELAY, MAX_RECONNECT_COUNT, \
     RECONNECT_RATE, MAX_RECONNECT_DELAY, RF2_FIRE_EVENT_TOPIC, MANAGER_INTERVENTION_TOPIC
-from models.fire_event import FireEvent
+from models.FireEvent import FireEvent
+from models.Intervention import Intervention
 
 load_dotenv()
 
