@@ -46,7 +46,7 @@ public class SensorController {
                         .collect(Collectors.toList()))
                 .orElse(Collections.emptyList());
 
-        return ResponseEntity.ok(sensorDTOList.isEmpty() ? null : sensorDTOList);
+        return ResponseEntity.ok(sensorDTOList);
     }
 
     @PutMapping("/update/{id}")

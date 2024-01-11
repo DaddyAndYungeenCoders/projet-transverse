@@ -28,14 +28,6 @@ public class FireStationController {
                 .map(fire -> ResponseEntity.ok().body(fire))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-    
-    @PostMapping("/create/generator")
-    public ResponseEntity<FireStationEntity> createFireStationFromGenerator(@RequestBody FireStationDTO fireStation) {
-        System.out.println("[REST] - Request to create a fireStation " + fireStation);
-        return this.fireStationHandlerService.createFireStation(fireStation)
-                .map(fire -> ResponseEntity.ok().body(fire))
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
 
     @GetMapping("/fetch-all")
     public ResponseEntity<List<FireStationDTO>> getAllFireStations() {
@@ -45,7 +37,7 @@ public class FireStationController {
                         .collect(Collectors.toList()))
                 .orElse(Collections.emptyList());
 
-        return ResponseEntity.ok(fireEventDTOList.isEmpty() ? null : fireEventDTOList);
+        return ResponseEntity.ok(fireEventDTOList);
     }
 
     @PutMapping("/update/{id}")

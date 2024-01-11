@@ -55,7 +55,7 @@ public class FireEventController {
                         .collect(Collectors.toList()))
                 .orElse(Collections.emptyList());
 
-        return ResponseEntity.ok(fireEventDTOList.isEmpty() ? null : fireEventDTOList);
+        return ResponseEntity.ok(fireEventDTOList);
     }
     
     @GetMapping("/is-real/{id}")
