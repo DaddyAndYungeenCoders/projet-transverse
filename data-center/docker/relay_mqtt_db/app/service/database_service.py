@@ -1,21 +1,13 @@
 import os
 import sys
+from datetime import datetime
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from core.database_manager import DatabaseManager
-from core.config_utils import logger
+from main import db
 
 
-def init_influxdb_client():
-    try:
-        influx_db = DatabaseManager()
-        return influx_db
-    except BaseException as e:
-        logger.error(f"It seems there was an error initializing Database : {e}")
-
-
-def save_intervention(db, intervention):
+def save_intervention(intervention):
     # save data in influx db
     id = intervention["id"]
     intensity = intervention["intensity"]
@@ -36,10 +28,10 @@ def save_intervention(db, intervention):
     db.insert_data(json_body)
 
 
-def save_fire_event(db, fire_event):
+def save_fire_event(fire_event_json):
     # save data in influx db
-    id = fire_event["id"]
-    intensity = fire_event["intensity"]
+    id = fire_event_json["id"]
+    intensity = fire_event_json["intensity"]
     json_body = {
         "measurement": "fire_event",
         "tags": {

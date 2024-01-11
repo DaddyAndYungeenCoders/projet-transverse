@@ -1,3 +1,4 @@
+import json
 import os
 import sys
 import time
@@ -8,41 +9,47 @@ from dotenv import load_dotenv
 from core.config_utils import logger
 from core.config_vars import *
 from core.config_vars import MAX_SUB_RETRY, TOPICS_TO_SUBSCRIBE, FIRST_RECONNECT_DELAY, MAX_RECONNECT_COUNT, \
-    RECONNECT_RATE, MAX_RECONNECT_DELAY
+    RECONNECT_RATE, MAX_RECONNECT_DELAY, RF2_FIRE_EVENT_TOPIC, MANAGER_INTERVENTION_TOPIC
+from models.fire_event import FireEvent
 
 load_dotenv()
 
 
 def on_message(client, userdata, message):
+    # avoid circular dependency
+    from service.database_service import save_fire_event, save_intervention
     print("Received message from {} : {}".format(message.topic, message.payload.decode("utf-8")))
 
-    if message.topic == topics.get(topic_rf2_fire_event):
+    if message.topic == RF2_FIRE_EVENT_TOPIC:
         try:
             fire_event_str = message.payload.decode("utf-8")
             fire_event = json.loads(fire_event_str)
-            save_fire_event(fire_event)
+            if isinstance(fire_event, FireEvent):
+                save_fire_event(fire_event)
+            else:
+                logger.warn(f"Received invalid fire_event object : {fire_event}")
 
         except json.JSONDecodeError as e:
-            print(f"Error decoding message: {e}")
+            logger.error(f"Error decoding message: {e}")
 
-    elif message.topic == topics.get(topic_manager_intervention):
+    elif message.topic == MANAGER_INTERVENTION_TOPIC:
         try:
             intervention = json.loads(message.payload.decode("utf-8"))
-
-            print(intervention["coords"])
-            print(intervention["intensity"])
-            print(intervention["startDate"])
-            print(intervention["endDate"])
-            print(intervention["validationStatus"])
-            print(intervention["idInterventionTeam"])
+            #
+            # print(intervention["coords"])
+            # print(intervention["intensity"])
+            # print(intervention["startDate"])
+            # print(intervention["endDate"])
+            # print(intervention["validationStatus"])
+            # print(intervention["idInterventionTeam"])
 
             save_intervention(intervention)
 
         except json.JSONDecodeError as e:
-            print(f"Error decoding message: {e}")
+            logger.error(f"Error decoding message: {e}")
 
     else:
-        logger.warn(f"Topic {topics.get()} is not valid.")
+        logger.warn(f"Topic {message.topic} is not valid.")
 
 
 def on_connect(client, userdata, flags, rc):

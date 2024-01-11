@@ -1,11 +1,9 @@
 import os
-from datetime import datetime
-from http import client
 
-from dotenv import load_dotenv
-from influxdb_client import InfluxDBClient, Point, WritePrecision, WriteOptions
-from influxdb_client.client.write_api import SYNCHRONOUS
 from core.config_utils import logger
+from dotenv import load_dotenv
+from influxdb_client import InfluxDBClient, WriteOptions
+from influxdb_client.client.write_api import SYNCHRONOUS
 
 load_dotenv()
 
@@ -22,7 +20,7 @@ class DatabaseManager:
     def insert_data(self, json_data):
         try:
             self.write_api.write(self.bucket, self.org, json_data)
-
+            logger.info(f"Successfully inserted data : {json_data}")
         except Exception as e:
             logger.error("Error writing to InfluxDB : ", e)
 
