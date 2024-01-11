@@ -10,9 +10,7 @@ from app.core.config_vars import topics, MAX_SUB_RETRY, TOPICS_TO_SUBSCRIBE, FIR
 
 
 def is_topic_valid(topic_param: str) -> bool:
-    if topic_param in topics:
-        return True
-    return False
+    return topic_param in topics
 
 
 def on_message(client, userdata, message):

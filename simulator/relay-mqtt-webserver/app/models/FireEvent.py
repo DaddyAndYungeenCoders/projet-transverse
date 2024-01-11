@@ -9,8 +9,3 @@ class FireEvent(BaseModel):
     # startDate: datetime
     # endDate: datetime
     isReal: bool
-
-
-class SensorValue(BaseModel):
-    id: int
-    intensity: int

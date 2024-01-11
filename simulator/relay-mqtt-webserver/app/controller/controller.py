@@ -2,7 +2,8 @@ from fastapi import APIRouter, HTTPException
 
 from app.core.config_vars import MQTT_CLIENT_NAME, FIRE_EVENT_VIEW_TOPIC, SENSOR_CHANGE_VIEW_TOPIC
 from app.core.mqtt_client import MqttClient
-from app.models.FireEvent import FireEvent, SensorValue
+from app.models.FireEvent import FireEvent
+from app.models.SensorValues import SensorValue
 
 router = APIRouter()
 mqtt_client = MqttClient(MQTT_CLIENT_NAME)

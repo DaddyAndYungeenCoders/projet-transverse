@@ -35,10 +35,9 @@ class MqttClient:
 
         try:
             self.client.connect(self.broker_ip, self.broker_port)
-        except ConnectionError as e:
-            logger.error(
-                "It appears that there was an error while connecting to the Broker, maybe the broker is down ? => %s",
-                str(e))
+            logger.info(f"Successfully connected to Broker at {self.broker_ip}:{self.broker_port} !")
+        except BaseException as e:
+            logger.error("It appears that there was an error while connecting to the Broker : %s", str(e))
         self.client.loop_start()
 
     def publish_message(self, topic, message):
