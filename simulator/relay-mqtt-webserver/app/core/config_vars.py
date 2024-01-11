@@ -7,9 +7,9 @@ from app.core.config_utils import load_config
 load_dotenv()
 
 # -------- API CONFIGURATION -------- #
-API_URL = os.getenv("API_URL") + ":" + os.getenv("API_PORT")
-NEW_AUTO_FIRE = "api/fire-event/create"
-NEW_SENSOR_VALUES = "api/sensor/update/%s"
+API_URL = os.getenv("API_URL") + ":" + os.getenv("API_PORT") + "/api"
+NEW_AUTO_FIRE = "/fire-event/create"
+NEW_SENSOR_VALUES = "/sensor/update/%s"
 # ----------------------------------- #
 
 # -------- MQTT CONFIGURATION -------- #

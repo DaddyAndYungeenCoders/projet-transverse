@@ -5,12 +5,12 @@ services:
     container_name: mqtt
     restart: always
 #    network_mode: "host"
-      #user: 1000:1000
+    user: 1000:1000
     volumes:
-      - ./mosquitto/config:/mosquitto/config
-      - ./mosquitto/utils:/mosquitto/utils
-      - ./mosquitto/data:/mosquitto/data
-      - ./mosquitto/log:/mosquitto/log
+      - ./mosquitto/config:/mosquitto/config:rw
+      - ./mosquitto/utils:/mosquitto/utils:rw
+      - ./mosquitto/data:/mosquitto/data:rw
+      - ./mosquitto/log:/mosquitto/log:rw
     ports:
       - "1883:1883"
       - "9001:9001"
@@ -21,19 +21,40 @@ services:
     ports:
       - "8086:8086"
     volumes:
-      - ./influxdb/influxdb:/var/lib/influxdb
-      - ./influxdb/influxdb2:/var/lib/influxdb2
-      - ./influxdb/influxdb2-utils:/etc/influxdb2
-      - ./influxdb/influxdb.conf:/etc/influxdb/influxdb.conf
+      - ./influxdb/influxdb:/var/lib/influxdb:rw
+      - ./influxdb/influxdb2:/var/lib/influxdb2:rw
+      - ./influxdb/influxdb2-utils:/etc/influxdb2:rw
+      - ./influxdb/influxdb.conf:/etc/influxdb/influxdb.conf:rw
     environment:
       - DOCKER_INFLUXDB_INIT_MODE=setup
       - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_ADMIN_USERNAME}
       - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_ADMIN_PASSWORD}
       - DOCKER_INFLUXDB_INIT_ORG=${INFLUXDB_V2_ORG}
       - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUXDB_V2_BUCKET}
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    restart: unless-stopped
+    user: "0"
+    # environment:
+    # - GF_DATABASE_TYPE=mysql
+    # - GF_DATABASE_HOST=db
+    # - GF_DATABASE_PORT=3306
+    # - GF_DATABASE_NAME=microbit
+    # - GF_DATABASE_USER=root
+    # - GF_DATABASE_PASSWORD=admin
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./grafana/data:/var/lib/grafana
+      # - ./grafana/conf:/etc/grafana
+    # networks:
+    #   iothub: 
+    #     ipv4_address: "192.168.80.3"
 volumes:
   #config:
   #data:
   #log:
   mosquitto:
   influxdb:
+  grafana:

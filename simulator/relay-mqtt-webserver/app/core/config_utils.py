@@ -9,6 +9,8 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     app_name: str = "Relay service MQTT - WebServer API"
     debug: bool = False
+    host: str = "localhost"
+    port: int = 8000
 
 
 settings = Settings()
