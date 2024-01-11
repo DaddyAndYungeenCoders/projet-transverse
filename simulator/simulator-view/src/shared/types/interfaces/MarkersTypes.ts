@@ -26,3 +26,8 @@ export interface FireStationMarkerType extends MarkersTypes {
 export interface InterventionMarkerType extends MarkersTypes {
   markerType?: "interventionMarkerType";
 }
+
+export interface SensorMarkerType extends MarkersTypes {
+  markerType?: "sensorMarkerType";
+}
+
