@@ -4,7 +4,7 @@ services:
     image: eclipse-mosquitto:latest
     container_name: mqtt
     restart: always
-    network_mode: "host"
+#    network_mode: "host"
       #user: 1000:1000
     volumes:
       - ./mosquitto/config:/mosquitto/config

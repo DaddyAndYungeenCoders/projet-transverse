@@ -3,9 +3,11 @@ import sys
 
 import paho.mqtt.client as mqtt
 
+
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from service.mqtt_service import *
+from core.config_utils import logger
 
 
 class MqttClient:
@@ -37,7 +39,6 @@ class MqttClient:
 
         try:
             self.client.connect(self.broker_ip, self.broker_port)
-            logger.info(f"Successfully connected to Broker at {self.broker_ip}:{self.broker_port} !")
         except BaseException as e:
             logger.error("It appears that there was an error while connecting to the Broker : %s. Maybe it's down ?",
                          str(e))

@@ -25,8 +25,8 @@ QOS = 1
 RF2_FIRE_EVENT_TOPIC = topics.get("rf2.fire_event")
 MANAGER_INTERVENTION_TOPIC = topics.get("manager.intervention")
 TOPICS_TO_SUBSCRIBE = [
-    RF2_FIRE_EVENT_TOPIC,
-    MANAGER_INTERVENTION_TOPIC
+    (RF2_FIRE_EVENT_TOPIC, QOS),
+    (MANAGER_INTERVENTION_TOPIC, QOS)
 ]
 
 # -------------------------------------- #

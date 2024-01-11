@@ -27,7 +27,7 @@ AUTO_EVENT_SIM_TOPIC = topics.get("simulator.auto-fire-event")
 NEW_SENSOR_VALUES_TOPIC = topics.get("simulator.new-sensor-value")
 
 TOPICS_TO_SUBSCRIBE = [
-    AUTO_EVENT_SIM_TOPIC,
-    NEW_SENSOR_VALUES_TOPIC
+    (AUTO_EVENT_SIM_TOPIC, QOS),
+    (NEW_SENSOR_VALUES_TOPIC, QOS)
 ]
 # -------------------------------------- #
