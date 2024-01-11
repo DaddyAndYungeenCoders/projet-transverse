@@ -23,3 +23,12 @@ docker compose up -d --force-recreate
 Cela permet de créer un broker mosquitto avec un utilisateur admin et un mot de passe stocké dans le fichier `mosquitto/config/mqtt_passwd`.
 
 
+### Certificats
+```shell
+
+
+```
+
+Copier les certificats *Client.key, Client.crt, ca.crt* dans les dossiers des clients (actor, relay-mqtt-api, relay-mqtt-db, emergency-manager...)
+Copier le script `gen-client.sh` dans le dossier des clients et lancer le script pour générer les certificats des clients.
+S'assurer qu'il est executable et le lancer avec `./gen-client.sh <nom_du_client>`
