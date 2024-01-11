@@ -1,21 +1,22 @@
 package com.simulator.webserver.models;
 
-import java.io.Serializable;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "sensor")
-public class SensorEntity implements Serializable {
+@Getter
+@Setter
+@Table(name = "firestation")
+public class FireStationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Embedded
-    private Coords coords;
+    Long id;
+    String name;
+    String address;
+    Coords coords;
 }
