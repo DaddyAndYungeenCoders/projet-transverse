@@ -1,19 +1,29 @@
 package com.simulator.webserver.service.implementations;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simulator.webserver.dto.FireEventDTO;
 import com.simulator.webserver.models.FireEventEntity;
 import com.simulator.webserver.repository.FireEventRepository;
 import com.simulator.webserver.service.interfaces.FireEventHandlerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class FireEventHandlerServiceImpl implements FireEventHandlerService {
     @Autowired
     private FireEventRepository fireEventRepository;
+
 
     @Override
     public Optional<FireEventEntity> createFireEvent(FireEventDTO fireEventDTO) {
@@ -25,6 +35,8 @@ public class FireEventHandlerServiceImpl implements FireEventHandlerService {
         entity.setReal_intensity(fireEventDTO.getRealIntensity());
         return Optional.of(fireEventRepository.save(entity));
     }
+
+
 
     @Override
     public Optional<FireEventEntity> createFireEventFromView(FireEventDTO fireEventDTO) {
