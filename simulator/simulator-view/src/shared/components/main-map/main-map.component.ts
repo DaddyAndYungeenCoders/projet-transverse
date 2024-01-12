@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import {InterventionMarkerService} from '../../services/intervention-marker-service.service';
 import {FirestationMarkerService} from '../../services/firestation-marker-service.service';
 import {SensorMarkerService} from '../../services/sensor-marker-service';
+import {StompService} from '../../services/StompService';
 
 @Component({
   selector: 'app-main-map',
@@ -27,25 +28,35 @@ export class MainMapComponent implements OnInit, AfterViewInit {
     private fireStationMarkerService: FirestationMarkerService,
     private interventionMarkerService: InterventionMarkerService,
     private fireMarkerService: FireMarkerService,
+    private stompService: StompService,
     private sensorMarkerService: SensorMarkerService
   ) {}
 
   ngOnInit(): void {
     this.isInMenuCreationMode = this.fireCreationService.isSettingNewElement;
+    this.stompService.subscribe("/topic/fire-event", () => {
+      this.refreshFires()
+    });
+    this.stompService.subscribe("/topic/intervention", () => {
+      this.refreshIntervention()
+    });
     this.$isInCreationSubscription =
       this.fireCreationService.$isInCreationState.subscribe((isCreating) => {
         this.isInMenuCreationMode = isCreating;
-        // FIXME use websocket (CSC-66)
-        if (!isCreating) {
-          this.fireMarkerService.fetchAll(this.map);
-        }
       });
   }
   ngAfterViewInit() {
     this.mountMap(); // Creating the map
     this.map.setZoom(19); // to avoid display bug
     this.map.on('click', (e) => this.createFireEvent(e));
-    this.fetchAll();
+    this.fetchAll(); // fetching all elements once when starting
+  }
+
+  private refreshFires() {
+    this.fireMarkerService.fetchAll(this.map);
+  }
+  private refreshIntervention() {
+    console.log("here move intervention"); // TODO
   }
 
   private fetchAll() {
