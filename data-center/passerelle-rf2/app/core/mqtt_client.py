@@ -46,3 +46,8 @@ class MqttClient:
     def publish_message(self, topic, message):
         # Publish the message
         result = self.client.publish(topic, message)
+        if result[0] == 0:
+            logger.info(f"Response code : {result}")
+            logger.info(f"Successfully published {message} to topic {topic} !")
+        else:
+            logger.info(f"There was an error publishing message ... res = {result[0]}")

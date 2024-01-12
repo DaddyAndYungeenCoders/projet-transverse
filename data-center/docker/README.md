@@ -3,7 +3,7 @@
 ### Mise en place mosquitto
 ```shell
 # /!\ Depuis le repertoire docker
-mkdir -p mosquitto/config mosquitto/data mosquitto/log mosquitto/utils
+`mkdir -p mosquitto/config mosquitto/data mosquitto/log mosquitto/utils
 echo "listener 1883 
 protocol mqtt
 persistence true
@@ -11,7 +11,7 @@ connection_messages true
 persistence_location /mosquitto/data
 allow_anonymous false
 password_file mosquitto/config/mqtt_passwd" > mosquitto/config/mosquitto.conf
-touch mosquitto/config/mqtt_passwd
+touch mosquitto/config/mqtt_passwd`
 docker compose up -d
 docker exec -it mqtt sh
 # /!\ Depuis le container mqtt
