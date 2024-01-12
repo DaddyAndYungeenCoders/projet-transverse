@@ -5,26 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b5261d2-5c17-495a-bad8-6c9555e0d2e4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/FireStationEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/InterventionEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/TeamEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/repository/DetectsRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/repository/FireEventRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/repository/FireStationRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/repository/HistoriqueRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/repository/InterventionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/repository/TeamRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/service/MQTTService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../data-center/docker/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../../data-center/docker/docker-compose.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/models/DetectsEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/DetectsEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/models/FireEventEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/FireEventEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/models/HistoriqueEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/HistoriqueEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/models/SensorEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/SensorEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/models/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/UserEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/repository/SensorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/repository/SensorRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/service/BddService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/service/BddService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,9 +28,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -66,9 +50,9 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "extract.method.default.visibility": "private",
-    "git-widget-placeholder": "CSC-53-SIMULATOR-arborescence",
+    "git-widget-placeholder": "CSC-55-SIMULATOR-JAVA-MQTT",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "G:/Projet/Projet-transverse/simulator/simulator-manager/src/main/java/com/simulator/models",
+    "last_opened_file_path": "G:/Projet/Projet-transverse/simulator/simulator-manager",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -84,7 +68,16 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\Projet\Projet-transverse\simulator\simulator-manager" />
+      <recent name="G:\Projet\Projet-transverse\simulator\simulator-manager\src\main\java\com\simulator" />
       <recent name="G:\Projet\Projet-transverse\simulator\simulator-manager\src\main\java\com\simulator\models" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="G:\Projet\Projet-transverse\simulator\simulator-manager\src\main\resources\config" />
+      <recent name="G:\Projet\Projet-transverse\simulator\simulator-manager\src\main\resources" />
+      <recent name="G:\Projet\Projet-transverse\simulator\simulator-manager" />
+      <recent name="G:\Projet\Projet-transverse\simulator\simulator-manager\src\main\java\com\simulator\mqtt\config" />
+      <recent name="G:\Projet\Projet-transverse\simulator\simulator-manager\src\main\java\com\simulator\mqtt" />
     </key>
   </component>
   <component name="RunManager">
@@ -111,7 +104,7 @@
     <attachedChunks>
       <set>
         <option value="jdk-1.8.0_392-corretto-1.8.0_392-f644763e9732-f719d367" />
-        <option value="jdk-21.0.1-openjdk-21.0.1-f644763e9732-f98dd351" />
+        <option value="jdk-21.0.1-corretto-21.0.1-f644763e9732-eed86825" />
       </set>
     </attachedChunks>
   </component>
@@ -125,10 +118,14 @@
       <updated>1702032391398</updated>
       <workItem from="1702032392404" duration="103000" />
       <workItem from="1704444793298" duration="5238000" />
+      <workItem from="1704995771583" duration="4978000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
 </project>
