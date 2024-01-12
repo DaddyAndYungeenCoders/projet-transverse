@@ -1,24 +1,38 @@
 package com.simulator.webserver.service.implementations;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.simulator.webserver.dto.FireEventDTO;
 import com.simulator.webserver.dto.SensorDTO;
 import com.simulator.webserver.models.SensorEntity;
 import com.simulator.webserver.repository.SensorRepository;
 import com.simulator.webserver.service.interfaces.SensorHandlerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class SensorHandlerServiceImpl implements SensorHandlerService {
     @Autowired
     private SensorRepository sensorRepository;
-    
+    private RestTemplate restTemplate = new RestTemplate();
+    private HttpHeaders headers = new HttpHeaders();
+    private ObjectMapper objectMapper = new ObjectMapper();
+
     @Override
     public Optional<SensorEntity> createSensor(SensorDTO sensorDTO) {
+        sendSensorUpdate("${relay.url}", sensorDTO);
+        sendSensorUpdate("${passerelle.url}", sensorDTO);
         return Optional.of(
                 this.sensorRepository.save(
                         SensorDTO.toEntity(sensorDTO)
@@ -42,5 +56,21 @@ public class SensorHandlerServiceImpl implements SensorHandlerService {
         }
         sensorToUpdate
                 .map(sensorEntity -> SensorDTO.toEntity(sensorDTO));
+//        sendSensorUpdate("${relay.url}", sensorDTO);
+        sendSensorUpdate("${passerelle.url}" , sensorDTO);
+
         return Optional.of(this.sensorRepository.save(sensorToUpdate.get()));    }
+
+    private void sendSensorUpdate(String url, SensorDTO sensorDTO){ try {
+        String json = objectMapper.writeValueAsString(sensorDTO);
+        HttpEntity<String> requestEntity = new HttpEntity<>(json, headers);
+        String response = restTemplate.exchange(url , HttpMethod.POST, requestEntity, String.class).getBody();
+
+        // Affiche la réponse
+        log.debug("Réponse du serveur : {}", response);
+        } catch (JsonProcessingException e) {
+            // Gérer l'exception, par exemple en l'affichant
+            e.printStackTrace();
+        }
+    }
 }
