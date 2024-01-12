@@ -2,17 +2,15 @@ package com.simulator.webserver.controller;
 
 import com.simulator.webserver.dto.FireEventDTO;
 import com.simulator.webserver.models.FireEventEntity;
-import com.simulator.webserver.service.FireEventHandlerService;
+import com.simulator.webserver.service.interfaces.FireEventHandlerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -59,7 +57,14 @@ public class FireEventController {
                         .collect(Collectors.toList()))
                 .orElse(Collections.emptyList());
 
-        return ResponseEntity.ok(fireEventDTOList.isEmpty() ? null : fireEventDTOList);
+        return ResponseEntity.ok(fireEventDTOList);
+    }
+    
+    @GetMapping("/is-real/{id}")
+    public ResponseEntity<Boolean> isFireEventReal(@PathVariable Long id) {
+        return fireEventHandlerService.isFireReal(id)
+                .map(fire -> ResponseEntity.ok().body(fire))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
     
     @PutMapping("/update/{id}/{intensity}")

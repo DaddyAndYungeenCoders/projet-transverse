@@ -7,6 +7,7 @@ import { FireMarkerService } from '../../services/fire-marker-service.service';
 import { Subscription } from 'rxjs';
 import {InterventionMarkerService} from '../../services/intervention-marker-service.service';
 import {FirestationMarkerService} from '../../services/firestation-marker-service.service';
+import {SensorMarkerService} from '../../services/sensor-marker-service';
 
 @Component({
   selector: 'app-main-map',
@@ -25,7 +26,8 @@ export class MainMapComponent implements OnInit, AfterViewInit {
     private fireCreationService: FireCreationService,
     private fireStationMarkerService: FirestationMarkerService,
     private interventionMarkerService: InterventionMarkerService,
-    private fireMarkerService: FireMarkerService
+    private fireMarkerService: FireMarkerService,
+    private sensorMarkerService: SensorMarkerService
   ) {}
 
   ngOnInit(): void {
@@ -33,6 +35,7 @@ export class MainMapComponent implements OnInit, AfterViewInit {
     this.$isInCreationSubscription =
       this.fireCreationService.$isInCreationState.subscribe((isCreating) => {
         this.isInMenuCreationMode = isCreating;
+        // FIXME use websocket (CSC-66)
         if (!isCreating) {
           this.fireMarkerService.fetchAll(this.map);
         }
@@ -49,6 +52,7 @@ export class MainMapComponent implements OnInit, AfterViewInit {
     this.fireMarkerService.fetchAll(this.map);
     this.fireStationMarkerService.fetchAll(this.map);
     this.interventionMarkerService.fetchAll(this.map);
+    this.sensorMarkerService.fetchAll(this.map);
   }
 
   private createFireEvent(e: L.LeafletMouseEvent) {

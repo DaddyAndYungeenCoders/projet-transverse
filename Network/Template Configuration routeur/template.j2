@@ -1,0 +1,109 @@
+Building configuration...
+
+Current configuration : 1935 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname {{ hostname }}
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+memory-size iomem 5
+no ip icmp rate-limit unreachable
+ip tcp synwait-time 5
+!
+!
+ip cef
+no ip domain lookup
+!
+!         
+!
+!
+!
+template d
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!         
+!
+interface Loopback0
+ ip address {{ loopback_ip }} 255.255.255.255
+!
+{% for interface in interfaces %}
+interface {{ interface.name }}
+ {% if interface.ip_address %}
+ ip address {{ interface.ip_address }} {{ interface.subnet_mask }}
+ {% else %}
+ no ip address
+ {% endif %}
+ {% if interface.shutdown %}
+ shutdown
+ {% endif %}
+ {% if interface.dhcp %}
+ ip address dhcp
+ {% endif %}
+ duplex auto
+ speed auto
+!
+{% endfor %}
+router ospf 1
+ router-id {{ ospf_router_id }}
+ log-adjacency-changes
+{% for network in ospf_networks %}
+ network {{ network.address }} {{ network.wildcard_mask }} area {{ network.area }}
+{% endfor %}
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+no cdp log mismatch duplex
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ login
+!
+!
+end
+

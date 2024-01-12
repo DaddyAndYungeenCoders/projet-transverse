@@ -3,4 +3,5 @@ export enum IconMarkerTypes {
   FIRE = 'fire',
   FAKEFIRE = 'fakefire',
   FIRESTATION = 'firestation',
+  SENSOR = 'sensor'
 }

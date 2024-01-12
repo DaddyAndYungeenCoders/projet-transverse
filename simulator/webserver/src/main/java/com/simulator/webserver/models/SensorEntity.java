@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Sensor")
+@Table(name = "sensor")
 public class SensorEntity implements Serializable {
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Embedded
-    private Coords coordsEntity;
+    private Coords coords;
 }
