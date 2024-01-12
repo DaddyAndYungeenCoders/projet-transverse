@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class SensorDTO extends BaseDTO implements Serializable {
     private Long id;
     private Coords coords;
-    private Integer intensity;
+    private int intensity;
 
     public static SensorEntity toEntity(SensorDTO sensorDTO) {
         SensorEntity entity = new SensorEntity();

@@ -21,7 +21,7 @@ public class SensorEntity extends BaseEntity implements Serializable {
     private Long id;
     @Embedded
     private Coords coords;
-    private Integer intensity;
+    private int intensity;
 
     public static SensorDTO toDTO(SensorEntity sensorEntity) {
         SensorDTO dto = new SensorDTO();

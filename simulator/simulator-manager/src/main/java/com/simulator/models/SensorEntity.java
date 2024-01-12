@@ -9,16 +9,16 @@ public class SensorEntity implements Serializable {
 
     private Long id;
     private CoordsEntity coordsEntity;
-    private Interger intensite;
+    private int intensity;
 
     DetectsRepository detectsRepository = new DetectsRepository();
     public SensorEntity() {
     }
 
-    public SensorEntity(Long id, CoordsEntity coordsEntity, Integer intensite) {
+    public SensorEntity(Long id, CoordsEntity coordsEntity, int intensity) {
         this.id = id;
         this.coordsEntity = coordsEntity;
-        this.intensite = intensite;
+        this.intensity = intensity;
     }
 
     public Long getId() {
@@ -41,11 +41,11 @@ public class SensorEntity implements Serializable {
         return detectsRepository.getDetectsBySensorId(this.id);
     }
 
-    public Interger getIntensite() {
-        return intensite;
+    public int getIntensity() {
+        return intensity;
     }
 
-    public void setIntensite(Interger intensite) {
-        this.intensite = intensite;
+    public void setIntensite(int intensity) {
+        this.intensity = intensity;
     }
 }
