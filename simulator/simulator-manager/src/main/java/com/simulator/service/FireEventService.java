@@ -25,21 +25,21 @@ public class FireEventService {
         return BASE_URL + endpoint;
     }
 
-    private HttpURLConnection setConnectionBaseParam(String endpoint) throws Exception {
+    private HttpURLConnection setConnectionBaseParam(String endpoint, String method) throws Exception {
         URL url = new URL(urlApi(endpoint));
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
+        connection.setRequestMethod(method);
         connection.setRequestProperty("Content-Type", "application/json");
         connection.setRequestProperty("Accept", "application/json");
         connection.setDoOutput(true);
         return connection;
     }
 
-    public void createFire() {
-        FireEventEntity fireEvent = new FireEventEntity(4L, new CoordsEntity(23.3, 23.1), 8, new Date(2024, 1, 10), null, true);
+    public void createFire(FireEventEntity fireEvent) {
+//         = new FireEventEntity(4L, new CoordsEntity(23.3, 23.1), 8, new Date(2024, 1, 10), null, true);
         try {
             String jsonInputString = MAPPER.writeValueAsString(fireEvent);
-            HttpURLConnection connection = setConnectionBaseParam("/create");
+            HttpURLConnection connection = setConnectionBaseParam("/create","POST");
 
             HttpUtils.sendJson(connection, jsonInputString);
             String response = HttpUtils.readResponse(connection);
@@ -51,10 +51,34 @@ public class FireEventService {
     }
 
 
-    public void updateFireIntensity(Integer intensity) {
-        // Implementation
+    public void updateFireIntensity(Integer intensity, FireEventEntity fireEvent) {
+        try {
+            String jsonInputString = MAPPER.writeValueAsString(fireEvent);
+//            HttpURLConnection connection = setConnectionBaseParam("/update/"+fireEvent.getId(),"PUT");
+            HttpURLConnection connection = setConnectionBaseParam("/update/"+fireEvent.getId()+"/"+intensity,"PUT");
+
+            HttpUtils.sendJson(connection, jsonInputString);
+            String response = HttpUtils.readResponse(connection);
+
+            System.out.println(response);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
+    public void updateFire( FireEventEntity fireEvent) {
+        try {
+            String jsonInputString = MAPPER.writeValueAsString(fireEvent);
+            HttpURLConnection connection = setConnectionBaseParam("/update/"+fireEvent.getId(),"PUT");
+
+            HttpUtils.sendJson(connection, jsonInputString);
+            String response = HttpUtils.readResponse(connection);
+
+            System.out.println(response);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
     public void onReceiveInterventionEvent() {
         // Implementation
     }

@@ -5,25 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b5261d2-5c17-495a-bad8-6c9555e0d2e4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/service/FireEventService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/utils/HttpUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/simulated/FireEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/models/FireEventEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/FireEventEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/models/FireStationEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/FireStationEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/models/InterventionEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/InterventionEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/models/SensorEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/SensorEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/models/TeamEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/TeamEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/repository/DetectsRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/repository/FireEventRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/repository/FireStationRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/repository/HistoriqueRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/repository/InterventionRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/repository/SensorRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/repository/TeamRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/repository/UserRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/service/BddService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/service/FireEventService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/service/FireEventService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../webserver/src/main/java/com/simulator/webserver/controller/FireEventController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/src/main/java/com/simulator/webserver/controller/FireEventController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
