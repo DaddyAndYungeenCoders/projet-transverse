@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b5261d2-5c17-495a-bad8-6c9555e0d2e4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/config/mqtt_topics.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/service/MQTTService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../data-center/docker/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../../data-center/docker/docker-compose.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/mqtt/MQTTClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/mqtt/MQTTClient.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +104,7 @@
     <attachedChunks>
       <set>
         <option value="jdk-1.8.0_392-corretto-1.8.0_392-f644763e9732-f719d367" />
-        <option value="jdk-21.0.1-openjdk-21.0.1-f644763e9732-f98dd351" />
+        <option value="jdk-21.0.1-corretto-21.0.1-f644763e9732-eed86825" />
       </set>
     </attachedChunks>
   </component>
@@ -119,6 +118,7 @@
       <updated>1702032391398</updated>
       <workItem from="1702032392404" duration="103000" />
       <workItem from="1704444793298" duration="5238000" />
+      <workItem from="1704995771583" duration="4978000" />
     </task>
     <servers />
   </component>

@@ -1,10 +1,13 @@
 package com.simulator;
 
 import com.simulator.mqtt.MQTTClient;
+import com.simulator.service.MQTTService;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Main {
     public static void main(String[] args) {
@@ -24,29 +27,24 @@ public class Main {
 
         System.out.println("Emergency Simulator Started!");
 
-        String clientName = "emergency_simulator";
-        String brokerUrl = "127.0.0.1:1883";
-        String topics_yaml = "config/mqtt_topics.yaml";
-        try {
-            MQTTClient mqttClient = MQTTClient.getClient(brokerUrl, clientName);
-            mqttClient.connectToBroker();
-
-            Map<String, String> topics = mqttClient.loadTopicsFromConfig(topics_yaml);
-
-            mqttClient.publishToBroker(topics.get("manager.intervention"), "Intervention launched!");
-
-            mqttClient.subscribeToTopicsFromConfig(topics_yaml, (topic, message) -> {
+        MQTTService mqttService = new MQTTService();
+        List<String> topicsToSubscribe = List.of("simulator-view.sensor-changed", "simulator-view.fire-event", "/simulator/auto_fire_event");
+        mqttService.subscribeToTopics(topicsToSubscribe, (topic, message) -> {
+            if (Objects.equals(topic, mqttService.getTopic("simulator-view.sensor-changed"))){
                 System.out.println("Received message on topic " + topic + ": " + new String(message.getPayload()));
-            });
-            mqttClient.publishToBroker(topics.get("manager.intervention"), "Intervention launched!");
-            while (mqttClient.isConnected()){
+            } else {
+                System.out.println("Received message on topic inconnu" + topic + ": " + new String(message.getPayload()));
 
             }
+        });
 
-            mqttClient.disconnectFromBroker();
-        } catch (MqttException e) {
-            // Gérer l'exception de manière appropriée (journalisation, notification, etc.)
-            e.printStackTrace();
+        mqttService.publish("simulator-view.sensor-changed", "YOLO");
+
+        while (mqttService.isConnected()){
+
         }
+
+        mqttService.deconnection();
+
     }
 }
