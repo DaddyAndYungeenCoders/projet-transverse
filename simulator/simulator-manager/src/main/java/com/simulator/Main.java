@@ -1,6 +1,7 @@
 package com.simulator;
 
 import com.simulator.mqtt.MQTTClient;
+import com.simulator.service.FireEventService;
 import com.simulator.service.MQTTService;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -27,24 +28,11 @@ public class Main {
 
         System.out.println("Emergency Simulator Started!");
 
-        MQTTService mqttService = new MQTTService();
-        List<String> topicsToSubscribe = List.of("simulator-view.sensor-changed", "simulator-view.fire-event", "/simulator/auto_fire_event");
-        mqttService.subscribeToTopics(topicsToSubscribe, (topic, message) -> {
-            if (Objects.equals(topic, mqttService.getTopic("simulator-view.sensor-changed"))){
-                System.out.println("Received message on topic " + topic + ": " + new String(message.getPayload()));
-            } else {
-                System.out.println("Received message on topic inconnu" + topic + ": " + new String(message.getPayload()));
+        FireEventService fireEventService = new FireEventService();
 
-            }
-        });
-
-        mqttService.publish("simulator-view.sensor-changed", "YOLO");
-
-        while (mqttService.isConnected()){
+        while (true){
 
         }
-
-        mqttService.deconnection();
 
     }
 }

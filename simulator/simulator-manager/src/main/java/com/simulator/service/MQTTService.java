@@ -60,6 +60,7 @@ public class MQTTService {
 
     public void publish(String topicName, String message){
         try {
+            System.out.println("[MQTT publish] topic : " + topicName + " message : " + message);
             mqttClient.publishToBroker(getTopic(topicName), message);
         } catch (MqttException e) {
             throw new RuntimeException(e);
@@ -78,6 +79,7 @@ public class MQTTService {
                 listTopics.add(getTopic(topicName));
             });
             mqttClient.subscribeToTopics(listTopics, listener);
+            System.out.println("Subscribe to topics" + listTopics);
         } catch (MqttException e) {
             throw new RuntimeException(e);
         }
