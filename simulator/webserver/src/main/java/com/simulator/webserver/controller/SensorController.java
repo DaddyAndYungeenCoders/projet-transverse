@@ -24,7 +24,7 @@ public class SensorController extends AbstractController<SensorEntity, SensorDTO
     @Override
     @PostMapping("/create")
     public ResponseEntity<SensorEntity> create(@RequestBody SensorDTO sensor) {
-        System.out.println("[REST] - Request to create a fire-station " + sensor);
+        System.out.println("[REST] - Request to create a sensor " + sensor);
         ResponseEntity<SensorEntity> result = this.sensorHandlerService.createSensor(sensor)
                 .map(fire -> ResponseEntity.ok().body(fire))
                 .orElseGet(() -> ResponseEntity.notFound().build());
