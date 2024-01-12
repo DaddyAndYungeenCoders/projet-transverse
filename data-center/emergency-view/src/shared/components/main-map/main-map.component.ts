@@ -1,7 +1,14 @@
-import { AfterViewInit, Component } from '@angular/core';
-import { NgClass, NgForOf, NgIf } from '@angular/common';
-import { Coordinates } from '../../types/interfaces/Coordinates';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {NgClass, NgForOf, NgIf} from '@angular/common';
+import {Coordinates} from '../../types/interfaces/Coordinates';
 import * as L from 'leaflet';
+import {FireMarkerService} from '../../services/fire-marker-service.service';
+import {Subscription} from 'rxjs';
+import {InterventionMarkerService} from '../../services/intervention-marker-service.service';
+import {FirestationMarkerService} from '../../services/firestation-marker-service.service';
+import {SensorMarkerService} from '../../services/sensor-marker-service';
+import {StompService} from '../../services/StompService';
+import * as jsonPolygon from './polygon.json';
 
 @Component({
   selector: 'app-main-map',
@@ -10,14 +17,59 @@ import * as L from 'leaflet';
   templateUrl: './main-map.component.html',
   styleUrl: './main-map.component.scss',
 })
-export class MainMapComponent implements AfterViewInit {
+export class MainMapComponent implements OnInit, AfterViewInit {
   map!: L.Map;
+  isInMenuCreationMode: boolean = false;
+  $isInCreationSubscription: Subscription = new Subscription();
+
   private defaultZoomLevel = 20;
+  constructor(
+    private fireStationMarkerService: FirestationMarkerService,
+    private interventionMarkerService: InterventionMarkerService,
+    private fireMarkerService: FireMarkerService,
+    private stompService: StompService,
+    private sensorMarkerService: SensorMarkerService
+  ) {}
 
-  constructor() { }
-
+  ngOnInit(): void {
+    this.stompService.subscribe("/topic/fire-event", () => {
+      this.refreshFires()
+    });
+  }
   ngAfterViewInit() {
     this.mountMap(); // Creating the map
+    this.map.setZoom(19); // to avoid display bug
+    this.fetchAll(); // fetching all elements once when starting
+    const latlngs = this.extractData(jsonPolygon);
+    let polygon = L.polygon(latlngs, {color: 'red'}).addTo(this.map);
+  }
+
+  private extractData(data: any): any[] {
+    if (data.type === 'MultiPolygon' && data.coordinates && data.coordinates.length > 0) {
+      const coordinates = data.coordinates[0][0];
+
+      return coordinates.map((coord: [number, number]) => {
+        return {lat: coord[1], lng: coord[0]};
+      });
+    } else {
+      console.error('Le fichier JSON ne correspond pas au format attendu.');
+      return [];
+    }
+  }
+
+
+  private refreshFires() {
+    this.fireMarkerService.fetchAll(this.map);
+  }
+  private refreshIntervention() {
+    console.log("here move intervention"); // TODO
+  }
+
+  private fetchAll() {
+    this.fireMarkerService.fetchAll(this.map);
+    this.fireStationMarkerService.fetchAll(this.map);
+    this.interventionMarkerService.fetchAll(this.map);
+    this.sensorMarkerService.fetchAll(this.map);
   }
 
   private mountMap() {
@@ -29,6 +81,8 @@ export class MainMapComponent implements AfterViewInit {
     this.map = L.map('map', {
       center: [parc.lat, parc.lng],
       zoom: this.defaultZoomLevel,
+      attributionControl: false,
+      zoomControl: false,
     });
 
     const mainLayer = L.tileLayer(

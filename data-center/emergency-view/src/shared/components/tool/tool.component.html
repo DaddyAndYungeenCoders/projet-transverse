@@ -1,0 +1,15 @@
+<div class="tool-container" (click)="handle()">
+  <ng-container *ngTemplateOutlet="filter"></ng-container>
+</div>
+
+<ng-template #filter>
+  <div *ngIf="imagePath.trim()" class="icon-container">
+    <fa-icon [icon]="image"/>
+  </div>
+
+  <div class="text-container">
+    <span class="text">
+      {{ text }}
+    </span>
+  </div>
+</ng-template>
