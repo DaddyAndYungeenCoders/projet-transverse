@@ -86,4 +86,11 @@ public class FireEventService {
     public void onReceiveActorEvent() {
         // Implementation
     }
+    public static java.sql.Date convertUtilToSqlDate(java.util.Date utilDate) {
+        if (utilDate == null) {
+            throw new IllegalArgumentException("The provided date is null");
+        }
+        long timeInMillis = utilDate.getTime();
+        return new java.sql.Date(timeInMillis);
+    }
 }
