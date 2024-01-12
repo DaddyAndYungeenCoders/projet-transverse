@@ -9,12 +9,13 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
 
+@EqualsAndHashCode(callSuper = false)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class FireEventDTO implements Serializable {
+public class FireEventDTO extends BaseDTO implements Serializable {
     private Long id;
     private Coords coords;
     private int realIntensity;
