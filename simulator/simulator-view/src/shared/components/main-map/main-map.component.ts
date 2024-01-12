@@ -1,14 +1,15 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { NgClass, NgForOf, NgIf } from '@angular/common';
-import { Coordinates } from '../../types/interfaces/Coordinates';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {NgClass, NgForOf, NgIf} from '@angular/common';
+import {Coordinates} from '../../types/interfaces/Coordinates';
 import * as L from 'leaflet';
-import { FireCreationService } from '../../services/fire-creation.service';
-import { FireMarkerService } from '../../services/fire-marker-service.service';
-import { Subscription } from 'rxjs';
+import {FireCreationService} from '../../services/fire-creation.service';
+import {FireMarkerService} from '../../services/fire-marker-service.service';
+import {Subscription} from 'rxjs';
 import {InterventionMarkerService} from '../../services/intervention-marker-service.service';
 import {FirestationMarkerService} from '../../services/firestation-marker-service.service';
 import {SensorMarkerService} from '../../services/sensor-marker-service';
 import {StompService} from '../../services/StompService';
+import * as jsonPolygon from './polygon.json';
 
 @Component({
   selector: 'app-main-map',
@@ -50,7 +51,23 @@ export class MainMapComponent implements OnInit, AfterViewInit {
     this.map.setZoom(19); // to avoid display bug
     this.map.on('click', (e) => this.createFireEvent(e));
     this.fetchAll(); // fetching all elements once when starting
+    const latlngs = this.extractData(jsonPolygon);
+    let polygon = L.polygon(latlngs, {color: 'red'}).addTo(this.map);
   }
+
+  private extractData(data: any): any[] {
+    if (data.type === 'MultiPolygon' && data.coordinates && data.coordinates.length > 0) {
+      const coordinates = data.coordinates[0][0];
+
+      return coordinates.map((coord: [number, number]) => {
+        return {lat: coord[1], lng: coord[0]};
+      });
+    } else {
+      console.error('Le fichier JSON ne correspond pas au format attendu.');
+      return [];
+    }
+  }
+
 
   private refreshFires() {
     this.fireMarkerService.fetchAll(this.map);
