@@ -37,7 +37,7 @@ mqttService.deconnection();
 public class MQTTService {
     String clientName = "emergency_simulator";
     String brokerUrl = "127.0.0.1:1883";
-    String topics_yaml = "config/mqtt_topics.yaml";
+    String topics_yaml = "config/topics.yaml";
     Map<String, String> topics;
     MQTTClient mqttClient;
 

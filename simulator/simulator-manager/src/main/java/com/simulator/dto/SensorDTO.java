@@ -14,13 +14,11 @@ import java.io.Serializable;
 @Setter
 public class SensorDTO extends BaseDTO implements Serializable {
     private Long id;
-    private CoordsEntity coords;
     private int intensity;
 
     public static SensorEntity toEntity(SensorDTO sensorDTO) {
         SensorEntity entity = new SensorEntity();
         entity.setId(sensorDTO.getId());
-        entity.setCoords(sensorDTO.getCoords());
         entity.setIntensity(sensorDTO.getIntensity());
         return entity;
     }

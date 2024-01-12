@@ -20,7 +20,9 @@ def post_new_fire_event(url, data):
 
 def put_new_sensor_values(url, data):
     try:
-        res = requests.put(url, data)
+        logger.info(f"Updating sensor values {data} to {url}")
+        headers = {'Content-Type': 'application/json'}
+        res = requests.put(url, json=data, headers=headers)
         if res.status_code == 200:
             logger.info(f"The new sensor values {data} were properly updated. Status code : {res.status_code}")
         else:

@@ -1,8 +1,10 @@
 package com.simulator.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.simulator.config.AppConfig;
 import com.simulator.dto.FireEventDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,8 +15,9 @@ import com.simulator.models.SensorEntity;
 public class FireEventService {
 
     ObjectMapper objectMapper = new ObjectMapper();
-    HTTPService httpService = new HTTPService();
+//    HTTPService httpService = new HTTPService();
     SensorService sensorService = new SensorService();
+    PostService postService = new PostService();
 
     public FireEventService() {
         start();
@@ -30,12 +33,17 @@ public class FireEventService {
                     FireEventDTO fireEventDTO = objectMapper.readValue(message.toString(), FireEventDTO.class);
                     FireEventEntity fireEvent = fireEventDTO.toEntity();
                     System.out.println("fireEvent : " + fireEvent);
-                    List<SensorEntity> sensorEntities = httpService.getSensorEntities();
+//                    List<SensorEntity> sensorEntities = httpService.getSensorEntities();
+                    String response = postService.GET(AppConfig.getWebServerURL() + "/api/sensor/fetch-all");
+                    System.out.println("Server Response : " + response);
 
+                    List<SensorEntity> sensorEntities = SensorService.convertJsonToSensorEntities(response);
+                    System.out.println(sensorEntities);
                     SensorEntity nearestSensor = sensorService.findNearestSensor(sensorEntities, fireEvent.getCoords());
                     nearestSensor.setIntensity(fireEvent.getReal_intensity());
+                    System.out.println("Nearest : " + nearestSensor.getId());
                     String json = objectMapper.writeValueAsString(nearestSensor);
-                    mqttService.publish("simulator-view.sensor-changed", json);
+                    mqttService.publish("simulator.new-sensor-value", json);
                 } catch (JsonProcessingException e) {
                     e.printStackTrace(); // Handle or log the exception
                 }
