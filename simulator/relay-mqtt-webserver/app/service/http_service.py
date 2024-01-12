@@ -5,7 +5,9 @@ from app.core.config_utils import logger
 
 def post_new_fire_event(url, data):
     try:
-        res = requests.post(url, data)
+        headers = {'Content-Type': 'application/json'}
+        res = requests.post(url, json=data, headers=headers)
+
         if res.status_code == 200:
             logger.info(f"The new fire_event {data} was properly sent to {url}")
         else:
@@ -14,8 +16,7 @@ def post_new_fire_event(url, data):
         logger.error(f"It appears that there was a problem connecting to the WebServer at {url}...")
         logger.error(e)
     except BaseException as e:
-        logger.error(f"It appears that there was a problem connecting to the WebServer at {url}...")
-        logger.error(e)
+        logger.error(f"Something went wrong : {e}")
 
 
 def put_new_sensor_values(url, data):
@@ -31,5 +32,4 @@ def put_new_sensor_values(url, data):
         logger.error(f"It appears that there was a problem connecting to the WebServer at {url}...")
         logger.error(e)
     except BaseException as e:
-        logger.error(f"It appears that there was a problem connecting to the WebServer at {url}...")
-        logger.error(e)
+        logger.error(f"Something went wrong : {e}")

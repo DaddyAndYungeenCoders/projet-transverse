@@ -1,3 +1,4 @@
+import json
 import os
 import sys
 
@@ -14,7 +15,8 @@ def publish_fire_event(fire_event):
     from core.mqtt_client import MqttClient
 
     mqtt_client = MqttClient(MQTT_CLIENT_NAME)
-    mqtt_client.publish_message(RF2_FIRE_EVENT_TOPIC, fire_event)
+
+    mqtt_client.publish_message(RF2_FIRE_EVENT_TOPIC, json.dumps(fire_event))
 
 
 def post_fire_event(fire_event):

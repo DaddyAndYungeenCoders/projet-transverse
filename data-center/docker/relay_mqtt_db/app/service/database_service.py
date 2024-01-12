@@ -3,8 +3,16 @@ import sys
 from datetime import datetime
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from core.config_utils import logger
+from core.database_manager import DatabaseManager
 
-from main import db
+# from main import db
+
+try:
+    db = DatabaseManager()
+    logger.info(f"Successfully connected to database (Org: {db.org})")
+except BaseException as e:
+    logger.error(f"It seems there was an error initializing Database : {e}").org = os.getenv("INFLUXDB_V2_ORG")
 
 
 def save_intervention(intervention):
@@ -30,20 +38,19 @@ def save_intervention(intervention):
 
 def save_fire_event(fire_event_json):
     # save data in influx db
-    id = fire_event_json["id"]
+    sensor_id = fire_event_json["id"]
     intensity = fire_event_json["intensity"]
+    time = fire_event_json["startDate"]
     json_body = {
         "measurement": "fire_event",
         "tags": {
             "fire": "true",
-            "sensor": f"sensor{id}"
+            "sensor": f"sensor_{sensor_id}"
         },
-        "time": datetime.utcnow().isoformat() + "Z",
+        "time": f"{time}Z",
         "fields": {
-            "id": id,
+            "id": sensor_id,
             "intensity": intensity
         }
     }
     db.insert_data(json_body)
-
-    # data_fire = db.get_data("fire_event")

@@ -28,9 +28,8 @@ def process_data_from_serial():
                 message_str = message.decode('utf-8')
 
                 logger.info("(SERIAL) received: " + message_str)
-                fire_event_json = compute_uart_to_json(message_str)
-                logger.info(f"Converted to JSON : {fire_event_json}")
-                # fire_event_json = json.loads(message_str)
+                fire_event_json = compute_uart_to_obj(message_str)
+                logger.info(f"Converted to JSON Object : {fire_event_json}")
 
                 # Publish fire_event to Broker
                 publish_fire_event(json.dumps(fire_event_json))
@@ -38,9 +37,10 @@ def process_data_from_serial():
                 post_fire_event(fire_event_json)
 
 
-def compute_uart_to_json(data):
+def compute_uart_to_obj(data):
     fire_event_id, intensity = extract_data_from_serial(data)
-    return {"id": fire_event_id, "intensity": intensity, "timestamp": datetime.now().isoformat()}
+    datetime_now = datetime.utcnow()
+    return {"id": fire_event_id, "intensity": intensity, "timestamp": str(datetime_now)}
 
 
 def extract_data_from_serial(data):

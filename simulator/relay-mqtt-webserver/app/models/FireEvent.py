@@ -1,10 +1,13 @@
-from pydantic import BaseModel
-from typing import Optional
 from datetime import datetime
+from typing import Optional
+
+from pydantic import BaseModel
+
 
 class Coords(BaseModel):
     latitude: float
     longitude: float
+
 
 class FireEvent(BaseModel):
     id: int

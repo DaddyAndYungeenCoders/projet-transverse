@@ -25,10 +25,10 @@ def on_message(client, userdata, message):
         try:
             fire_event_str = message.payload.decode("utf-8")
             fire_event = json.loads(fire_event_str)
-            if isinstance(fire_event, FireEvent):
-                save_fire_event(fire_event)
-            else:
-                logger.warn(f"Received invalid fire_event object : {fire_event}")
+            # if isinstance(fire_event, FireEvent):
+            save_fire_event(fire_event)
+            # else:
+            #     logger.warn(f"Received invalid fire_event object : {fire_event}")
 
         except json.JSONDecodeError as e:
             logger.error(f"Error decoding message: {e}")
