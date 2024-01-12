@@ -20,19 +20,20 @@ def on_message(client, userdata, message):
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
         logger.info("Successfully connected to Broker %s:%s", os.getenv('BROKER_IP'), os.getenv('BROKER_PORT'))
-        res = ""
-        current_tries = 0
-        while res != 0 and current_tries < MAX_SUB_RETRY:
-            current_tries += 1
-            res = client.subscribe(TOPICS_TO_SUBSCRIBE)
-            if res[0] == 0:
-                logger.info("Successfully subscribed to topics")
-                break
-            else:
-                logger.warn("It seems that there was an error (error code: %s), reattempting... %d tries left",
-                            str(res),
-                            MAX_SUB_RETRY - current_tries)
-            time.sleep(1)
+        if TOPICS_TO_SUBSCRIBE:
+            res = ""
+            current_tries = 0
+            while res != 0 and current_tries < MAX_SUB_RETRY:
+                current_tries += 1
+                res = client.subscribe(TOPICS_TO_SUBSCRIBE)
+                if res[0] == 0:
+                    logger.info("Successfully subscribed to topics")
+                    break
+                else:
+                    logger.warn("It seems that there was an error (error code: %s), reattempting... %d tries left",
+                                str(res),
+                                MAX_SUB_RETRY - current_tries)
+                time.sleep(1)
     else:
         logger.error("Error while attempting to connect to Broker, return code : %d", rc)
 
