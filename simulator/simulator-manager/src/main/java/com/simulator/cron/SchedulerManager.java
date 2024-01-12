@@ -3,6 +3,8 @@ package com.simulator.cron;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
+import java.util.Random;
+
 public class SchedulerManager {
     public void startScheduler() {
         try {
@@ -17,6 +19,7 @@ public class SchedulerManager {
                     .withIdentity("cronTrigger", "cronGroup")
                     .withSchedule(CronScheduleBuilder.cronSchedule("0 * * ? * *")) // Cron expression for every minute
                     .build();
+
 
             scheduler.scheduleJob(job, trigger);
         } catch (SchedulerException se) {

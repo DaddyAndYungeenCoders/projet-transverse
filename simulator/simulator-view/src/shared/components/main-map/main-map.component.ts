@@ -37,9 +37,9 @@ export class MainMapComponent implements OnInit, AfterViewInit {
     this.stompService.subscribe("/topic/fire-event", () => {
       this.refreshFires()
     });
-    this.stompService.subscribe("/topic/intervention", () => {
-      this.refreshIntervention()
-    });
+//     this.stompService.subscribe("/topic/intervention", () => {
+//       this.refreshIntervention()
+//     });
     this.$isInCreationSubscription =
       this.fireCreationService.$isInCreationState.subscribe((isCreating) => {
         this.isInMenuCreationMode = isCreating;
