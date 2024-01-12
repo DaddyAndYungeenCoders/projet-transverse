@@ -14,7 +14,8 @@ SERVER_CERT="${OUTPUT_DIR}/brokerServer.crt"
 openssl genrsa -out "${SERVER_KEY}" 2048
 
 # Générer la demande de certificat (CSR)
-openssl req -new -out "${SERVER_CSR}" -key "${SERVER_KEY}" -subj "/C=FR/ST=Rhone/L=Lyon/O=DaddyYungees/OU=DY/CN=BrokerServer"
+openssl req -new -out "${SERVER_CSR}" -key "${SERVER_KEY}" -subj "/C=FR/ST=Rhone/L=Lyon/O=DaddyYungees/OU=DY/CN=BrokerServer" -reqexts SAN -config <(echo "[req]"; echo "distinguished_name=req"; echo "[SAN]"; echo "subjectAltName=DNS:localhost,DNS:local.broker")
+
 
 # Afficher les informations de la demande de certificat
 openssl req -in "${SERVER_CSR}" -noout -text

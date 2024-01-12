@@ -24,6 +24,7 @@ class MqttClient:
             certfile='app/config/certs/actorClient.crt',
             keyfile='app/config/certs/actorClient.key'
         )
+        self.client.tls_insecure_set(True)
         self.client.username_pw_set(username=self.user, password=self.pw)
         self.client.on_connect = on_connect
         self.client.on_disconnect = on_disconnect

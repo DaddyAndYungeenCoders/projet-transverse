@@ -14,7 +14,8 @@ services:
       - ./mosquitto/certs/brokerServer.crt:/brokerServer.crt
       - ./mosquitto/certs/brokerServer.key:/brokerServer.key
     ports:
-      - "1883:1883"
+      # - "1883:1883"
+      - "8883:8883"
       - "9001:9001"
   influxdb:
     image: influxdb:2.0
