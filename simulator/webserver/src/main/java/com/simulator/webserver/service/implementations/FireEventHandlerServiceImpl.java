@@ -1,19 +1,30 @@
 package com.simulator.webserver.service.implementations;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simulator.webserver.dto.FireEventDTO;
 import com.simulator.webserver.models.FireEventEntity;
 import com.simulator.webserver.repository.FireEventRepository;
 import com.simulator.webserver.service.interfaces.FireEventHandlerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class FireEventHandlerServiceImpl implements FireEventHandlerService {
     @Autowired
     private FireEventRepository fireEventRepository;
+    private RestTemplate restTemplate = new RestTemplate();
+    private HttpHeaders headers = new HttpHeaders();
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public Optional<FireEventEntity> createFireEvent(FireEventDTO fireEventDTO) {
@@ -23,7 +34,23 @@ public class FireEventHandlerServiceImpl implements FireEventHandlerService {
         entity.setEnd_date(null);
         entity.setStart_date(fireEventDTO.getStartDate());
         entity.setReal_intensity(fireEventDTO.getRealIntensity());
+
+        sendFireEventToManager("http://127.0.0.1:8000", fireEventDTO);
         return Optional.of(fireEventRepository.save(entity));
+    }
+
+    private void sendFireEventToManager(String url, FireEventDTO fireEventDTO){
+        try {
+            String json = objectMapper.writeValueAsString(fireEventDTO);
+            HttpEntity<String> requestEntity = new HttpEntity<>(json, headers);
+            String response = restTemplate.exchange(url + "/api/view/fire-event/", HttpMethod.POST, requestEntity, String.class).getBody();
+
+            // Affiche la réponse
+            log.debug("Réponse du serveur : {}", response);
+        } catch (JsonProcessingException e) {
+            // Gérer l'exception, par exemple en l'affichant
+            e.printStackTrace();
+        }
     }
 
     @Override
