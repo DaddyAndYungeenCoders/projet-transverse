@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="552d4d35-734e-490b-a043-1ec0b0c9c181" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/cron/CronJob.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/cron/SchedulerManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/log4j.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/service/FireEventService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/service/FireEventService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/cron/CronJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/cron/CronJob.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
