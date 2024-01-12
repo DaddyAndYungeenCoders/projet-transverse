@@ -17,10 +17,12 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "preserveSymlinks": true,
             "outputPath": "dist/emergency-view",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
+              "src/polyfills.ts",
               "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
@@ -30,6 +32,7 @@
               "src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/pink-bluegrey.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -90,6 +93,7 @@
               "src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/pink-bluegrey.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -99,6 +103,6 @@
     }
   },
   "cli": {
-    "analytics": "167c5a0f-3d5d-4d2d-a4c5-651a421a0d1b"
+    "analytics": "09808d9d-0d4a-49c1-ac1e-5614cd7ef9e1"
   }
 }
