@@ -6,11 +6,11 @@ VALUES
     ('BobJohnson', 'pass123', '2024-01-03');
 
 -- Insertion de données dans la table Sensor
-INSERT INTO Sensor (latitude, longitude)
+INSERT INTO Sensor (latitude, longitude, intensity)
 VALUES
-    (45.7579, 4.8320),
-    (45.7640, 4.8357),
-    (45.7737, 4.8340);
+    (45.7579, 4.8320,0),
+    (45.7640, 4.8357,2),
+    (45.7737, 4.8340,3);
 
 -- Insertion de données dans la table FireEvent
 INSERT INTO FireEvent (latitude, longitude, real_intensity, start_date, end_date, is_real)
