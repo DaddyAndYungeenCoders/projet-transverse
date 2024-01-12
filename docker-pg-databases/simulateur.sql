@@ -11,7 +11,8 @@ CREATE TABLE Users (
 CREATE TABLE Sensor (
     id SERIAL PRIMARY KEY,
     latitude FLOAT,
-    longitude FLOAT
+    longitude FLOAT,
+    intensity INT
 );
 
 CREATE TABLE FireEvent (

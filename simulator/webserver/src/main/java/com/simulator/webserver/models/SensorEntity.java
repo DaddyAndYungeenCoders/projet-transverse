@@ -21,11 +21,13 @@ public class SensorEntity extends BaseEntity implements Serializable {
     private Long id;
     @Embedded
     private Coords coords;
+    private int intensity;
 
     public static SensorDTO toDTO(SensorEntity sensorEntity) {
         SensorDTO dto = new SensorDTO();
         dto.setId(sensorEntity.getId());
         dto.setCoords(sensorEntity.getCoords());
+        dto.setIntensity(sensorEntity.getIntensity());
         return dto;
     }
 }

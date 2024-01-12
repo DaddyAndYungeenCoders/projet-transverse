@@ -8,13 +8,15 @@ public class SensorEntity implements Serializable {
 
     private Long id;
     private CoordsEntity coordsEntity;
+    private int intensity;
 
     public SensorEntity() {
     }
 
-    public SensorEntity(Long id, CoordsEntity coordsEntity) {
+    public SensorEntity(Long id, CoordsEntity coordsEntity, int intensity) {
         this.id = id;
         this.coordsEntity = coordsEntity;
+        this.intensity = intensity;
     }
 
     public Long getId() {
@@ -35,5 +37,13 @@ public class SensorEntity implements Serializable {
 
     public List<DetectsEntity> getDetects() {
         return null;
+    }
+
+    public int getIntensity() {
+        return intensity;
+    }
+
+    public void setIntensite(int intensity) {
+        this.intensity = intensity;
     }
 }
