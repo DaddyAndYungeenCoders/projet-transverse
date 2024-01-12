@@ -13,6 +13,7 @@ if __name__ == '__main__':
         MqttClient(MQTT_CLIENT_NAME)
         try:
             db = DatabaseManager()
+            logger.info(f"Successfully connected to database (Org: {db.org})")
         except BaseException as e:
             logger.error(f"It seems there was an error initializing Database : {e}")
 
