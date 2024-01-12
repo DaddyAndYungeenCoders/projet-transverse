@@ -1,9 +1,12 @@
 import os
+import sys
 
-from core.config_utils import logger
 from dotenv import load_dotenv
 from influxdb_client import InfluxDBClient, WriteOptions
 from influxdb_client.client.write_api import SYNCHRONOUS
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from core.config_utils import logger
 
 load_dotenv()
 
