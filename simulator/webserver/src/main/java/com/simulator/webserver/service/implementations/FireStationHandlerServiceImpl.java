@@ -4,7 +4,6 @@ import com.simulator.webserver.dto.FireStationDTO;
 import com.simulator.webserver.models.FireStationEntity;
 import com.simulator.webserver.repository.FireStationRepository;
 import com.simulator.webserver.service.interfaces.FireStationHandlerService;
-import com.simulator.webserver.service.interfaces.mappers.FireStationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -22,7 +21,7 @@ public class FireStationHandlerServiceImpl implements FireStationHandlerService 
     public Optional<FireStationEntity> createFireStation(FireStationDTO fireStationDTO) {
         return Optional.of(
                 this.fireStationRepository.save(
-                        FireStationMapper.MAPPER.toEntity(fireStationDTO)
+                        FireStationDTO.toEntity(fireStationDTO)
                 ));
     }
 
@@ -47,7 +46,7 @@ public class FireStationHandlerServiceImpl implements FireStationHandlerService 
             return Optional.empty();
         }
         fireStationToUpdate
-                .map(fireStation -> FireStationMapper.MAPPER.toEntity(fireStationDTO));
+                .map(fireStation -> FireStationDTO.toEntity(fireStationDTO));
         return Optional.of(this.fireStationRepository.save(fireStationToUpdate.get()));
     }
 }

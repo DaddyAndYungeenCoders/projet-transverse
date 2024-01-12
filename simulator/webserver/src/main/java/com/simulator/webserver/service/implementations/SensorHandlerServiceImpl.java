@@ -4,7 +4,6 @@ import com.simulator.webserver.dto.SensorDTO;
 import com.simulator.webserver.models.SensorEntity;
 import com.simulator.webserver.repository.SensorRepository;
 import com.simulator.webserver.service.interfaces.SensorHandlerService;
-import com.simulator.webserver.service.interfaces.mappers.SensorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -22,7 +21,7 @@ public class SensorHandlerServiceImpl implements SensorHandlerService {
     public Optional<SensorEntity> createSensor(SensorDTO sensorDTO) {
         return Optional.of(
                 this.sensorRepository.save(
-                        SensorMapper.MAPPER.toEntity(sensorDTO)
+                        SensorDTO.toEntity(sensorDTO)
                 ));
     }
 
@@ -42,6 +41,6 @@ public class SensorHandlerServiceImpl implements SensorHandlerService {
             return Optional.empty();
         }
         sensorToUpdate
-                .map(sensorEntity -> SensorMapper.MAPPER.toEntity(sensorDTO));
+                .map(sensorEntity -> SensorDTO.toEntity(sensorDTO));
         return Optional.of(this.sensorRepository.save(sensorToUpdate.get()));    }
 }

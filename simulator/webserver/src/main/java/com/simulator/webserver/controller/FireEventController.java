@@ -17,21 +17,26 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/fire-event")
-public class FireEventController {
+public class FireEventController extends AbstractController<FireEventEntity, FireEventDTO> {
 
     private final FireEventHandlerService fireEventHandlerService;
 
+    @Override
     @PostMapping("/create")
-    public ResponseEntity<FireEventEntity> createFireEventFromView(@RequestBody FireEventDTO fireEvent) throws BadRequestException {
+    public ResponseEntity<FireEventEntity> create(@RequestBody FireEventDTO fireEvent) throws BadRequestException {
         System.out.println("[REST] - Request to create a fire " + fireEvent);
         System.out.println("[REST] - LES COORDS " + fireEvent.getCoords());
 
         if (!fireEvent.hasNecessaryValuesToCreate()) {
             throw new BadRequestException();
         } else {
-            return this.fireEventHandlerService.createFireEventFromView(fireEvent)
+            ResponseEntity<FireEventEntity> result = this.fireEventHandlerService.createFireEventFromView(fireEvent)
                     .map(fire -> ResponseEntity.ok().body(fire))
                     .orElseGet(() -> ResponseEntity.notFound().build());
+            
+            this.notifyFrontEnd();
+            
+            return result;
         }
     }
 
@@ -43,14 +48,19 @@ public class FireEventController {
         if (!fireEvent.hasNecessaryValuesToCreate()) {
             throw new BadRequestException();
         } else {
-            return this.fireEventHandlerService.createFireEvent(fireEvent)
+            ResponseEntity<FireEventEntity> result = this.fireEventHandlerService.createFireEvent(fireEvent)
                     .map(fire -> ResponseEntity.ok().body(fire))
                     .orElseGet(() -> ResponseEntity.notFound().build());
+            
+            this.notifyFrontEnd();
+
+            return result;
         }
     }
 
+    @Override
     @GetMapping("/fetch-all")
-    public ResponseEntity<List<FireEventDTO>> getAllFires() {
+    public ResponseEntity<List<FireEventDTO>> fetchAll() {
         List<FireEventDTO> fireEventDTOList = fireEventHandlerService.getAllFireEvents()
                 .map(fireEventEntities -> fireEventEntities.stream()
                         .map(FireEventEntity::toDTO)
@@ -69,15 +79,29 @@ public class FireEventController {
     
     @PutMapping("/update/{id}/{intensity}")
     public ResponseEntity<FireEventEntity> updateFireIntensityFromId(@PathVariable Long id, @PathVariable int intensity) {
-        return this.fireEventHandlerService.updateFireEvent(id, intensity)
+        ResponseEntity<FireEventEntity> result = this.fireEventHandlerService.updateFireEvent(id, intensity)
                 .map(fire -> ResponseEntity.ok().body(fire))
                 .orElseGet(() -> ResponseEntity.notFound().build());
+        
+        this.notifyFrontEnd();
+        
+        return result;
     }
 
+    @Override
     @PutMapping("/update/{id}")
-    public ResponseEntity<FireEventEntity> updateFireFromId(@PathVariable Long id, @RequestBody FireEventDTO fireEventDTO) {
-        return this.fireEventHandlerService.updateFireEvent(id, fireEventDTO)
+    public ResponseEntity<FireEventEntity> update(@PathVariable Long id, @RequestBody FireEventDTO fireEventDTO) {
+        ResponseEntity<FireEventEntity> result =  this.fireEventHandlerService.updateFireEvent(id, fireEventDTO)
                 .map(fire -> ResponseEntity.ok().body(fire))
                 .orElseGet(() -> ResponseEntity.notFound().build());
+
+        this.notifyFrontEnd();
+
+        return result;
+    }
+
+    @Override
+    String getEntityTopic() {
+        return "fire-event";
     }
 }
