@@ -10,6 +10,9 @@ services:
       - ./mosquitto/utils:/mosquitto/utils:rw
       - ./mosquitto/data:/mosquitto/data:rw
       - ./mosquitto/log:/mosquitto/log:rw
+      - ./mosquitto/certs/BrokerCA.crt:/BrokerCA.crt
+      - ./mosquitto/certs/brokerServer.crt:/brokerServer.crt
+      - ./mosquitto/certs/brokerServer.key:/brokerServer.key
     ports:
       - "1883:1883"
       - "9001:9001"

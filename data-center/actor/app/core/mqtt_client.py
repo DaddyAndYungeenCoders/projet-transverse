@@ -19,11 +19,11 @@ class MqttClient:
         self.pw = os.getenv("BROKER_PW")
 
         self.client = mqtt.Client(client_name)
-        # self.client.tls_set(
-        #     ca_certs='./server-ca.crt',
-        #     certfile='./client.crt',
-        #     keyfile='./client.key'
-        # )
+        self.client.tls_set(
+            ca_certs='app/config/certs/BrokerCA.crt',
+            certfile='app/config/certs/actorClient.crt',
+            keyfile='app/config/certs/actorClient.key'
+        )
         self.client.username_pw_set(username=self.user, password=self.pw)
         self.client.on_connect = on_connect
         self.client.on_disconnect = on_disconnect
