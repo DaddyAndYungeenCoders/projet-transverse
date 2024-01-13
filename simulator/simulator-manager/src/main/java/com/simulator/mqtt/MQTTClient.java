@@ -5,13 +5,8 @@ import com.simulator.utils.Topics;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.slf4j.Logger;
-import org.yaml.snakeyaml.Yaml;
 
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -21,9 +16,9 @@ public final class MQTTClient extends MqttAsyncClient {
     private static final int MAX_RECONNECT_ATTEMPTS = 3;
     private static final int RECONNECT_DELAY_SECONDS = 3;
     private static final int QOS = 1;
+    private static MQTTClient client;
     private int reconnectAttempts;
     private ScheduledExecutorService executorService;
-    private static MQTTClient client;
 
 
     private MQTTClient(String brokerUrl, String clientId) throws MqttException {

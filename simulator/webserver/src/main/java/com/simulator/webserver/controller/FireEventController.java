@@ -43,6 +43,8 @@ public class FireEventController extends AbstractController<FireEventEntity, Fir
     @PostMapping("/create")
     public ResponseEntity<FireEventEntity> create(@RequestBody FireEventDTO fireEvent) throws BadRequestException {
         System.out.println("[REST] - Request to create a fire " + fireEvent);
+        System.out.println("[REST] - LES COORDS " + fireEvent.getCoords());
+
         if (!fireEvent.hasNecessaryValuesToCreate()) {
             throw new BadRequestException();
         } else {

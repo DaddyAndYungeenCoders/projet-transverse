@@ -49,11 +49,7 @@ public class SensorController extends AbstractController<SensorEntity, SensorDTO
     @Override
     @GetMapping("/fetch-all")
     public ResponseEntity<List<SensorDTO>> fetchAll() {
-        List<SensorDTO> sensorDTOList = sensorHandlerService.getAllSensors()
-                .map(sensors -> sensors.stream()
-                        .map(SensorEntity::toDTO)
-                        .collect(Collectors.toList()))
-                .orElse(Collections.emptyList());
+        List<SensorDTO> sensorDTOList = sensorHandlerService.getAllSensors().map(sensors -> sensors.stream().map(SensorEntity::toDTO).collect(Collectors.toList())).orElse(Collections.emptyList());
 
         return ResponseEntity.ok(sensorDTOList);
     }

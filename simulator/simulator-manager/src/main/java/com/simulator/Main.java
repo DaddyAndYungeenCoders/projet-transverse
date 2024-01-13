@@ -1,19 +1,20 @@
 package com.simulator;
 
-import com.simulator.mqtt.MQTTClient;
-import com.simulator.service.FireEventService;
-import com.simulator.service.MQTTService;
-import org.eclipse.paho.client.mqttv3.MqttException;
-
-
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import com.simulator.cron.SchedulerManager;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Emergency Simulator Started!");
+        try {
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-        FireEventService fireEventService = new FireEventService();
+            SchedulerManager schedulerManager = new SchedulerManager();
+
+            executorService.submit(schedulerManager::startScheduler);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
