@@ -1,7 +1,5 @@
 package com.simulator.cron;
 
-import com.fasterxml.jackson.core.json.JsonReadFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simulator.models.CoordsEntity;
 import com.simulator.models.FireEventEntity;
 import com.simulator.service.FireEventService;
@@ -16,7 +14,6 @@ import org.quartz.JobExecutionException;
 
 import java.util.Arrays;
 import java.util.Date;
-
 import java.util.Random;
 
 public class CronJob implements Job {
@@ -42,9 +39,9 @@ public class CronJob implements Job {
         if (int_random == 0) {
             int upperboundRandomBoolean = 5;
             int randomBoolean = rand.nextInt(upperboundRandomBoolean);
-            Boolean trueFire = randomBoolean ==0;
+            Boolean trueFire = randomBoolean == 0;
             int upperboundIntensity = 10;
-            int intensity = 1+rand.nextInt(upperboundIntensity);
+            int intensity = 1 + rand.nextInt(upperboundIntensity);
             System.out.println("GONNA GENERATE A FIRE");
             System.out.println("CRON EXECUTED;");
             FireEventService fireEventService = new FireEventService();

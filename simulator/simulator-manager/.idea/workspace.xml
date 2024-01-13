@@ -5,19 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="552d4d35-734e-490b-a043-1ec0b0c9c181" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/cron/polygon.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/cron/test.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/Polygon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/cron/CronJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/cron/CronJob.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/cron/RandomCoords.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/cron/RandomCoords.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/log4j.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../simulator-view/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../simulator-view/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../simulator-view/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../simulator-view/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../simulator-view/src/shared/components/main-map/main-map.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../simulator-view/src/shared/components/main-map/main-map.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../simulator-view/src/shared/services/abstract-marker.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../simulator-view/src/shared/services/abstract-marker.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../simulator-view/src/shared/services/sensor-marker-service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../simulator-view/src/shared/services/sensor-marker-service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../simulator-view/src/shared/types/interfaces/MarkersTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../simulator-view/src/shared/types/interfaces/MarkersTypes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/cron/SchedulerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/cron/SchedulerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webserver/src/main/java/com/simulator/webserver/controller/SensorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/src/main/java/com/simulator/webserver/controller/SensorController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
