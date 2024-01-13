@@ -30,12 +30,12 @@ public class MQTTCallback implements MqttCallback {
         try {
             logger.info("Received message from topic: {}", s);
             logger.info("Message: {}", new String(message.getPayload()));
-            if (s.equals(Topics.ACTOR_FIRE_VALIDATION)) {
+            if (s.equals(Topics.getTopicName(Topics.ACTOR_FIRE_VALIDATION))) {
                 // received confirmation or whether fire is real or not.
                 // if it's real, start intervention
 
                 // if not, not doing anything special
-            } else if (s.equals(Topics.RF2_FIRE_EVENT)) {
+            } else if (s.equals(Topics.getTopicName(Topics.RF2_FIRE_EVENT))) {
                 // received new fire event, need to check if it's real or not
                 actorService.checkIfFireIsReal(new String(message.getPayload()));
             } else {
