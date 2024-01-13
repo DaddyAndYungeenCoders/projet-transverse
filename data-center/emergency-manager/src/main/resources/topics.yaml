@@ -1,10 +1,12 @@
 ---
 topics:
-  simulator-view.sensor-changed: "/simulator_view/sensor_changed"
-  simulator-view.fire-event: "/simulator_view/fire_event"
-  simulator.auto-fire-event: "/simulator/auto_fire_event"
-  simulator.new-sensor-value: "/simulator/new_sensor_value"
-  rf2.fire-event: "/rf2/fire_event"
   actor.fire-validation: "/actor/fire_validation"
   manager.intervention: "/manager/intervention"
   manager.finished-fire-event: "/manager/finished_fire_event"
+  manager.ask-validation: "/manager/ask_validation"
+  rf2.fire-event: "/rf2/fire_event"
+  simulator.auto-fire-event: "/simulator/auto_fire_event"
+  simulator.new-sensor-value: "/simulator/new_sensor_value"
+  simulator.team-position: "/simulator/team_position"
+  simulator-view.sensor-changed: "/simulator_view/sensor_changed"
+  simulator-view.fire-event: "/simulator_view/fire_event"

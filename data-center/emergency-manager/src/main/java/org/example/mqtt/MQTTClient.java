@@ -3,6 +3,7 @@ package org.example.mqtt;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.example.utils.LoggerUtil;
+import org.example.utils.Topics;
 import org.slf4j.Logger;
 import org.yaml.snakeyaml.Yaml;
 
@@ -23,8 +24,10 @@ public final class MQTTClient extends MqttAsyncClient {
     private int reconnectAttempts;
     private ScheduledExecutorService executorService;
     private static MQTTClient client;
-    String topics_path = "topics.yaml";
-    List<String> topicsToSubscribe = List.of("actor.fire-validation", "rf2.fire-event");
+    private static final String topics_path = "topics.yaml";
+    private static final List<String> topicsToSubscribe =
+            List.of(Topics.ACTOR_FIRE_VALIDATION,
+                    Topics.RF2_FIRE_EVENT);
 
     Map<String, String> topics;
     int qos = 1;
@@ -131,7 +134,7 @@ public final class MQTTClient extends MqttAsyncClient {
         try {
             InputStream input = getClass().getClassLoader().getResourceAsStream(configFile);
             if (input != null) {
-                TopicsConfig config = yaml.loadAs(input, TopicsConfig.class);
+                Topics config = yaml.loadAs(input, Topics.class);
                 topics = config.getTopics();
             } else {
                 // Gérer le cas où le fichier n'est pas trouvé

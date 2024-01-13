@@ -4,6 +4,7 @@ import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.example.utils.LoggerUtil;
+import org.example.utils.Topics;
 import org.slf4j.Logger;
 
 public class MQTTCallback implements MqttCallback {
@@ -26,12 +27,11 @@ public class MQTTCallback implements MqttCallback {
         try {
             logger.info("Received message from topic: {}", s);
             logger.info("Message: {}", new String(message.getPayload()));
-            if (s.equals("topic1")) {
+            if (s.equals(Topics.ACTOR_FIRE_VALIDATION)) {
                 // call appropiraite method
-            } else if (s.equals("topic2")) {
+            } else if (s.equals(Topics.RF2_FIRE_EVENT)) {
                 // call other func
-            }
-            else {
+            } else {
                 // should not happen
                 logger.error("Not a valid topic");
             }
