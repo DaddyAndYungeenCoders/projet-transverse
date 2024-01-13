@@ -1,22 +1,26 @@
 -- Création des types ENUM pour les champs enum
 CREATE TYPE validation_status AS ENUM ('0', '1', '2');
-CREATE TYPE product_type AS ENUM ('type1', 'type2', 'type3'); -- Remplacer 'type1', 'type2', 'type3' par les valeurs réelles
+CREATE TYPE product_type AS ENUM ('VSAV', 'EPA', 'FPT', 'CAR');
 
 -- Table Sensor
 CREATE TABLE Sensor (
     id SERIAL PRIMARY KEY,
-    coords INT[2]
+    latitude FLOAT,
+    longitude FLOAT,
+    intensity INT
 );
 
 -- Table FireEvent
 CREATE TABLE FireEvent (
     id SERIAL PRIMARY KEY,
-    coords INT[2],
+    latitude FLOAT,
+    longitude FLOAT,
     intensity INT,
     start_date TIMESTAMP,
     end_date TIMESTAMP,
     validation_status validation_status,
-    id_equipe_intervention INT
+    id_equipe_intervention INT,
+    is_handled BOOLEAN
 );
 
 -- Table historique
@@ -24,7 +28,7 @@ CREATE TABLE historique (
     sensor_id INT,
     fire_event_id INT,
     date_time TIMESTAMP,
-    intensite INT,
+    intensity INT,
     FOREIGN KEY (sensor_id) REFERENCES Sensor(id),
     FOREIGN KEY (fire_event_id) REFERENCES FireEvent(id)
 );
@@ -54,7 +58,8 @@ CREATE TABLE Team (
     id SERIAL PRIMARY KEY,
     chief_officer VARCHAR(50),
     stamina INT,
-    id_firestation INT
+    id_firestation INT,
+    is_available BOOLEAN
     -- Assumption: id_firestation is a foreign key referencing FireStation table
 );
 
@@ -75,7 +80,8 @@ CREATE TABLE FireStation (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50),
     address VARCHAR(50),
-    coords INT[2]
+    latitude FLOAT,
+    longitude FLOAT,
 );
 
 -- Table Team_Intervention_Reference
