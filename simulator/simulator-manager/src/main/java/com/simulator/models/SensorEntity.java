@@ -1,6 +1,7 @@
 package com.simulator.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.simulator.dto.SensorDTO;
 
 import java.io.Serializable;
 
@@ -22,6 +23,12 @@ public class SensorEntity implements Serializable {
         this.intensity = intensity;
     }
 
+    public SensorDTO toDTO() {
+        SensorDTO sensorDTO = new SensorDTO();
+        sensorDTO.setId(this.id);
+        sensorDTO.setIntensity(this.intensity);
+        return sensorDTO;
+    }
     public Long getId() {
         return id;
     }

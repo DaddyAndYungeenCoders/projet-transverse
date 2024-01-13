@@ -61,6 +61,7 @@ public class SensorController extends AbstractController<SensorEntity, SensorDTO
     @Override
     @PutMapping("/update/{id}")
     public ResponseEntity<SensorEntity> update(@PathVariable Long id, @RequestBody SensorDTO sensorDTO) {
+        System.out.println("[REST] - Request to update a sensor " + sensorDTO);
         ResponseEntity<SensorEntity> result = this.sensorHandlerService.updateSensor(id, sensorDTO)
                 .map(sensor -> ResponseEntity.ok().body(sensor))
                 .orElseGet(() -> ResponseEntity.notFound().build());
