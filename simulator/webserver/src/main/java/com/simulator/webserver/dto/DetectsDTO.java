@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DetectsDTO {
-    private Long id;
+    private Long idSensor;
+    private Long idFireEvent;
     private float intensity;
 }
