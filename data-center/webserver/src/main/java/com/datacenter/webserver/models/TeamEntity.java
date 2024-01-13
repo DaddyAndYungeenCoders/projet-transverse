@@ -19,9 +19,10 @@ public class TeamEntity extends BaseEntity {
     String chief_officer;
     int stamina;
     Long id_firestation;
+    private boolean is_available;
 
     @Override
-    public BaseDTO toDTO() {
-        return new TeamDTO(this.id, this.chief_officer, this.stamina, this.id_firestation);
+    public TeamDTO toDTO() {
+        return new TeamDTO(this.id, this.chief_officer, this.stamina, this.id_firestation, this.is_available);
     }
 }

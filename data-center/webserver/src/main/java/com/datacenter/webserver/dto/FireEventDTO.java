@@ -23,6 +23,8 @@ public class FireEventDTO extends BaseDTO implements Serializable {
     private Date startDate;
     private Date endDate;
     private ValidationStatus validationStatus;
+    private Long idEquipeIntervention;
+    private boolean isHandled;
 
     public boolean hasNecessaryValuesToCreate() {
         return (
@@ -35,6 +37,6 @@ public class FireEventDTO extends BaseDTO implements Serializable {
 
     @Override
     public FireEventEntity toEntity() {
-        return new FireEventEntity(this.id, this.coords, this.intensity, this.startDate, this.endDate, this.validationStatus);
+        return new FireEventEntity(this.id, this.coords, this.intensity, this.startDate, this.endDate, this.validationStatus, this.idEquipeIntervention, this.isHandled);
     }
 }

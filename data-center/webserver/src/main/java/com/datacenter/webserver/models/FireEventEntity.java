@@ -29,9 +29,11 @@ public class FireEventEntity extends BaseEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "validation_status")
     private ValidationStatus validation_status;
+    private Long id_equipe_intervention;
+    private boolean is_handled;
     
     @Override
     public FireEventDTO toDTO() {
-        return new FireEventDTO(this.id, this.coords, this.intensity, this.start_date, this.end_date, this.validation_status);
+        return new FireEventDTO(this.id, this.coords, this.intensity, this.start_date, this.end_date, this.validation_status, this.id_equipe_intervention, this.is_handled);
     }
 }

@@ -11,13 +11,14 @@ import lombok.*;
 @Getter
 @Setter
 public class TeamDTO extends BaseDTO {
-    Long id;
-    String chiefOfficer;
-    int stamina;
-    Long id_firestation;
+    private Long id;
+    private String chiefOfficer;
+    private int stamina;
+    private Long idFirestation;
+    private boolean isAvailable;
     
     @Override
     public TeamEntity toEntity() {
-        return new TeamEntity(this.id, this.chiefOfficer, this.stamina, this.id_firestation);
+        return new TeamEntity(this.id, this.chiefOfficer, this.stamina, this.idFirestation, this.isAvailable);
     }
 }
