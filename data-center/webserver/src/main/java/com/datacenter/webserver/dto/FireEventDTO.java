@@ -1,9 +1,9 @@
 
 package com.datacenter.webserver.dto;
 
-import com.datacenter.webserver.models.BaseEntity;
 import com.datacenter.webserver.models.Coords;
 import com.datacenter.webserver.models.FireEventEntity;
+import com.datacenter.webserver.models.ValidationStatus;
 import lombok.*;
 import org.springframework.util.ObjectUtils;
 
@@ -19,15 +19,15 @@ import java.sql.Date;
 public class FireEventDTO extends BaseDTO implements Serializable {
     private Long id;
     private Coords coords;
-    private int realIntensity;
+    private int intensity;
     private Date startDate;
     private Date endDate;
-    private boolean isReal;
+    private ValidationStatus validationStatus;
 
     public boolean hasNecessaryValuesToCreate() {
         return (
                 this.endDate == null
-                        && this.realIntensity > 0
+                        && this.intensity > 0
                         && this.startDate != null
                         && !ObjectUtils.isEmpty(this.coords)
         );
@@ -35,6 +35,6 @@ public class FireEventDTO extends BaseDTO implements Serializable {
 
     @Override
     public FireEventEntity toEntity() {
-        return new FireEventEntity(this.id, this.coords, this.realIntensity, this.startDate, this.endDate, this.isReal);
+        return new FireEventEntity(this.id, this.coords, this.intensity, this.startDate, this.endDate, this.validationStatus);
     }
 }

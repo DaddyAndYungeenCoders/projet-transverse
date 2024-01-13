@@ -1,5 +1,4 @@
 -- Création des types ENUM pour les champs enum
-CREATE TYPE validation_status AS ENUM ('0', '1', '2');
 CREATE TYPE product_type AS ENUM ('VSAV', 'EPA', 'FPT', 'CAR');
 
 -- Table Sensor
@@ -18,7 +17,7 @@ CREATE TABLE FireEvent (
     intensity INT,
     start_date TIMESTAMP,
     end_date TIMESTAMP,
-    validation_status validation_status,
+    validation_status VARCHAR(10),
     id_equipe_intervention INT,
     is_handled BOOLEAN
 );
@@ -81,7 +80,7 @@ CREATE TABLE FireStation (
     name VARCHAR(50),
     address VARCHAR(50),
     latitude FLOAT,
-    longitude FLOAT,
+    longitude FLOAT
 );
 
 -- Table Team_Intervention_Reference

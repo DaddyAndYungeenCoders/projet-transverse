@@ -1,12 +1,12 @@
 package com.datacenter.webserver.models;
 
-import com.datacenter.webserver.dto.BaseDTO;
 import com.datacenter.webserver.dto.FireEventDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -23,13 +23,15 @@ public class FireEventEntity extends BaseEntity implements Serializable {
     private Long id;
     @Embedded
     private Coords coords;
-    private int real_intensity;
+    private int intensity;
     private Date start_date;
     private Date end_date;
-    private boolean is_real;
-
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "validation_status")
+    private ValidationStatus validation_status;
+    
     @Override
     public FireEventDTO toDTO() {
-        return new FireEventDTO(this.getId(), this.getCoords(), this.getReal_intensity(), this.getStart_date(), this.getEnd_date(), this.is_real());
+        return new FireEventDTO(this.id, this.coords, this.intensity, this.start_date, this.end_date, this.validation_status);
     }
 }

@@ -2,7 +2,7 @@ package com.datacenter.webserver.service.implementations;
 
 import com.datacenter.webserver.dto.FireEventDTO;
 import com.datacenter.webserver.models.FireEventEntity;
-import com.datacenter.webserver.models.FiremanEntity;
+import com.datacenter.webserver.models.ValidationStatus;
 import com.datacenter.webserver.repository.FireEventRepository;
 import com.datacenter.webserver.service.interfaces.AbstractOrchestrationService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,13 +22,7 @@ public class FireEventHandlerServiceImpl extends AbstractOrchestrationService<Fi
     
     @Override
     public Optional<FireEventEntity> create(FireEventDTO fireEventDTO) {
-        FireEventEntity entity = new FireEventEntity();
-        entity.set_real(fireEventDTO.isReal());
-        entity.setCoords(fireEventDTO.getCoords());
-        entity.setEnd_date(null);
-        entity.setStart_date(fireEventDTO.getStartDate());
-        entity.setReal_intensity(fireEventDTO.getRealIntensity());
-        return Optional.of(this.repository.save(entity));
+        return Optional.of(this.repository.save(fireEventDTO.toEntity()));
     }
 
 
@@ -50,7 +44,7 @@ public class FireEventHandlerServiceImpl extends AbstractOrchestrationService<Fi
         }
         
         FireEventEntity fire = fireToUpdate.get();
-        fire.setReal_intensity(intensity);
+        fire.setIntensity(intensity);
         return Optional.of(this.repository.save(fire));
     }
 
@@ -65,15 +59,10 @@ public class FireEventHandlerServiceImpl extends AbstractOrchestrationService<Fi
         return Optional.of(this.repository.save(fire));
     }
 
-    public Optional<Boolean> isFireReal(Long id) {
-        Optional<FireEventEntity> fireEventEntity = this.repository.findById(id);
-        return fireEventEntity.map(FireEventEntity::is_real);
-    }
-
     //TODO Mapper with MapStruct instead of this function
     private void updateFireEventData(FireEventDTO fireEventDTO, FireEventEntity fireEventEntity) {
-        fireEventEntity.setReal_intensity(fireEventDTO.getRealIntensity());
-        fireEventEntity.set_real(fireEventDTO.isReal());
+        fireEventEntity.setIntensity(fireEventDTO.getIntensity());
+        fireEventEntity.setValidation_status(fireEventDTO.getValidationStatus());
         fireEventEntity.setStart_date(fireEventDTO.getStartDate());
         fireEventEntity.setCoords(fireEventDTO.getCoords());
     }
