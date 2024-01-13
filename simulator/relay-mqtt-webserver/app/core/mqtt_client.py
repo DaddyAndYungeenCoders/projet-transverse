@@ -41,6 +41,7 @@ class MqttClient:
             logger.info(f"Successfully connected to Broker at {self.broker_ip}:{self.broker_port} !")
         except BaseException as e:
             logger.error("It appears that there was an error while connecting to the Broker : %s", str(e))
+            logger.error(f"Broker at {self.broker_ip}:{self.broker_port} !")
         self.client.loop_start()
 
     def publish_message(self, topic, message):

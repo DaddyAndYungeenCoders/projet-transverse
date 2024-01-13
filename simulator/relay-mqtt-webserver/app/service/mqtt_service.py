@@ -1,5 +1,6 @@
 import os
 import time
+import json
 
 from app.core.config_utils import *
 from app.core.config_vars import topics, MAX_SUB_RETRY, TOPICS_TO_SUBSCRIBE, FIRST_RECONNECT_DELAY, MAX_RECONNECT_COUNT, \
@@ -17,6 +18,7 @@ def on_message(client, userdata, message):
 
     logger.info(f"Message received from {message.topic} : {message.payload.decode('utf-8')}")
     data = message.payload.decode('utf-8')
+    data_json = json.loads(data)
 
     if message.topic == AUTO_EVENT_SIM_TOPIC:
         logger.info("Received new fireEvent from Simulator")
@@ -26,8 +28,10 @@ def on_message(client, userdata, message):
     if message.topic == NEW_SENSOR_VALUES_TOPIC:
         logger.info("Received new sensor value from Simulator")
         # post new values of sensor to webserver, that was given by simulation from simulator
-        update_sensor_endpoint = format(NEW_SENSOR_VALUES, data["id"])
-        put_new_sensor_values(API_URL + update_sensor_endpoint, data)
+        update_sensor_endpoint = NEW_SENSOR_VALUES + str(data_json["id"])
+
+        # logger.info(values_to_send)
+        put_new_sensor_values(API_URL + update_sensor_endpoint, data_json)
 
 
 def on_connect(client, userdata, flags, rc):

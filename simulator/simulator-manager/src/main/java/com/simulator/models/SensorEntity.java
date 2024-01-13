@@ -1,17 +1,19 @@
 package com.simulator.models;
 
-import com.simulator.repository.DetectsRepository;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.simulator.dto.SensorDTO;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class SensorEntity implements Serializable {
 
+    @JsonProperty("id")
     private Long id;
+    @JsonProperty("coords")
     private CoordsEntity coordsEntity;
+    @JsonProperty("intensity")
     private int intensity;
 
-    DetectsRepository detectsRepository = new DetectsRepository();
     public SensorEntity() {
     }
 
@@ -21,6 +23,12 @@ public class SensorEntity implements Serializable {
         this.intensity = intensity;
     }
 
+    public SensorDTO toDTO() {
+        SensorDTO sensorDTO = new SensorDTO();
+        sensorDTO.setId(this.id);
+        sensorDTO.setIntensity(this.intensity);
+        return sensorDTO;
+    }
     public Long getId() {
         return id;
     }
@@ -37,15 +45,15 @@ public class SensorEntity implements Serializable {
         this.coordsEntity = coordsEntity;
     }
 
-    public List<DetectsEntity> getDetects() {
-        return detectsRepository.getDetectsBySensorId(this.id);
-    }
-
     public int getIntensity() {
         return intensity;
     }
 
-    public void setIntensite(int intensity) {
+    public void setIntensity(int intensity) {
         this.intensity = intensity;
+    }
+
+    public void setCoords(CoordsEntity coords) {
+        this.coordsEntity = coords;
     }
 }

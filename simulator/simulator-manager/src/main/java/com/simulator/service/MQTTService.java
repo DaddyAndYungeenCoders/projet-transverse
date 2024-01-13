@@ -1,6 +1,9 @@
 package com.simulator.service;
 
 import com.simulator.mqtt.MQTTClient;
+import com.simulator.utils.LoggerUtil;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.eclipse.paho.client.mqttv3.IMqttMessageListener;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -35,64 +38,43 @@ mqttService.deconnection();
 
  */
 public class MQTTService {
+    private static final Logger logger = LoggerFactory.getLogger(LoggerUtil.class);
     String clientName = "emergency_simulator";
     String brokerUrl = "127.0.0.1:1883";
-    String topics_yaml = "config/mqtt_topics.yaml";
-    Map<String, String> topics;
     MQTTClient mqttClient;
 
-    public MQTTService(){
+    public MQTTService() {
         try {
             mqttClient = MQTTClient.getClient(brokerUrl, clientName);
-            if (!mqttClient.isConnected()){
+            if (!mqttClient.isConnected()) {
                 mqttClient.connectToBroker();
             }
-
-            this.topics = mqttClient.loadTopicsFromConfig(topics_yaml);
-
+            while (!mqttClient.isConnected()) {
+                Thread.sleep(10);
+            }
 
 
         } catch (MqttException e) {
-            // Gérer l'exception de manière appropriée (journalisation, notification, etc.)
-            e.printStackTrace();
+            logger.error("There was an error getting the client...");
+            logger.error(String.valueOf(e));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public void publish(String topicName, String message){
+    public void publish(String topicName, String message) {
         try {
-            mqttClient.publishToBroker(getTopic(topicName), message);
+            mqttClient.publishToBroker(topicName, message);
         } catch (MqttException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public String getTopic(String topicsName){
-        return topics.get(topicsName);
-    }
-
-
-    public void subscribeToTopics(List<String> topicsName, IMqttMessageListener listener){
-        try {
-            List<String> listTopics = new ArrayList<>();
-            topicsName.forEach((topicName) -> {
-                listTopics.add(getTopic(topicName));
-            });
-            mqttClient.subscribeToTopics(listTopics, listener);
-        } catch (MqttException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void deconnection(){
+    public void deconnection() {
         try {
             mqttClient.disconnectFromBroker();
         } catch (MqttException e) {
             throw new RuntimeException(e);
         }
-    }
-
-
-    public boolean isConnected(){
-        return mqttClient.isConnected();
     }
 }

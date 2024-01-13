@@ -6,9 +6,11 @@ import com.simulator.webserver.dto.FireEventDTO;
 import com.simulator.webserver.dto.SensorDTO;
 import com.simulator.webserver.models.SensorEntity;
 import com.simulator.webserver.repository.SensorRepository;
+import com.simulator.webserver.service.PostService;
 import com.simulator.webserver.service.interfaces.SensorHandlerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -28,11 +30,14 @@ public class SensorHandlerServiceImpl implements SensorHandlerService {
     private RestTemplate restTemplate = new RestTemplate();
     private HttpHeaders headers = new HttpHeaders();
     private ObjectMapper objectMapper = new ObjectMapper();
+    private PostService postService = new PostService();
+    @Value("${relay.url}")
+    private String relayURL;
+    @Value("${passerelle.url}")
+    private String passerelleURL;
 
     @Override
     public Optional<SensorEntity> createSensor(SensorDTO sensorDTO) {
-        sendSensorUpdate("${relay.url}", sensorDTO);
-        sendSensorUpdate("${passerelle.url}", sensorDTO);
         return Optional.of(
                 this.sensorRepository.save(
                         SensorDTO.toEntity(sensorDTO)
@@ -56,8 +61,7 @@ public class SensorHandlerServiceImpl implements SensorHandlerService {
         }
         sensorToUpdate
                 .map(sensorEntity -> SensorDTO.toEntity(sensorDTO));
-//        sendSensorUpdate("${relay.url}", sensorDTO);
-        sendSensorUpdate("${passerelle.url}" , sensorDTO);
+        postService.sendObject(passerelleURL , sensorDTO);
 
         return Optional.of(this.sensorRepository.save(sensorToUpdate.get()));    }
 
