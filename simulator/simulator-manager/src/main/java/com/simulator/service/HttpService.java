@@ -6,11 +6,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
-public class PostService {
+public class HttpService {
     private RestTemplate restTemplate = new RestTemplate();
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    public String GET(String url) {
+    public String get(String url) {
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> requestEntity = new HttpEntity<>("", requestHeaders);

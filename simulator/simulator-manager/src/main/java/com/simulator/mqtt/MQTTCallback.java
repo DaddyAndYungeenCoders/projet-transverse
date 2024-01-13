@@ -9,8 +9,10 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.slf4j.Logger;
 
 public class MQTTCallback implements MqttCallback {
-    private static final Logger logger = LoggerUtil.getLogger();
+    private static final Logger logger = LoggerFactory.getLogger(LoggerUtil.class);
     private final MQTTClient mqttClient;
+    ActorService actorService = ActorService.getActorService();
+
 
     public MQTTCallback(MQTTClient mqttClient) {
         this.mqttClient = mqttClient;
@@ -27,11 +29,15 @@ public class MQTTCallback implements MqttCallback {
         try {
             logger.info("Received message from topic: {}", s);
             logger.info("Message: {}", new String(message.getPayload()));
-            if (s.equals(Topics.ACTOR_FIRE_VALIDATION)) {
-                // call appropiraite method
-            } else if (s.equals(Topics.RF2_FIRE_EVENT)) {
-                // call other func
-            } else if (s.equals(mqttClient.getTopicName(Topics.SIMULATOR_VIEW_FIRE_EVENT))){
+            if (s.equals(Topics.getTopicName(Topics.ACTOR_FIRE_VALIDATION))) {
+                // received confirmation or whether fire is real or not.
+                // if it's real, start intervention
+
+                // if not, not doing anything special
+            } else if (s.equals(Topics.getTopicName(Topics.RF2_FIRE_EVENT))) {
+                // received new fire event, need to check if it's real or not
+                actorService.checkIfFireIsReal(new String(message.getPayload()));
+            } else if (s.equals(mqttClient.getTopicName(Topics.SIMULATOR_VIEW_FIRE_EVENT))) {
                 FireEventService.OnFireEvent(new String(message.getPayload()));
             } else {
                 // should not happen
@@ -47,4 +53,4 @@ public class MQTTCallback implements MqttCallback {
         logger.info("Message succesfully published to topic : {}", (Object) iMqttDeliveryToken.getTopics());
     }
 
-}
+}}

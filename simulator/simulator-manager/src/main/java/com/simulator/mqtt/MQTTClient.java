@@ -20,16 +20,11 @@ public final class MQTTClient extends MqttAsyncClient {
     private static final Logger logger = LoggerUtil.getLogger();
     private static final int MAX_RECONNECT_ATTEMPTS = 3;
     private static final int RECONNECT_DELAY_SECONDS = 3;
-
+    private static final int QOS = 1;
     private int reconnectAttempts;
     private ScheduledExecutorService executorService;
     private static MQTTClient client;
-    private static final String topics_path = "topics.yaml";
-    private static final List<String> topicsToSubscribe =
-            List.of(Topics.SIMULATOR_VIEW_FIRE_EVENT);
 
-    Map<String, String> topics;
-    int qos = 1;
 
     private MQTTClient(String brokerUrl, String clientId) throws MqttException {
         super("tcp://" + brokerUrl, clientId, new MemoryPersistence());
@@ -60,9 +55,9 @@ public final class MQTTClient extends MqttAsyncClient {
             public void onSuccess(IMqttToken iMqttToken) {
                 logger.info("Successfully connected to Broker at {}", client.getServerURI());
                 try {
-                    String[] topicsArray = getTopicsArray();
+                    String[] topicsArray = Topics.getTopicsArray();
                     int[] qosLevels = new int[topicsArray.length];
-                    Arrays.fill(qosLevels, qos);
+                    Arrays.fill(qosLevels, QOS);
                     IMqttToken token = subscribe(topicsArray, qosLevels);
                     logger.info("Successfully subscribed to topics {}", (Object) topicsArray);
                     resetScheduler();
@@ -94,15 +89,6 @@ public final class MQTTClient extends MqttAsyncClient {
         });
     }
 
-    private String[] getTopicsArray() {
-        topics = loadTopicsFromConfig(topics_path);
-        List<String> listTopics = new ArrayList<>();
-        topicsToSubscribe.forEach((topic) -> {
-            listTopics.add(getTopicName(topic));
-        });
-
-        return listTopics.toArray(new String[0]);
-    }
 
     public void attemptReconnect() {
         reconnectAttempts++;
@@ -126,28 +112,5 @@ public final class MQTTClient extends MqttAsyncClient {
         client.publish(topic, mqttMessage);
     }
 
-    public Map<String, String> loadTopicsFromConfig(String configFile) {
-        Yaml yaml = new Yaml();
-        Map<String, String> topics = null;
 
-        try {
-            InputStream input = getClass().getClassLoader().getResourceAsStream(configFile);
-            if (input != null) {
-                Topics config = yaml.loadAs(input, Topics.class);
-                topics = config.getTopics();
-            } else {
-                // Gérer le cas où le fichier n'est pas trouvé
-                System.err.println("Fichier de configuration introuvable: " + configFile);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Erreur lors du chargement des sujets depuis le fichier de configuration.", e);
-        }
-
-        return topics;
-    }
-
-    public String getTopicName(String topicsName) {
-        return topics.get(topicsName);
-    }
 }
