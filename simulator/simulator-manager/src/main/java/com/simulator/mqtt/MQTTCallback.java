@@ -7,6 +7,7 @@ import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MQTTCallback implements MqttCallback {
     private static final Logger logger = LoggerFactory.getLogger(LoggerUtil.class);
