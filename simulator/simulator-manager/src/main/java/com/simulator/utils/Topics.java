@@ -1,6 +1,13 @@
 package com.simulator.utils;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.yaml.snakeyaml.Yaml;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Topics {
@@ -9,11 +16,14 @@ public class Topics {
     public static final String MANAGER_ASK_VALIDATION = "manager.ask-validation";
     public static final String MANAGER_FIRE_EVENT_FINISHED = "manager.fire-event-finished";
     public static final String MANAGER_INTERVENTION = "manager.intervention";
+    public static final String SIMULATOR_VIEW_FIRE_EVENT = "simulator-view.fire-event";
+    public static final String SIMULATOR_NEW_SENSOR_VALUE = "simulator.new-sensor-value";
     public static final String RF2_FIRE_EVENT = "rf2.fire-event";
     private static Map<String, String> topics;
     private static final String topics_path = "topics.yaml";
     private static final List<String> topicsToSubscribe =
-            List.of(Topics.SIMULATOR_VIEW_FIRE_EVENT);
+            List.of(Topics.SIMULATOR_VIEW_FIRE_EVENT,
+                    Topics.MANAGER_INTERVENTION);
 
     public void setTopics(Map<String, String> topics) {
         Topics.topics = topics;

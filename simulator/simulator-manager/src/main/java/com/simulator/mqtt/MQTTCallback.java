@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 public class MQTTCallback implements MqttCallback {
     private static final Logger logger = LoggerFactory.getLogger(LoggerUtil.class);
     private final MQTTClient mqttClient;
-    ActorService actorService = ActorService.getActorService();
 
 
     public MQTTCallback(MQTTClient mqttClient) {
@@ -37,8 +36,7 @@ public class MQTTCallback implements MqttCallback {
                 // if not, not doing anything special
             } else if (s.equals(Topics.getTopicName(Topics.RF2_FIRE_EVENT))) {
                 // received new fire event, need to check if it's real or not
-                actorService.checkIfFireIsReal(new String(message.getPayload()));
-            } else if (s.equals(mqttClient.getTopicName(Topics.SIMULATOR_VIEW_FIRE_EVENT))) {
+            } else if (s.equals(Topics.getTopicName(Topics.SIMULATOR_VIEW_FIRE_EVENT))) {
                 FireEventService.OnFireEvent(new String(message.getPayload()));
             } else {
                 // should not happen
@@ -54,4 +52,4 @@ public class MQTTCallback implements MqttCallback {
         logger.info("Message succesfully published to topic : {}", (Object) iMqttDeliveryToken.getTopics());
     }
 
-}}
+}

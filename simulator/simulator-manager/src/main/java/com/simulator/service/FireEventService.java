@@ -17,7 +17,7 @@ public class FireEventService {
     private static final String BASE_URL = "http://localhost:7777/api/fire-event";
     private static final ObjectMapper objectMapper = new ObjectMapper();
     static SensorService sensorService = new SensorService();
-    static PostService postService = new PostService();
+    static HttpService httpService = new HttpService();
     static MQTTService mqttService = new MQTTService();
 
     public FireEventService() {
@@ -36,8 +36,8 @@ public class FireEventService {
             FireEventDTO fireEventDTO = objectMapper.readValue(message.toString(), FireEventDTO.class);
             FireEventEntity fireEvent = fireEventDTO.toEntity();
             System.out.println("fireEvent : " + fireEvent);
-            // List<SensorEntity> sensorEntities = httpService.getSensorEntities();
-            String response = postService.GET(AppConfig.getWebServerURL() + "/api/sensor/fetch-all");
+//                    List<SensorEntity> sensorEntities = httpService.getSensorEntities();
+            String response = httpService.get(AppConfig.getWebServerURL() + "/api/sensor/fetch-all");
             System.out.println("Server Response : " + response);
 
             List<SensorEntity> sensorEntities = SensorService.convertJsonToSensorEntities(response);
