@@ -5,12 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="552d4d35-734e-490b-a043-1ec0b0c9c181" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/cron/RandomCoords.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/cron/polygon.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/cron/test.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/simulator/models/Polygon.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/cron/CronJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/cron/CronJob.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/cron/SchedulerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/cron/SchedulerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/simulator/cron/RandomCoords.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/simulator/cron/RandomCoords.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/log4j.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../simulator-view/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../simulator-view/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../simulator-view/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../simulator-view/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../simulator-view/src/shared/components/main-map/main-map.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../simulator-view/src/shared/components/main-map/main-map.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../simulator-view/src/shared/services/abstract-marker.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../simulator-view/src/shared/services/abstract-marker.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../simulator-view/src/shared/services/sensor-marker-service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../simulator-view/src/shared/services/sensor-marker-service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../simulator-view/src/shared/types/interfaces/MarkersTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../simulator-view/src/shared/types/interfaces/MarkersTypes.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +55,8 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ceift\Documents\Code\projet-transverse\simulator\simulator-manager\src\main\java\com\simulator\cron" />
+      <recent name="C:\Users\ceift\Documents\Code\projet-transverse\simulator\simulator-manager\src\main\java\com\simulator\ressources" />
       <recent name="C:\Users\ceift\Documents\Code\projet-transverse\simulator\simulator-manager\src\main\resources" />
     </key>
   </component>

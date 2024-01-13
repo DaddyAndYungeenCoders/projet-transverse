@@ -1,11 +1,12 @@
-import {Coords} from '../DTOs/Coords';
-import {IconMarkerTypes} from '../enum/IconType';
+import { Coords } from '../DTOs/Coords';
+import { IconMarkerTypes } from '../enum/IconType';
 
 export interface MarkerParameter {
-  coords: Coords,
-  type: IconMarkerTypes,
-  color: string,
-  intensity?: number
+  coords: Coords;
+  type: IconMarkerTypes;
+  color: string;
+  intensity?: number;
+  height?: number;
 }
 
 export interface MarkersTypes {
@@ -15,19 +16,18 @@ export interface MarkersTypes {
 }
 
 export interface FireMarkerType extends MarkersTypes {
-  markerType?: "fireMarkerType";
+  markerType?: 'fireMarkerType';
   size: number;
 }
 
 export interface FireStationMarkerType extends MarkersTypes {
-  markerType?: "fireStationMarkerType";
+  markerType?: 'fireStationMarkerType';
 }
 
 export interface InterventionMarkerType extends MarkersTypes {
-  markerType?: "interventionMarkerType";
+  markerType?: 'interventionMarkerType';
 }
 
 export interface SensorMarkerType extends MarkersTypes {
-  markerType?: "sensorMarkerType";
+  markerType?: 'sensorMarkerType';
 }
-

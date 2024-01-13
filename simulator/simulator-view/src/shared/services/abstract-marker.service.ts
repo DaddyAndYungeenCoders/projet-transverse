@@ -1,10 +1,20 @@
 import { Injectable } from '@angular/core';
 import { IconMarkerTypes } from '../types/enum/IconType';
-import {faDroplet, faFire, faHome, faSmoking, faPassport, IconDefinition} from '@fortawesome/free-solid-svg-icons';
+import {
+  faDroplet,
+  faFire,
+  faHome,
+  faSmoking,
+  faPassport,
+  IconDefinition,
+} from '@fortawesome/free-solid-svg-icons';
 import L from 'leaflet';
-import {MarkerParameter, MarkersTypes} from '../types/interfaces/MarkersTypes';
+import {
+  MarkerParameter,
+  MarkersTypes,
+} from '../types/interfaces/MarkersTypes';
 import { Map } from 'leaflet';
-import {Coords} from '../types/DTOs/Coords';
+import { Coords } from '../types/DTOs/Coords';
 
 @Injectable({
   providedIn: 'root',
@@ -21,26 +31,23 @@ export abstract class AbstractMarkerService<T extends MarkersTypes> {
       case IconMarkerTypes.FIREMAN:
         return faDroplet;
       case IconMarkerTypes.FIRESTATION:
-        return faHome
+        return faHome;
       case IconMarkerTypes.SENSOR:
-        return faPassport
+        return faPassport;
     }
-  };
+  }
 
   // TODO Fire station and intervention and sensor
   abstract fetchAll(map: Map): void;
 
-  createMarkers(
-    markerParams: MarkerParameter[],
-    map: L.Map,
-  ): void {
+  createMarkers(markerParams: MarkerParameter[], map: L.Map): void {
     markerParams.forEach((marker) => {
       const icon = this.getIconMarker(marker.type);
       const iconHtml = `<svg class="svg-inline--fa fa-w-16" aria-hidden="true" focusable="false" data-prefix="${icon.prefix}" data-icon="${icon.iconName}" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${icon.icon[0]} ${icon.icon[1]}" style="font-size: 24px;background-color:transparent; color: ${marker.color};"><path fill="currentColor" d="${icon.icon[4]}"></path></svg>`;
       new L.Marker([marker.coords.latitude, marker.coords.longitude], {
         icon: L.divIcon({
           html: iconHtml,
-          iconSize: [20, 20],
+          iconSize: marker.height ? [marker.height, marker.height] : [20, 20],
           className: 'custom-marker-icon',
         }),
       })
@@ -50,8 +57,12 @@ export abstract class AbstractMarkerService<T extends MarkersTypes> {
   }
 
   getObjectInfo(intensity?: number, coords?: Coords): any {
-    return "<span>Intensité du feu : " + intensity?.toString() + "</span><br/><button style=\"margin: 0.25rem auto auto; background-color: #870000; color: #ffffff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;\">\n" +
-    "  SUPPRIMER\n" +
-    "</button>"
-  };
+    return (
+      '<span>Intensité du feu : ' +
+      intensity?.toString() +
+      '</span><br/><button style="margin: 0.25rem auto auto; background-color: #870000; color: #ffffff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">\n' +
+      '  SUPPRIMER\n' +
+      '</button>'
+    );
+  }
 }
