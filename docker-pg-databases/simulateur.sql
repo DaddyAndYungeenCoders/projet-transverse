@@ -22,8 +22,7 @@ CREATE TABLE FireEvent (
     real_intensity INT,
     start_date TIMESTAMP,
     end_date TIMESTAMP,
-    is_real BOOLEAN,
-    is_handled BOOLEAN
+    is_real BOOLEAN
 );
 
 CREATE TABLE detects (
