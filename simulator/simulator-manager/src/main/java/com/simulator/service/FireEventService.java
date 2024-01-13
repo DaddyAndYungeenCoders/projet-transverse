@@ -1,25 +1,58 @@
 package com.simulator.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.simulator.models.CoordsEntity;
+import com.simulator.config.AppConfig;
+import com.simulator.dto.FireEventDTO;
 import com.simulator.models.FireEventEntity;
+import com.simulator.models.SensorEntity;
 import com.simulator.utils.HttpUtils;
+import com.simulator.utils.Topics;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.sql.Date;
+import java.util.List;
 
 public class FireEventService {
     private static final String BASE_URL = "http://localhost:7777/api/fire-event";
-
     // ObjectMapper is thread-safe and reusable. Creating it once and reusing it.
     private static final ObjectMapper MAPPER = new ObjectMapper();
+    static SensorService sensorService = new SensorService();
+    static PostService postService = new PostService();
+    static MQTTService mqttService = new MQTTService();
 
-    public FireEventService() {}
+    public FireEventService() {
+    }
+
+    public static java.sql.Date convertUtilToSqlDate(java.util.Date utilDate) {
+        if (utilDate == null) {
+            throw new IllegalArgumentException("The provided date is null");
+        }
+        long timeInMillis = utilDate.getTime();
+        return new java.sql.Date(timeInMillis);
+    }
+
+    public static void OnFireEvent(String message) {
+        try {
+            FireEventDTO fireEventDTO = objectMapper.readValue(message.toString(), FireEventDTO.class);
+            FireEventEntity fireEvent = fireEventDTO.toEntity();
+            System.out.println("fireEvent : " + fireEvent);
+//                    List<SensorEntity> sensorEntities = httpService.getSensorEntities();
+            String response = postService.GET(AppConfig.getWebServerURL() + "/api/sensor/fetch-all");
+            System.out.println("Server Response : " + response);
+
+            List<SensorEntity> sensorEntities = SensorService.convertJsonToSensorEntities(response);
+            System.out.println(sensorEntities);
+            SensorEntity nearestSensor = sensorService.findNearestSensor(sensorEntities, fireEvent.getCoords());
+            nearestSensor.setIntensity(fireEvent.getReal_intensity());
+            System.out.println("Nearest : " + nearestSensor.getId());
+            String json = objectMapper.writeValueAsString(nearestSensor.toDTO());
+            System.out.println("JSON sent to MQTT: " + json);
+            mqttService.publish(Topics.SIMULATOR_NEW_SENSOR_VALUE, json);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace(); // Handle or log the exception
+        }
+    }
 
     private String urlApi(String endpoint) {
         return BASE_URL + endpoint;
@@ -39,7 +72,7 @@ public class FireEventService {
 //         = new FireEventEntity(4L, new CoordsEntity(23.3, 23.1), 8, new Date(2024, 1, 10), null, true);
         try {
             String jsonInputString = MAPPER.writeValueAsString(fireEvent);
-            HttpURLConnection connection = setConnectionBaseParam("/create","POST");
+            HttpURLConnection connection = setConnectionBaseParam("/create", "POST");
 
             HttpUtils.sendJson(connection, jsonInputString);
             String response = HttpUtils.readResponse(connection);
@@ -49,13 +82,12 @@ public class FireEventService {
             System.out.println(e.getMessage());
         }
     }
-
 
     public void updateFireIntensity(Integer intensity, FireEventEntity fireEvent) {
         try {
             String jsonInputString = MAPPER.writeValueAsString(fireEvent);
 //            HttpURLConnection connection = setConnectionBaseParam("/update/"+fireEvent.getId(),"PUT");
-            HttpURLConnection connection = setConnectionBaseParam("/update/"+fireEvent.getId()+"/"+intensity,"PUT");
+            HttpURLConnection connection = setConnectionBaseParam("/update/" + fireEvent.getId() + "/" + intensity, "PUT");
 
             HttpUtils.sendJson(connection, jsonInputString);
             String response = HttpUtils.readResponse(connection);
@@ -66,10 +98,10 @@ public class FireEventService {
         }
     }
 
-    public void updateFire( FireEventEntity fireEvent) {
+    public void updateFire(FireEventEntity fireEvent) {
         try {
             String jsonInputString = MAPPER.writeValueAsString(fireEvent);
-            HttpURLConnection connection = setConnectionBaseParam("/update/"+fireEvent.getId(),"PUT");
+            HttpURLConnection connection = setConnectionBaseParam("/update/" + fireEvent.getId(), "PUT");
 
             HttpUtils.sendJson(connection, jsonInputString);
             String response = HttpUtils.readResponse(connection);
@@ -79,6 +111,7 @@ public class FireEventService {
             System.out.println(e.getMessage());
         }
     }
+
     public void onReceiveInterventionEvent() {
         // Implementation
     }
@@ -86,11 +119,5 @@ public class FireEventService {
     public void onReceiveActorEvent() {
         // Implementation
     }
-    public static java.sql.Date convertUtilToSqlDate(java.util.Date utilDate) {
-        if (utilDate == null) {
-            throw new IllegalArgumentException("The provided date is null");
-        }
-        long timeInMillis = utilDate.getTime();
-        return new java.sql.Date(timeInMillis);
-    }
 }
+

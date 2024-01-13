@@ -20,8 +20,9 @@ MAX_RECONNECT_DELAY = 60
 MAX_SUB_RETRY = 30
 QOS = 1
 ACTOR_VALIDATION_TOPIC = topics.get("actor.fire-validation")
+MANAGER_ASK_VALIDATION = topics.get("manager.ask-validation")
 TOPICS_TO_SUBSCRIBE = [
-    (ACTOR_VALIDATION_TOPIC, QOS)
+    (MANAGER_ASK_VALIDATION, QOS)
 ]
 
 # -------------------------------------- #

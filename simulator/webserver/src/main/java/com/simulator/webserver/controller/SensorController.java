@@ -25,7 +25,9 @@ public class SensorController extends AbstractController<SensorEntity, SensorDTO
     @PostMapping("/create")
     public ResponseEntity<SensorEntity> create(@RequestBody SensorDTO sensor) {
         System.out.println("[REST] - Request to create a sensor " + sensor);
-        ResponseEntity<SensorEntity> result = this.sensorHandlerService.createSensor(sensor).map(fire -> ResponseEntity.ok().body(fire)).orElseGet(() -> ResponseEntity.notFound().build());
+        ResponseEntity<SensorEntity> result = this.sensorHandlerService.createSensor(sensor)
+                .map(fire -> ResponseEntity.ok().body(fire))
+                .orElseGet(() -> ResponseEntity.notFound().build());
 
         this.notifyFrontEnd();
 
@@ -35,7 +37,9 @@ public class SensorController extends AbstractController<SensorEntity, SensorDTO
     @PostMapping("/create/generator")
     public ResponseEntity<SensorEntity> createSensorFromGenerator(@RequestBody SensorDTO sensor) {
         System.out.println("[REST] - Request to create a sensor " + sensor);
-        ResponseEntity<SensorEntity> result = this.sensorHandlerService.createSensor(sensor).map(fire -> ResponseEntity.ok().body(fire)).orElseGet(() -> ResponseEntity.notFound().build());
+        ResponseEntity<SensorEntity> result = this.sensorHandlerService.createSensor(sensor)
+                .map(fire -> ResponseEntity.ok().body(fire))
+                .orElseGet(() -> ResponseEntity.notFound().build());
 
         this.notifyFrontEnd();
 
@@ -53,8 +57,11 @@ public class SensorController extends AbstractController<SensorEntity, SensorDTO
     @Override
     @PutMapping("/update/{id}")
     public ResponseEntity<SensorEntity> update(@PathVariable Long id, @RequestBody SensorDTO sensorDTO) {
-        ResponseEntity<SensorEntity> result = this.sensorHandlerService.updateSensor(id, sensorDTO).map(sensor -> ResponseEntity.ok().body(sensor)).orElseGet(() -> ResponseEntity.notFound().build());
-
+        System.out.println("[REST] - Request to update a sensor " + sensorDTO);
+        ResponseEntity<SensorEntity> result = this.sensorHandlerService.updateSensor(id, sensorDTO)
+                .map(sensor -> ResponseEntity.ok().body(sensor))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+        
         this.notifyFrontEnd();
 
         return result;

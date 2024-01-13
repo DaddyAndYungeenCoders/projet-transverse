@@ -1,103 +1,116 @@
 package com.simulator.mqtt;
 
+import com.simulator.utils.LoggerUtil;
+import com.simulator.utils.Topics;
 import org.eclipse.paho.client.mqttv3.*;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import org.slf4j.Logger;
 import org.yaml.snakeyaml.Yaml;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-public final class MQTTClient extends MqttClient {
+public final class MQTTClient extends MqttAsyncClient {
+    private static final Logger logger = LoggerUtil.getLogger();
+    private static final int MAX_RECONNECT_ATTEMPTS = 3;
+    private static final int RECONNECT_DELAY_SECONDS = 3;
+    private static final int QOS = 1;
+    private int reconnectAttempts;
+    private ScheduledExecutorService executorService;
     private static MQTTClient client;
-//    private final String brokerUrl;
-//    private final String clientId;
+
 
     private MQTTClient(String brokerUrl, String clientId) throws MqttException {
-        super("tcp://" + brokerUrl, clientId);
-//        super(brokerUrl, clientId);
-//        this.brokerUrl = brokerUrl;
-//         this.clientId = clientId;
-     }
+        super("tcp://" + brokerUrl, clientId, new MemoryPersistence());
+        MQTTCallback callback = new MQTTCallback(this);
+        setCallback(callback);
+        this.reconnectAttempts = 0;
+        this.executorService = Executors.newSingleThreadScheduledExecutor();
 
-     public static synchronized MQTTClient getClient(String brokerUrl, String clientId) throws MqttException {
-         if (client == null) {
-             client = new MQTTClient(brokerUrl, clientId);
-         }
-         return client;
-     }
-
-     public void connectToBroker() throws MqttException {
-         MqttConnectOptions options = new MqttConnectOptions();
-         // options to define if needed
-         char[] pw = "admin".toCharArray();
-         String username = "admin";
-         options.setUserName(username);
-         options.setPassword(pw);
-
-         client.connect(options);
-     }
-
-     public void disconnectFromBroker() throws MqttException {
-         client.disconnect();
-     }
-
-     public void publishToBroker(String topic, String message) throws MqttException {
-         MqttMessage mqttMessage = new MqttMessage(message.getBytes());
-         client.publish(topic, mqttMessage);
-     }
-
-     public void subscribeToBroker(String topic, IMqttMessageListener listener) throws MqttException {
-         client.subscribe(topic, listener);
-     }
-
-    public void subscribeToTopics(List<String> topics, IMqttMessageListener listener) throws MqttException {
-        for (String topic : topics) {
-            client.subscribe(topic, listener);
-        }
     }
 
-    public void subscribeToTopicsFromConfig(String configFile, IMqttMessageListener listener) throws MqttException {
-        Map<String, String> topicsMap = loadTopicsFromConfig(configFile);
-        for (Map.Entry<String, String> entry : topicsMap.entrySet()) {
-            String topicName = entry.getKey();
-            String mqttTopic = entry.getValue();
-            client.subscribe(mqttTopic, listener);
-            System.out.println("Subscribed to topic " + mqttTopic);
+    public static synchronized MQTTClient getClient(String brokerUrl, String clientId) throws MqttException {
+        if (client == null) {
+            client = new MQTTClient(brokerUrl, clientId);
         }
+        return client;
     }
 
-    public Map<String, String> loadTopicsFromConfig(String configFile) {
-        Yaml yaml = new Yaml();
-        Map<String, String> topics = null;
+    public void connectToBroker() throws MqttException {
+        MqttConnectOptions options = new MqttConnectOptions();
+        // options to define if needed
+        char[] pw = "admin".toCharArray();
+        String username = "admin";
+        options.setUserName(username);
+        options.setPassword(pw);
+
+        client.connect(options, null, new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken iMqttToken) {
+                logger.info("Successfully connected to Broker at {}", client.getServerURI());
+                try {
+                    String[] topicsArray = Topics.getTopicsArray();
+                    int[] qosLevels = new int[topicsArray.length];
+                    Arrays.fill(qosLevels, QOS);
+                    IMqttToken token = subscribe(topicsArray, qosLevels);
+                    logger.info("Successfully subscribed to topics {}", (Object) topicsArray);
+                    resetScheduler();
+                } catch (MqttException e) {
+                    logger.error("There was an error subscribing to topics.", e);
+                }
+            }
+
+            @Override
+            public void onFailure(IMqttToken iMqttToken, Throwable exception) {
+                logger.error("Failed to connect to MQTT broker", exception);
+                if (reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
+                    logger.info("Scheduling reconnection attempt in {} seconds...", RECONNECT_DELAY_SECONDS);
+                    executorService.schedule(this::attemptReconnect, RECONNECT_DELAY_SECONDS, TimeUnit.SECONDS);
+                } else {
+                    logger.error("Max reconnect attempts reached. Giving up.");
+                }
+            }
+
+            private void attemptReconnect() {
+                client.attemptReconnect();
+            }
+
+            private void resetScheduler() {
+                reconnectAttempts = 0;
+                executorService.shutdown();
+                executorService = Executors.newSingleThreadScheduledExecutor();
+            }
+        });
+    }
+
+
+    public void attemptReconnect() {
+        reconnectAttempts++;
+        logger.info("Attempting reconnect (Attempt {}/{})", reconnectAttempts, MAX_RECONNECT_ATTEMPTS);
 
         try {
-            InputStream input = getClass().getClassLoader().getResourceAsStream(configFile);
-            if (input != null) {
-                TopicsConfig config = yaml.loadAs(input, TopicsConfig.class);
-                topics = config.getTopics();
-            } else {
-                // Gérer le cas où le fichier n'est pas trouvé
-                System.err.println("Fichier de configuration introuvable: " + configFile);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Erreur lors du chargement des sujets depuis le fichier de configuration.", e);
+            connectToBroker();
+        } catch (MqttException e) {
+            logger.error("Reconnect attempt failed.", e);
         }
-
-        return topics;
     }
 
 
+    public void disconnectFromBroker() throws MqttException {
+        executorService.shutdown();
+        client.disconnect();
+    }
+
+    public void publishToBroker(String topic, String message) throws MqttException {
+        MqttMessage mqttMessage = new MqttMessage(message.getBytes());
+        client.publish(topic, mqttMessage);
+    }
 
 
-
-//    public String getBrokerUrl() {
-//        return brokerUrl;
-//    }
-//
-//    public String getClientId() {
-//        return clientId;
-//    }
 }

@@ -7,7 +7,6 @@ influxdb-client==1.39.0
 paho-mqtt==1.6.1
 pydantic==2.5.2
 pydantic-settings==2.1.0
-pyserial==3.5
 python-dateutil==2.8.2
 python-dotenv==1.0.0
 pytool==4.0.0

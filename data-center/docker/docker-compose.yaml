@@ -13,6 +13,9 @@ services:
     ports:
       - "1883:1883"
       - "9001:9001"
+    networks:
+      firenet: 
+        ipv4_address: "192.168.80.2"
   influxdb:
     image: influxdb:2.0
     container_name: influxdb
@@ -30,6 +33,10 @@ services:
       - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_ADMIN_PASSWORD}
       - DOCKER_INFLUXDB_INIT_ORG=${INFLUXDB_V2_ORG}
       - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUXDB_V2_BUCKET}
+    networks:
+      firenet: 
+        ipv4_address: "192.168.80.3"
+
   grafana:
     image: grafana/grafana
     container_name: grafana
@@ -39,26 +46,42 @@ services:
       - '3000:3000'
     volumes:
       - ./grafana/data:/var/lib/grafana
+    networks:
+      firenet: 
+        ipv4_address: "192.168.80.4"
 
-  # actor:
-  #   image: daddyornot/actor:latest
-  #   container_name: actor
-  #   restart: unless-stopped
-  #   ports:
-  #     - '8001:8000'
-  #   volumes:
-  #     - ./actor/logs:/logs
-  # relay-mqtt-db:
-  #   image: daddyornot/relay-mqtt-db:latest
-  #   container_name: relay-mqtt-db
-  #   restart: unless-stopped
-  #   ports:
-  #     - '8002:8000'
-  #   volumes:
-  #     - ./relay-mqtt-db/logs:/logs
+  actor-app:
+    image: daddyornot/actor-app:latest
+    container_name: actor
+    restart: unless-stopped
+    ports:
+      - '8001:8000'
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      firenet: 
+        ipv4_address: "192.168.80.5"
+  relay-mqtt-db:
+    image: daddyornot/relay-mqtt-db:latest
+    container_name: relay-mqtt-db
+    restart: unless-stopped
+    ports:
+      - '8002:8002'
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      firenet: 
+        ipv4_address: "192.168.80.6"
 volumes:
   mosquitto:
   influxdb:
   grafana:
-  # actor:
-  # relay-mqtt-db:
+  actor:
+  relay-mqtt-db:
+
+networks:
+  firenet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: "192.168.80.0/24"

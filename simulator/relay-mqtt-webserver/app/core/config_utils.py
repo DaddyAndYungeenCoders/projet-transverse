@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     app_name: str = "Relay service MQTT - WebServer API"
     debug: bool = False
     host: str = "localhost"
-    port: int = 8000
+    port: int = 8100
 
 
 settings = Settings()
