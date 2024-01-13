@@ -15,7 +15,7 @@ def on_message(client, userdata, message):
     logger.info(f"Message received from {message.topic} : {message.payload.decode('utf-8')}")
     data = message.payload.decode('utf-8')
 
-    if message.topic == topics.get("manager.validation_demand"):
+    if message.topic == MANAGER_ASK_VALIDATION:
         # check if fire is real or not in simulator DB
         fire_reality = is_fire_real(data)
         # pub if fire is real or not
