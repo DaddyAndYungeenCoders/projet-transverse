@@ -1,33 +1,19 @@
 package org.example;
 
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.example.mqtt.MQTTClient;
-
-import java.util.Map;
+import org.example.service.MQTTService;
+import org.example.utils.LoggerUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Main {
+    private static final Logger logger = LoggerFactory.getLogger(LoggerUtil.class);
 
     public static void main(String[] args) {
-        System.out.println("Emergency Manager Started !");
-        String clientName = "emergency_manager";
-        String brokerUrl = "127.0.0.1:1883";
-        String topics_yaml = "/config/topics.yaml";
-        try {
-            MQTTClient mqttClient = MQTTClient.getClient(brokerUrl, clientName);
-            mqttClient.connect();
+        logger.info("Emergency Manager Started !");
 
-            Map<String, String> topics = mqttClient.loadTopicsFromConfig(topics_yaml);
+        MQTTService mqtt = new MQTTService();
 
-            mqttClient.publish(topics.get("manager.intervention"), "intervention lancée !");
-
-            mqttClient.subscribeToTopicsFromConfig("/config/mqtt_topics.yaml", (topic, message) -> {
-                System.out.println("Received message on topic " + topic + ": " + new String(message.getPayload()));
-            });
-
-            mqttClient.disconnect();
-
-        } catch (MqttException e) {
-            e.printStackTrace();
-        }
+        mqtt.publish("/rf2/test", "test");
     }
+
 }
