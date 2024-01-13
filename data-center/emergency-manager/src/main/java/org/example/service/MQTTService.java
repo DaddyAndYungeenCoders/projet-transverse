@@ -7,13 +7,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class MQTTService {
+public final class MQTTService {
     private static final Logger logger = LoggerFactory.getLogger(LoggerUtil.class);
-    String clientName = "emergency-manager";
-    String brokerUrl = "127.0.0.1:1883";
-    MQTTClient mqttClient;
+    private static final String clientName = "emergency-manager";
+    private static final String brokerUrl = "127.0.0.1:1883";
+    private static MQTTClient mqttClient;
+    private static MQTTService mqttService;
 
-    public MQTTService() {
+    private MQTTService() {
         try {
             mqttClient = MQTTClient.getClient(brokerUrl, clientName);
             if (!mqttClient.isConnected()) {
@@ -22,14 +23,19 @@ public class MQTTService {
             while (!mqttClient.isConnected()) {
                 Thread.sleep(10);
             }
-
-
         } catch (MqttException e) {
             logger.error("There was an error getting the client...");
             logger.error(String.valueOf(e));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static MQTTService getMqttService() {
+        if (mqttService == null) {
+            mqttService = new MQTTService();
+        }
+        return mqttService;
     }
 
     public void publish(String topicName, String message) {
