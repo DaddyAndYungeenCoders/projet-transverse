@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 from core.config_utils import logger
 from core.config_vars import *
 from core.config_vars import MAX_SUB_RETRY, TOPICS_TO_SUBSCRIBE, FIRST_RECONNECT_DELAY, MAX_RECONNECT_COUNT, \
-    RECONNECT_RATE, MAX_RECONNECT_DELAY, RF2_FIRE_EVENT_TOPIC, MANAGER_INTERVENTION_TOPIC
+    RECONNECT_RATE, MAX_RECONNECT_DELAY, RF2_FIRE_EVENT_TOPIC, MANAGER_INTERVENTION_TOPIC, FINISHED_FIRE_EVENT_TOPIC
 from models.FireEvent import FireEvent
 from models.Intervention import Intervention
 
@@ -18,15 +18,15 @@ load_dotenv()
 
 def on_message(client, userdata, message):
     # avoid circular dependency
-    from service.database_service import save_fire_event, save_intervention
+    from service.database_service import save_fire_event, save_intervention, save_new_sensor_values
     print("Received message from {} : {}".format(message.topic, message.payload.decode("utf-8")))
 
     if message.topic == RF2_FIRE_EVENT_TOPIC:
         try:
-            fire_event_str = message.payload.decode("utf-8")
-            fire_event = json.loads(fire_event_str)
+            sensor_values_str = message.payload.decode("utf-8")
+            sensor_values = json.loads(sensor_values_str)
             # if isinstance(fire_event, FireEvent):
-            save_fire_event(fire_event)
+            save_new_sensor_values(sensor_values)
             # else:
             #     logger.warn(f"Received invalid fire_event object : {fire_event}")
 
@@ -36,19 +36,24 @@ def on_message(client, userdata, message):
     elif message.topic == MANAGER_INTERVENTION_TOPIC:
         try:
             intervention = json.loads(message.payload.decode("utf-8"))
-            #
-            # print(intervention["coords"])
-            # print(intervention["intensity"])
-            # print(intervention["startDate"])
-            # print(intervention["endDate"])
-            # print(intervention["validationStatus"])
-            # print(intervention["idInterventionTeam"])
 
             save_intervention(intervention)
 
         except json.JSONDecodeError as e:
             logger.error(f"Error decoding message: {e}")
 
+    elif message.topic == FINISHED_FIRE_EVENT_TOPIC:
+        try:
+            fire_event_str = message.payload.decode("utf-8")
+            fire_event = json.loads(fire_event_str)
+            # if isinstance(fire_event, FireEvent):
+            logger.info(f"Received fire event : {fire_event}")
+            save_fire_event(fire_event)
+            # else:
+            #     logger.warn(f"Received invalid fire_event object : {fire_event}")
+
+        except json.JSONDecodeError as e:
+            logger.error(f"Error decoding message: {e}")
     else:
         logger.warn(f"Topic {message.topic} is not valid.")
 

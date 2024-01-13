@@ -38,13 +38,42 @@ def save_intervention(intervention):
 
 def save_fire_event(fire_event_json):
     # save data in influx db
-    sensor_id = fire_event_json["id"]
+    time = datetime.utcnow()
+    fire_event_id = fire_event_json["id"]
+    coords = fire_event_json["coords"]
     intensity = fire_event_json["intensity"]
-    time = fire_event_json["startDate"]
+    start_date = fire_event_json["start_date"]
+    end_date = fire_event_json["end_date"]
+    real = fire_event_json["real"]
+    time = str(time)
     json_body = {
         "measurement": "fire_event",
         "tags": {
             "fire": "true",
+            "sensor": f"fire_event_{fire_event_id}"
+        },
+        "time": f"{time}Z",
+        "fields": {
+            "id": fire_event_id,
+            "latitude": coords["latitude"],
+            "longitude": coords["longitude"],
+            "intensity": intensity,
+            "startDate": start_date,
+            "endDate": end_date,
+            "real": real,
+        }
+    }
+    db.insert_data(json_body)
+
+
+def save_new_sensor_values(sensor_values_json):
+    # save data in influx db
+    sensor_id = sensor_values_json["id"]
+    intensity = sensor_values_json["intensity"]
+    time = sensor_values_json["startDate"]
+    json_body = {
+        "measurement": "sensor",
+        "tags": {
             "sensor": f"sensor_{sensor_id}"
         },
         "time": f"{time}Z",

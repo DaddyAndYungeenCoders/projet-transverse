@@ -22,11 +22,13 @@ MAX_RECONNECT_COUNT = 12
 MAX_RECONNECT_DELAY = 60
 MAX_SUB_RETRY = 30
 QOS = 1
-RF2_FIRE_EVENT_TOPIC = topics.get("rf2.fire_event")
+RF2_FIRE_EVENT_TOPIC = topics.get("rf2.fire-event")
 MANAGER_INTERVENTION_TOPIC = topics.get("manager.intervention")
+FINISHED_FIRE_EVENT_TOPIC = topics.get("manager.fire-event-finished")
 TOPICS_TO_SUBSCRIBE = [
     (RF2_FIRE_EVENT_TOPIC, QOS),
-    (MANAGER_INTERVENTION_TOPIC, QOS)
+    (MANAGER_INTERVENTION_TOPIC, QOS),
+    (FINISHED_FIRE_EVENT_TOPIC, QOS)
 ]
 
 # -------------------------------------- #

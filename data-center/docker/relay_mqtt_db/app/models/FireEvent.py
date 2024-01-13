@@ -8,16 +8,22 @@ class Coords(BaseModel):
     longitude: float
 
 
+class Sensor(BaseModel):
+    id: int
+    intensity: int
+    start_date: Optional[datetime]
+
+
 class FireEvent(BaseModel):
     id: int
-    # coords: Coords
+    coords: Coords
     intensity: int
-    startDate: Optional[datetime]
-    # endDate: Optional[datetime]
-    # real: bool
+    start_date: Optional[datetime]
+    end_date: Optional[datetime]
+    real: bool
 
     @classmethod
     def parse_obj(cls, obj):
-        obj["startDate"] = datetime.fromtimestamp(obj["startDate"] / 1000.0) if "startDate" in obj else None
-        # obj["endDate"] = datetime.fromtimestamp(obj["endDate"] / 1000.0) if "endDate" in obj else None
+        obj["start_date"] = datetime.fromtimestamp(obj["start_date"] / 1000.0) if "start_date" in obj else None
+        obj["end_date"] = datetime.fromtimestamp(obj["end_date"] / 1000.0) if "end_date" in obj else None
         return super().model_validate(obj)

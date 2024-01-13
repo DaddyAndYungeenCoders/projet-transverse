@@ -9,3 +9,4 @@ topics:
   manager.intervention: "/manager/intervention"
   manager.ask-validation: "/manager/ask_validation"
 
+  manager.fire-event-finished: "/manager/fire_event_finished"
