@@ -7,6 +7,7 @@ import com.simulator.webserver.models.FireEventEntity;
 import com.simulator.webserver.repository.FireEventRepository;
 import com.simulator.webserver.service.interfaces.FireEventHandlerService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -72,9 +73,14 @@ public class FireEventHandlerServiceImpl implements FireEventHandlerService {
     }
 
     @Override
-    public Optional<Boolean> isFireReal(Long id) {
-        Optional<FireEventEntity> fireEventEntity = this.fireEventRepository.findById(id);
-        return fireEventEntity.map(FireEventEntity::is_real);
+    public boolean isFireReal(Long id) throws BadRequestException {
+        Optional<FireEventEntity> fireEventEntity = this.fireEventRepository.findById(id).filter(fireEventEntity1 -> fireEventEntity1.getReal_intensity() > 0);
+        
+        if (fireEventEntity.isEmpty()) {
+            throw new BadRequestException("Fire event was not found in simulator database");
+        }
+        
+        return fireEventEntity.get().is_real();
     }
 
     //TODO Mapper with MapStruct instead of this function

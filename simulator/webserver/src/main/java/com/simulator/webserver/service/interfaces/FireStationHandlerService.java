@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FireStationHandlerService {
-    Optional<FireStationEntity> createFireStation(@RequestBody FireStationDTO fireStationDTO);
-    Optional<FireStationEntity> createFireStationFromView(@RequestBody FireStationDTO fireStationDTO);
+    Optional<FireStationEntity> createFireStation(FireStationDTO fireStationDTO);
+    Optional<FireStationEntity> createFireStationFromView(FireStationDTO fireStationDTO);
     Optional<List<FireStationEntity>> getAllFireStations();
     Optional<FireStationEntity> updateFireStation(Long id, FireStationDTO fireStationDTO);
 }

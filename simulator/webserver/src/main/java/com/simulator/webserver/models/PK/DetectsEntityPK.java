@@ -7,28 +7,19 @@ import java.util.Objects;
 import com.simulator.webserver.models.FireEventEntity;
 import com.simulator.webserver.models.SensorEntity;
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class DetectsEntityPK implements Serializable {
-    private SensorEntity sensorEntity;
-    private FireEventEntity fireEventEntity;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        DetectsEntityPK that = (DetectsEntityPK) o;
-        return Objects.equals(sensorEntity, that.sensorEntity) &&
-               Objects.equals(fireEventEntity, that.fireEventEntity);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(sensorEntity, fireEventEntity);
-    }
+    @Column(name = "id_sensor", nullable = false)
+    private Long idSensor;
+    @Column(name = "id_fire_event", nullable = false)
+    private Long idFireEvent;
 }
