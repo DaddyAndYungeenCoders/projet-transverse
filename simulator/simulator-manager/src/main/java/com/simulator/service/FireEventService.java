@@ -43,7 +43,7 @@ public class FireEventService {
             List<SensorEntity> sensorEntities = SensorService.convertJsonToSensorEntities(response);
             System.out.println(sensorEntities);
             SensorEntity nearestSensor = sensorService.findNearestSensor(sensorEntities, fireEvent.getCoords());
-            nearestSensor.setIntensity(fireEvent.getReal_intensity());
+            nearestSensor.setIntensity(fireEvent.getRealIntensity());
             System.out.println("Nearest : " + nearestSensor.getId());
             String json = objectMapper.writeValueAsString(nearestSensor.toDTO());
             System.out.println("JSON sent to MQTT: " + json);
@@ -71,7 +71,7 @@ public class FireEventService {
         // = new FireEventEntity(4L, new CoordsEntity(23.3, 23.1), 8, new Date(2024, 1,
         // 10), null, true);
         try {
-            String jsonInputString = MAPPER.writeValueAsString(fireEvent);
+            String jsonInputString = objectMapper.writeValueAsString(fireEvent);
             HttpURLConnection connection = setConnectionBaseParam("/create", "POST");
 
             HttpUtils.sendJson(connection, jsonInputString);
@@ -85,7 +85,7 @@ public class FireEventService {
 
     public void updateFireIntensity(Integer intensity, FireEventEntity fireEvent) {
         try {
-            String jsonInputString = MAPPER.writeValueAsString(fireEvent);
+            String jsonInputString = objectMapper.writeValueAsString(fireEvent);
             // HttpURLConnection connection =
             // setConnectionBaseParam("/update/"+fireEvent.getId(),"PUT");
             HttpURLConnection connection = setConnectionBaseParam("/update/" + fireEvent.getId() + "/" + intensity,
@@ -102,7 +102,7 @@ public class FireEventService {
 
     public void updateFire(FireEventEntity fireEvent) {
         try {
-            String jsonInputString = MAPPER.writeValueAsString(fireEvent);
+            String jsonInputString = objectMapper.writeValueAsString(fireEvent);
             HttpURLConnection connection = setConnectionBaseParam("/update/" + fireEvent.getId(), "PUT");
 
             HttpUtils.sendJson(connection, jsonInputString);
