@@ -8,25 +8,18 @@ import java.util.List;
 
 public class FireEventEntity implements Serializable{
 
-    @JsonProperty("id")
     private Long id;
 
-    @JsonProperty("coords")
     private CoordsEntity coords;
 
-    @JsonProperty("real_intensity")
     private int realIntensity;
 
-    @JsonProperty("start_date")
     private Date startDate;
 
-    @JsonProperty("end_date")
     private Date endDate;
 
-    @JsonProperty("is_real")
     private boolean isReal;
 
-    @JsonProperty("is_handled")
     private boolean isHandled;
 
 

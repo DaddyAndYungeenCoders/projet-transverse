@@ -25,14 +25,9 @@ public class CronJob implements Job {
 
         this.geometryFactory = new GeometryFactory();
 
-        System.out.println("CURRENT TRANSFORMATION");
-
-        System.out.println(Arrays.toString(randomCoords.boundCoordinates));
 
         Polygon polygon = this.geometryFactory.createPolygon(new CoordinateArraySequence(randomCoords.boundCoordinates));
 
-        System.out.println("CURRENT THIS.POLYGON");
-        System.out.println(polygon);
         Random rand = new Random();
         int upperbound = 1;
         int int_random = rand.nextInt(upperbound);
@@ -42,8 +37,6 @@ public class CronJob implements Job {
             Boolean trueFire = randomBoolean == 0;
             int upperboundIntensity = 10;
             int intensity = 1 + rand.nextInt(upperboundIntensity);
-            System.out.println("GONNA GENERATE A FIRE");
-            System.out.println("CRON EXECUTED;");
             FireEventService fireEventService = new FireEventService();
             CoordsEntity randomCoordinatesInBound = generateRandomCoordinateInsidePolygon(polygon);
 

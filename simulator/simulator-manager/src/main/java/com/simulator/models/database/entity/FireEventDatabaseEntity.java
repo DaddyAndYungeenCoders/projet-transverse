@@ -1,21 +1,37 @@
 package com.simulator.models.database.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.simulator.models.CoordsEntity;
 import com.simulator.models.FireEventEntity;
 
 import java.sql.Date;
 
 public class FireEventDatabaseEntity {
+
+    @JsonProperty("id")
     private Long id;
+
+    @JsonProperty("coords")
     private CoordsEntity coords;
+
+    @JsonProperty("real_intensity")
     private int real_intensity;
+
+    @JsonProperty("start_date")
     private Date start_date;
+
+    @JsonProperty("end_date")
     private Date end_date;
 
     // Peut etre un probleme car autoconversion qui eneleve le is !
+
+    @JsonProperty("is_real")
     private boolean is_real;
 
+
     // Peut etre un probleme car autoconversion qui eneleve le is !
+
+    @JsonProperty("is_handled")
     private boolean is_handled;
 
 

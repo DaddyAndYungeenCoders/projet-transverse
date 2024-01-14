@@ -93,9 +93,10 @@ public class FireEventService {
 
             HttpUtils.sendJson(connection, jsonInputString);
             String response = HttpUtils.readResponse(connection);
-            FireEventEntity updatedFireEvent = objectMapper.readValue(response,FireEventEntity.class ); ;
-            System.out.println(updatedFireEvent);
-            return updatedFireEvent;
+            System.out.println("CECI EST LA RESPONSE : " + response);
+            FireEventDatabaseEntity updatedFireEvent = objectMapper.readValue(response,FireEventDatabaseEntity.class );
+            System.out.println("LIGNE 97 :"+updatedFireEvent);
+            return updatedFireEvent.toEntity();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
