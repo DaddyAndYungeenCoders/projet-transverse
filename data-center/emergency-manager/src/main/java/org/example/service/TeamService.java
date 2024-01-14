@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.models.Coords;
+import org.example.models.InterventionMessageDTO;
+import org.example.models.SensorEntity;
 import org.example.models.Team;
 import org.example.utils.HttpUtils;
 import org.example.utils.LoggerUtil;
@@ -21,6 +23,8 @@ public class TeamService {
     private static final Logger logger = LoggerFactory.getLogger(LoggerUtil.class);
     ObjectMapper mapper = new ObjectMapper();
     private static final String BASE_URL = "http://localhost:8080/api/team";
+    private static final String BASE_URL_SENSOR = "http://localhost:8080/api/sensor";
+
     private static final PublishService pubService = PublishService.getPublishService();
     private static final FireService fireService = new FireService();
     static HttpService httpService = new HttpService();
@@ -32,7 +36,8 @@ public class TeamService {
     public void processAvailableTeam(String sensorId) {
         // get all teams fetch-all
         String response = null;
-        response = httpService.get(BASE_URL + "/fetch-all");
+        response = HttpService.get(BASE_URL + "/fetch-all");
+        logger.info(response);
         logger.info("Getting all teams...");
         try {
             List<Team> allTeams = mapper.readValue(response, new TypeReference<List<Team>>() {
@@ -46,8 +51,13 @@ public class TeamService {
             firstAvailableTeam.ifPresentOrElse(team -> {
                 try {
                     logger.info("Available team found : {}", team);
-                    String teamToSend = mapper.writeValueAsString(team);
-                    pubService.pubManagerIntervention(teamToSend);
+                    String responseSensor = HttpService.get(BASE_URL_SENSOR + "/get/" + sensorId);
+                    logger.info("Getting sensor..." + responseSensor);
+                    SensorEntity sensor = mapper.readValue(responseSensor, SensorEntity.class);
+                    InterventionMessageDTO newIntervention = new InterventionMessageDTO(sensor.getCoords(), team.getStamina(), 10, team.getFireStationId(), team.getId());
+                    String interventionTosend = mapper.writeValueAsString(newIntervention);
+                    pubService.pubManagerIntervention(interventionTosend);
+
                     updateAvailabilityOfTeam(team, false);
                     fireService.updateFireEventHandledStatus(sensorId);
 
@@ -77,9 +87,8 @@ public class TeamService {
         try {
             team.setAvailable(availability);
             String teamAsJson = mapper.writeValueAsString(team);
-            String endpoint = String.format("/available/%s/%s", team.getId(), availability);
             HttpURLConnection connection =
-                    setConnectionBaseParam(endpoint, "PUT");
+                    setConnectionBaseParam("/available/" + team.getId() + "/" + availability , "PUT");
             HttpUtils.sendJson(connection, teamAsJson);
             String response = HttpUtils.readResponse(connection);
 

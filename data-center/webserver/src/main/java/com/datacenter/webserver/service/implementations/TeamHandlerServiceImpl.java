@@ -64,4 +64,9 @@ public class TeamHandlerServiceImpl extends AbstractOrchestrationService<TeamEnt
                     return this.repository.save(teamEntity);
                 });
     }
+
+    @Override
+    public Optional<TeamEntity> getFromId(Long id) {
+        return Optional.empty();
+    }
 }

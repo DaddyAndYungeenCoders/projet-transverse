@@ -8,6 +8,7 @@ import com.datacenter.webserver.models.SensorEntity;
 import com.datacenter.webserver.service.implementations.FireEventHandlerServiceImpl;
 import com.datacenter.webserver.service.implementations.SensorHandlerServiceImpl;
 import com.datacenter.webserver.service.implementations.WebSocketService;
+import com.datacenter.webserver.service.interfaces.FireEventHandlerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ import java.util.Optional;
 @RequestMapping("/api/fire-event")
 public class FireEventController extends CRUDController<FireEventEntity, FireEventDTO> {
     private final SensorHandlerServiceImpl sensorService;
+    private final FireEventHandlerServiceImpl fireEventService;
 
     @Autowired
     public FireEventController(FireEventHandlerServiceImpl fireEventService,
@@ -27,6 +29,7 @@ public class FireEventController extends CRUDController<FireEventEntity, FireEve
         super(fireEventService);
         this.webSocketService = webSocketService;
         this.sensorService = sensorService;
+        this.fireEventService = fireEventService;
     }
     
     @Override
@@ -65,4 +68,24 @@ public class FireEventController extends CRUDController<FireEventEntity, FireEve
 
         return this.create(fireEventDTO);
     }
+
+    @PutMapping("/updateIsVerified/{id}")
+    public ResponseEntity<FireEventEntity> updateIsVerified(@PathVariable Long id, @RequestBody FireEventDTO dto) throws Exception {
+        ResponseEntity<FireEventEntity> result = this.fireEventService.updateIsVerified(id, dto)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+
+        this.notifyFrontEnd();
+        return result;
+    };
+
+    @PutMapping("/updateIdEquipeIntervention/{id}")
+    public ResponseEntity<FireEventEntity> updateIdEquipeIntervention(@PathVariable Long id, @RequestBody FireEventDTO dto) throws Exception {
+        ResponseEntity<FireEventEntity> result = this.fireEventService.updateIdEquipeIntervention(id, dto)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+
+        this.notifyFrontEnd();
+        return result;
+    };
 }

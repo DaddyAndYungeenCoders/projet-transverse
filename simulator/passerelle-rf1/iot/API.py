@@ -72,6 +72,7 @@ def read_root():
 
 @app.post("/new")
 def new(sensor: Sensor):
+    print("HTTPMessage : id:" + str(sensor.id) +",in:" + str(sensor.intensity))
     sendUARTMessage("id:" + str(sensor.id) +",in:" + str(sensor.intensity))
     return {"id" : sensor.id, "intensity": sensor.intensity}
 

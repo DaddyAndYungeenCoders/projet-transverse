@@ -32,7 +32,7 @@ public class MovingTeamService {
 
     public Runnable moveTeams() {
         while (true) {
-            logger.info("Moving teams");
+//            logger.info("Moving teams");
             List<MovingTeamEntity> teamsCopy = new ArrayList<>(teamsInIntervention);
 
             for (MovingTeamEntity team : teamsCopy) {

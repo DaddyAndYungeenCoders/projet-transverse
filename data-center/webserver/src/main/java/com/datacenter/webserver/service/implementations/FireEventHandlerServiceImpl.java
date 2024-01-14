@@ -75,6 +75,11 @@ public class FireEventHandlerServiceImpl extends AbstractOrchestrationService<Fi
         return Optional.empty();
     }
 
+    @Override
+    public Optional<FireEventEntity> getFromId(Long id) {
+        return Optional.empty();
+    }
+
     //TODO Mapper with MapStruct instead of this function
     private void updateFireEventData(FireEventDTO fireEventDTO, FireEventEntity fireEventEntity) {
         fireEventEntity.setIntensity(fireEventDTO.getIntensity());
@@ -83,4 +88,25 @@ public class FireEventHandlerServiceImpl extends AbstractOrchestrationService<Fi
         fireEventEntity.setCoords(fireEventDTO.getCoords());
     }
 
+    public Optional<FireEventEntity> updateIsVerified(Long id, FireEventDTO dto) {
+        Optional<FireEventEntity> fireToUpdate = this.repository.findById(id);
+        if (fireToUpdate.isEmpty()) {
+            return Optional.empty();
+        }
+
+        FireEventEntity fire = fireToUpdate.get();
+        fire.set_verified(true);
+        return Optional.of(this.repository.save(fire));
+    }
+
+    public Optional<FireEventEntity> updateIdEquipeIntervention(Long id, FireEventDTO dto) {
+        Optional<FireEventEntity> fireToUpdate = this.repository.findById(id);
+        if (fireToUpdate.isEmpty()) {
+            return Optional.empty();
+        }
+
+        FireEventEntity fire = fireToUpdate.get();
+        fire.setId_equipe_intervention(dto.getIdEquipeIntervention());
+        return Optional.of(this.repository.save(fire));
+    }
 }

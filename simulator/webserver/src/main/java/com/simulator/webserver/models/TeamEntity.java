@@ -18,9 +18,8 @@ public class TeamEntity extends BaseEntity {
     private Long fire_station_id;
     private int stamina;
     private int fire_mastery;
-    private Coords coords;
 
     public TeamDTO toDTO() {
-        return new TeamDTO(this.id, this.fire_station_id, this.stamina, this.fire_mastery, this.coords);
+        return new TeamDTO(this.id, this.fire_station_id, this.stamina, this.fire_mastery);
     }
 }

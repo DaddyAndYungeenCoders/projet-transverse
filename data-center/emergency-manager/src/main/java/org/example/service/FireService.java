@@ -59,7 +59,7 @@ public class FireService {
             String sensorValuesAsJson = mapper.writeValueAsString(sensorDetection);
             System.out.println(sensorValuesAsJson);
             HttpURLConnection connection =
-                    setConnectionBaseParam(DATA_CENTER_PORT, "/update/" + sensorDetection.getId(), "PUT");
+                    setConnectionBaseParam(DATA_CENTER_PORT, "/updateIsVerified/" + sensorDetection.getId(), "PUT");
 
             HttpUtils.sendJson(connection, sensorValuesAsJson);
             String response = HttpUtils.readResponse(connection);

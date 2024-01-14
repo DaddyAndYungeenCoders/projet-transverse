@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class HttpService {
     private static RestTemplate restTemplate = new RestTemplate();
+    static ObjectMapper objectMapper = new ObjectMapper();
 
     public static String get(String url) {
         HttpHeaders requestHeaders = new HttpHeaders();
@@ -29,7 +30,7 @@ public class HttpService {
     }
 
 
-    public void putSendObject(String url, Object object) {
+    public static void putSendObject(String url, Object object) {
         try {
             String json = objectMapper.writeValueAsString(object);
             log.debug("Request JSON: {}", json);
