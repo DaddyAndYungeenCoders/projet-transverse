@@ -34,7 +34,7 @@ public class FireEventController extends CRUDController<FireEventEntity, FireEve
     }
 
     @Override
-    public ResponseEntity<FireEventEntity> create(SensorDetectionVM sensorDetectionVM) throws Exception {
+    public ResponseEntity<FireEventEntity> create(@RequestBody SensorDetectionVM sensorDetectionVM) throws Exception {
         Optional<SensorEntity> sensorEntity = this.sensorService.getFromId(sensorDetectionVM.getId());
         
         if (sensorEntity.isEmpty()) {
@@ -50,10 +50,11 @@ public class FireEventController extends CRUDController<FireEventEntity, FireEve
         }
         
         FireEventDTO fireEventDTO = new FireEventDTO();
-        fireEventDTO.setId(0L);
         fireEventDTO.setSensorId(sensorDetectionVM.getId());
         fireEventDTO.setIntensity(sensorDetectionVM.getIntensity());
-        fireEventDTO.setStartDate((java.sql.Date) Date.from(Instant.now()));
+        java.util.Date utilDate = java.util.Date.from(Instant.now());
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        fireEventDTO.setStartDate(sqlDate);
         fireEventDTO.setEndDate(null);
         fireEventDTO.setVerified(false);
         fireEventDTO.setHandled(false);
