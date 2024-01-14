@@ -12,5 +12,5 @@ public interface OrchestrationService<ENTITY extends BaseEntity, DTO extends Bas
     Optional<ENTITY> createFromView(@RequestBody DTO dto);
     Optional<List<DTO>> getAll();
     Optional<ENTITY> update(Long id, DTO dto);
-    Optional<ENTITY> updateStatus(Long id, BaseDTO dto);
+    Optional<ENTITY> updateVerificationStatus(Long id, BaseDTO dto);
 }

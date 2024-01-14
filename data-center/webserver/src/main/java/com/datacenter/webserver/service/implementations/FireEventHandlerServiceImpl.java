@@ -62,7 +62,7 @@ public class FireEventHandlerServiceImpl extends AbstractOrchestrationService<Fi
     }
 
     @Override
-    public Optional<FireEventEntity> updateStatus(Long id, BaseDTO dto) {
+    public Optional<FireEventEntity> updateVerificationStatus(Long id, BaseDTO dto) {
         // get sur historique et set a verified
 
         return Optional.empty();

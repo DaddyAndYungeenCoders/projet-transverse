@@ -54,7 +54,7 @@ public class SensorHandlerServiceImpl extends AbstractOrchestrationService<Senso
     }
 
     @Override
-    public Optional<SensorEntity> updateStatus(Long id, BaseDTO dto) {
+    public Optional<SensorEntity> updateVerificationStatus(Long id, BaseDTO dto) {
         return Optional.empty();
     }
 

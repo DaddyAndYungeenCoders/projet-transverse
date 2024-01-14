@@ -55,7 +55,7 @@ public class FireStationHandlerServiceImpl extends AbstractOrchestrationService<
     }
 
     @Override
-    public Optional<FireStationEntity> updateStatus(Long id, BaseDTO dto) {
+    public Optional<FireStationEntity> updateVerificationStatus(Long id, BaseDTO dto) {
         return Optional.empty();
     }
 }
