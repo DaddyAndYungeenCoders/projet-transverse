@@ -11,7 +11,7 @@ import lombok.*;
 @Getter
 @Setter
 public class MovingTeamDTO {
-    private TeamEntity team;
+    private long team;
     private CoordsEntity destination;
     private CoordsEntity current_position;
     private int stamina;

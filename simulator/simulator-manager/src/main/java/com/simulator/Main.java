@@ -14,9 +14,9 @@ public class Main {
         try {
             ExecutorService executorService = Executors.newCachedThreadPool();
 
-            SchedulerManager schedulerManager = new SchedulerManager();
+//            SchedulerManager schedulerManager = new SchedulerManager();
 
-            executorService.submit(schedulerManager::startScheduler);
+//            executorService.submit(schedulerManager::startScheduler);
 
             executorService.submit(movingTeamService.moveTeams());
 

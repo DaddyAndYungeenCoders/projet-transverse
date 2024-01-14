@@ -1,6 +1,7 @@
 package com.simulator.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.simulator.dto.InterventionMessageDTO;
 import com.simulator.models.MovingTeamEntity;
 import com.simulator.utils.LoggerUtil;
 import com.simulator.utils.Topics;
@@ -18,7 +19,7 @@ public class MovingTeamService {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
 
-    public void sendTeamPosition(MovingTeamEntity team) {
+    public void sendTeamPosition(InterventionMessageDTO team) {
         try {
             String json = objectMapper.writeValueAsString(team);
             logger.info("Nouvelle position de team {}", json);
