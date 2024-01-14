@@ -28,6 +28,7 @@ public class FireEventController extends CRUDController<FireEventEntity, FireEve
         this.webSocketService = webSocketService;
         this.sensorService = sensorService;
     }
+    
     @Override
     String getEntityTopic() {
         return "fire-event";
@@ -36,7 +37,7 @@ public class FireEventController extends CRUDController<FireEventEntity, FireEve
     @Override
     public ResponseEntity<FireEventEntity> create(@RequestBody SensorDetectionVM sensorDetectionVM) throws Exception {
         Optional<SensorEntity> sensorEntity = this.sensorService.getFromId(sensorDetectionVM.getId());
-        
+
         if (sensorEntity.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -48,7 +49,7 @@ public class FireEventController extends CRUDController<FireEventEntity, FireEve
         if (sensorCoordinates == null) {
             return ResponseEntity.notFound().build();
         }
-        
+
         FireEventDTO fireEventDTO = new FireEventDTO();
         fireEventDTO.setSensorId(sensorDetectionVM.getId());
         fireEventDTO.setIntensity(sensorDetectionVM.getIntensity());
@@ -59,9 +60,9 @@ public class FireEventController extends CRUDController<FireEventEntity, FireEve
         fireEventDTO.setVerified(false);
         fireEventDTO.setHandled(false);
         fireEventDTO.setIdEquipeIntervention(null); // WTF ?
-        
+
         fireEventDTO.setCoords(sensorCoordinates);
-        
+
         return this.create(fireEventDTO);
     }
 }

@@ -16,8 +16,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -73,14 +75,16 @@ public class FireEventHandlerServiceImpl implements FireEventHandlerService {
     }
 
     @Override
-    public boolean isFireReal(Long id) throws BadRequestException {
-        Optional<FireEventEntity> fireEventEntity = this.fireEventRepository.findById(id).filter(fireEventEntity1 -> fireEventEntity1.getReal_intensity() > 0);
+    public boolean isThereARealFireNearSensor(Long id) {
+        Optional<List<FireEventEntity>> fireEventEntity = this.fireEventRepository.findBySensorId(id);
+
+        List<FireEventEntity> filteredList = fireEventEntity
+                .map(list -> list.stream()
+                        .filter(entity -> entity.getReal_intensity() > 0 && entity.is_real())
+                        .collect(Collectors.toList()))
+                .orElse(Collections.emptyList());
         
-        if (fireEventEntity.isEmpty()) {
-            throw new BadRequestException("Fire event was not found in simulator database");
-        }
-        
-        return fireEventEntity.get().is_real();
+        return !filteredList.isEmpty();
     }
 
     //TODO Mapper with MapStruct instead of this function

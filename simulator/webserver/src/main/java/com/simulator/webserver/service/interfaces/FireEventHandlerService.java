@@ -15,5 +15,5 @@ public interface FireEventHandlerService {
     Optional<List<FireEventEntity>> getAllFireEvents();
     Optional<FireEventEntity> updateFireEvent(Long id, int intensity);
     Optional<FireEventEntity> updateFireEvent(Long id, FireEventDTO fireEventDTO);
-    boolean isFireReal(Long id) throws BadRequestException;
+    boolean isThereARealFireNearSensor(Long sensorId);
 }
