@@ -65,17 +65,14 @@ export abstract class AbstractMarkerService<T extends MarkersTypes> {
     });
   }
 
-  getObjectInfo(intensity?: number, coords?: Coords): any {
+  getObjectInfo(intensity?: number, coords?: Coords, id?: number): any {
     return (
       '<span>Intensité du feu : ' +
-      intensity?.toString() +
-      '</span><br/><button (click)="onDeleteFireEvent(${id})" style="margin: 0.25rem auto auto; background-color: #870000; color: #ffffff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">\n' +
-      '  SUPPRIMER\n' +
-      '</button>'
+      intensity?.toString()
+      // +
+      // '</span><br/><button (click)="onDeleteFireEvent(${id})" style="margin: 0.25rem auto auto; background-color: #870000; color: #ffffff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">\n' +
+      // '  SUPPRIMER\n' +
+      // '</button>'
     );
-  }
-
-  onDeleteFireEvent(id: number): void {
-  //    this.fireMarkerService.deleteFireEvent(id).subscribe();
   }
 }
