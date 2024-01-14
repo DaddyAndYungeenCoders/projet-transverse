@@ -41,11 +41,6 @@ public class CronJob implements Job {
 
             FireEventEntity fireEvent = new FireEventEntity(0L, new CoordsEntity(randomCoordinatesInBound.getLatitude(), randomCoordinatesInBound.getLongitude()), intensity, FireEventService.convertUtilToSqlDate(new Date()), null, trueFire, false, null);
             FireEventEntity newFireEvent = fireEventService.createFire(fireEvent);
-            FireEventEntity updatedFireEvent = fireEventService.updateFireIntensity(444, newFireEvent.getId());
-            System.out.println("THIS IS OUR UPDATED FIREEVENT "+ updatedFireEvent.getRealIntensity());
-            updatedFireEvent.setEndDate(FireEventService.convertUtilToSqlDate(new Date()));
-             fireEventService.updateFire(updatedFireEvent);
-
         } else {
             System.out.println("!NOT GONNA GENERATE A FIRE!");
         }

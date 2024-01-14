@@ -17,7 +17,7 @@ public class SchedulerManager {
 
             Trigger trigger = TriggerBuilder.newTrigger()
                     .withIdentity("cronTrigger", "cronGroup")
-                    .withSchedule(CronScheduleBuilder.cronSchedule("0/5 * * * * ? *")) // Cron expression for every minute
+                    .withSchedule(CronScheduleBuilder.cronSchedule("* * * * *")) // Cron expression for every minute
                     .build();
 
 
