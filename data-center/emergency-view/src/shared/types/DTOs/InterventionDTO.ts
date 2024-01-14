@@ -1,7 +1,10 @@
-export class InterventionDTO {
+import {Coords} from './Coords';
+
+export interface InterventionDTO {
   id: number;
-  chief_officer: string;
+  chiefOfficer: string;
   stamina: number; // out of 10
   idFirestation: number;
+  coords: Coords;
   isAvailable: boolean;
 }

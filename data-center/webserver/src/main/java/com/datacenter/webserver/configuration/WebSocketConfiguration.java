@@ -20,6 +20,6 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
     
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/sba-websocket").setAllowedOrigins("http://localhost:9000", "http://localhost:9000/").withSockJS();
+        registry.addEndpoint("/sba-websocket").setAllowedOrigins("http://localhost:8888", "http://localhost:8888/").withSockJS();
     }
 }
