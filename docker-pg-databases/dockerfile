@@ -7,5 +7,6 @@ COPY simulateur.sql /sql_scripts/
 COPY simulateur_DATA.sql /sql_scripts/
 COPY SENSORS_DATA.sql /sql_scripts/
 COPY emergency.sql /sql_scripts/
+COPY emergency_DATA.sql /sql_scripts/
 # Make sure the initialization script is executable
 RUN chmod +x /docker-entrypoint-initdb.d/init_databases.sh

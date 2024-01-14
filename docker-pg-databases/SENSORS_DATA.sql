@@ -1,4 +1,4 @@
-DELETE from sensors;
+DELETE from sensor;
 SELECT setval('sensor_id_seq', 1, false);
 INSERT INTO public.sensor (latitude,longitude,intensity) VALUES
 	 (45.75396863645002,4.901053554546559,0),

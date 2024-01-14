@@ -23,5 +23,7 @@ echo "sensor DATA --> SIMU"
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "simulateur" -f /sql_scripts/SENSORS_DATA.sql
 echo "sensors DATA --> EMERGENCY"
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "emergency" -f /sql_scripts/SENSORS_DATA.sql
+echo "sensors DATA --> EMERGENCY"
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "emergency" -f /sql_scripts/emergency_data.sql
 
 echo "All databases have been initialized."
