@@ -138,7 +138,7 @@ public class FireEventService {
 
     public void reduceFire(TeamEntity team, FireEventEntity fireEvent) {
         while (fireEvent.getRealIntensity() > 0) {
-            int newIntensity = Long.valueOf(fireEvent.getRealIntensity() * team.getFireMastery() / 10).intValue();
+            int newIntensity = Double.valueOf(fireEvent.getRealIntensity() * team.getFireMastery() / 10).intValue();
             fireEvent.setRealIntensity(newIntensity);
             this.updateFireIntensity(newIntensity, fireEvent.getId());
         }
