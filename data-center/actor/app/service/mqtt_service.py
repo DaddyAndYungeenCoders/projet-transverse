@@ -1,4 +1,5 @@
 import time
+import json
 
 from app.controller.controller import publish_validation_message
 from app.core.config_vars import *
@@ -17,7 +18,8 @@ def on_message(client, userdata, message):
 
     if message.topic == MANAGER_ASK_VALIDATION:
         # check if fire is real or not in simulator DB
-        fire_reality = is_fire_real(data)
+        data_json = json.loads(data)
+        fire_reality = is_fire_real(data_json)
         # pub if fire is real or not
         if isinstance(fire_reality, bool):
             publish_validation_message(data, fire_reality)

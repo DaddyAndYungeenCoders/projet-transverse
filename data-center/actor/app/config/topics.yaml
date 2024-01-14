@@ -10,3 +10,4 @@ topics:
   manager.ask-validation: "/manager/ask_validation"
 
   manager.fire-event-finished: "/manager/fire_event_finished"
+  manager.ask-validation: "/manager/ask_validation"

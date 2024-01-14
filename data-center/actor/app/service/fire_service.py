@@ -9,7 +9,8 @@ def is_fire_real(fire_event):
     res = requests.get(url)
     if res.status_code == 200:
         real_fire_event = res.json()
-        return real_fire_event["body"]
+        logger.info(f"res : {real_fire_event}")
+        return real_fire_event
     elif res.status_code == 404:
         logger.error(
             f"The request returned a {res.status_code} code status. Maybe the id {fire_event['id']} is invalid?")
