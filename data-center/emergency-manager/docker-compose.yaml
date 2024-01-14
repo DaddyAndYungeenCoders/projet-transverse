@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  emergency-manager:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: em
+#    ports:
+#      - "8080:8080"

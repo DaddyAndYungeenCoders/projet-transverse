@@ -76,8 +76,9 @@ public class TeamService {
         try {
             team.setAvailable(availability);
             String teamAsJson = mapper.writeValueAsString(team);
+            String endpoint = String.format("/available/%s/%s", team.getId(), availability);
             HttpURLConnection connection =
-                    setConnectionBaseParam("/update/" + team.getId(), "PUT");
+                    setConnectionBaseParam(endpoint, "PUT");
             HttpUtils.sendJson(connection, teamAsJson);
             String response = HttpUtils.readResponse(connection);
 
@@ -92,7 +93,7 @@ public class TeamService {
             Team team = mapper.readValue(data, Team.class);
             String teamAsJson = mapper.writeValueAsString(team);
             HttpURLConnection connection =
-                    setConnectionBaseParam("/update/" + team.getId(), "PUT");
+                    setConnectionBaseParam("/coords/" + team.getId(), "PUT");
             HttpUtils.sendJson(connection, teamAsJson);
             String response = HttpUtils.readResponse(connection);
 

@@ -7,3 +7,5 @@ topics:
   rf2.fire-event: "/rf2/fire_event"
   actor.fire-validation: "/actor/fire_validation"
   manager.intervention: "/manager/intervention"
+  manager.ask-validation: "/manager/ask_validation"
+
