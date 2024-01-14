@@ -1,6 +1,8 @@
 package com.simulator.webserver.controller;
 
+import com.simulator.webserver.dto.FireStationDTO;
 import com.simulator.webserver.dto.TeamDTO;
+import com.simulator.webserver.models.FireStationEntity;
 import com.simulator.webserver.models.TeamEntity;
 import com.simulator.webserver.service.interfaces.TeamHandlerService;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
-import java.util.List;
+import org.springframework.util.ObjectUtils;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j

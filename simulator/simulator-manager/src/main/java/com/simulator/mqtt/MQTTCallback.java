@@ -1,6 +1,7 @@
 package com.simulator.mqtt;
 
 import com.simulator.service.FireEventService;
+import com.simulator.service.InterventionMessageService;
 import com.simulator.utils.LoggerUtil;
 import com.simulator.utils.Topics;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -38,6 +39,9 @@ public class MQTTCallback implements MqttCallback {
                 // received new fire event, need to check if it's real or not
             } else if (s.equals(Topics.getTopicName(Topics.SIMULATOR_VIEW_FIRE_EVENT))) {
                 FireEventService.OnFireEvent(new String(message.getPayload()));
+            } else if (s.equals(Topics.getTopicName(Topics.MANAGER_INTERVENTION))){
+                // received new intervention
+                InterventionMessageService.OnIntervention(new String(message.getPayload()));
             } else {
                 // should not happen
                 logger.error("Not a valid topic");

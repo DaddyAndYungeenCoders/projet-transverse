@@ -49,4 +49,9 @@ public class FireStationHandlerServiceImpl implements FireStationHandlerService 
                 .map(fireStation -> FireStationDTO.toEntity(fireStationDTO));
         return Optional.of(this.fireStationRepository.save(fireStationToUpdate.get()));
     }
+
+    @Override
+    public Optional<FireStationEntity> getFireStaionByID(Long idFirestation) {
+        return this.fireStationRepository.findById(idFirestation);
+    }
 }

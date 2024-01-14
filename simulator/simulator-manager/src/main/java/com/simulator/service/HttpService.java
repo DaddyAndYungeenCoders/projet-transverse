@@ -8,10 +8,9 @@ import org.springframework.web.client.RestTemplate;
 
 @Slf4j
 public class HttpService {
-    private RestTemplate restTemplate = new RestTemplate();
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private static RestTemplate restTemplate = new RestTemplate();
 
-    public String get(String url) {
+    public static String get(String url) {
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> requestEntity = new HttpEntity<>("", requestHeaders);

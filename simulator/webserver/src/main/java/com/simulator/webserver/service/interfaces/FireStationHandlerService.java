@@ -12,4 +12,6 @@ public interface FireStationHandlerService {
     Optional<FireStationEntity> createFireStationFromView(FireStationDTO fireStationDTO);
     Optional<List<FireStationEntity>> getAllFireStations();
     Optional<FireStationEntity> updateFireStation(Long id, FireStationDTO fireStationDTO);
+
+    Optional<FireStationEntity> getFireStaionByID(Long idFirestation);
 }
