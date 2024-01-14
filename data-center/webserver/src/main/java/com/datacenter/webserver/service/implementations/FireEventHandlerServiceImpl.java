@@ -1,6 +1,8 @@
 package com.datacenter.webserver.service.implementations;
 
+import com.datacenter.webserver.dto.BaseDTO;
 import com.datacenter.webserver.dto.FireEventDTO;
+import com.datacenter.webserver.dto.SensorDetectionDTO;
 import com.datacenter.webserver.models.Coords;
 import com.datacenter.webserver.models.FireEventEntity;
 import com.datacenter.webserver.repository.FireEventRepository;

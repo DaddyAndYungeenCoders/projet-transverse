@@ -1,12 +1,15 @@
 package org.example.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.utils.LoggerUtil;
+import org.slf4j.Logger;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 public class HttpService {
-    private RestTemplate restTemplate = new RestTemplate();
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private static final Logger logger = LoggerUtil.getLogger();
+    private final RestTemplate restTemplate = new RestTemplate();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public String get(String url) {
         HttpHeaders requestHeaders = new HttpHeaders();
@@ -16,12 +19,9 @@ public class HttpService {
         ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
         String response = responseEntity.getBody();
 
-        // Log the response
-
         // Check if the response status is not in the 2xx range
         if (!responseEntity.getStatusCode().is2xxSuccessful()) {
-            System.out.println("Request failed with status code: " + responseEntity.getStatusCodeValue());
-            // Handle the error, throw an exception, or perform other error-specific actions
+            logger.warn("Request failed with status code: " + responseEntity.getStatusCode());
         }
         return response;
     }

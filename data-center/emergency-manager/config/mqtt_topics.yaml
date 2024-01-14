@@ -1,9 +1,0 @@
----
-topics:
-  simulator-view.sensor-changed: "/simulator_view/sensor_changed"
-  simulator-view.fire-event: "/simulator_view/fire_event"
-  simulator_auto.fire-event: "/simulator/auto_fire_event"
-  simulator_auto.new_sensor_value: "/simulator/auto_fire_event"
-  rf2.fire_event: "/rf2/fire_event"
-  actor.fire_validation: "/actor/fire_validation"
-  manager.intervention: "/manager/intervention"
