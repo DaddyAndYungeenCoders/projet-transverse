@@ -58,7 +58,9 @@ CREATE TABLE Team (
     chief_officer VARCHAR(50),
     stamina INT,
     id_firestation INT,
-    is_available BOOLEAN
+    is_available BOOLEAN,
+    current_latitude FLOAT,
+    current_longitude FLOAT
     -- Assumption: id_firestation is a foreign key referencing FireStation table
 );
 
