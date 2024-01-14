@@ -13,7 +13,7 @@ VALUES
     (45.7737, 4.8340,3);
 
 -- Insertion de données dans la table FireEvent
-delete from fire_event;
+delete from fireevent;
 
 -- Insertion de données dans la table FireStation
 delete from firestation;
