@@ -21,7 +21,7 @@ import { FireMarkerService } from './fire-marker-service.service';
   providedIn: 'root',
 })
 export abstract class AbstractMarkerService<T extends MarkersTypes> {
-  private fireMarkerService = Injector.create({ providers: [{ provide: FireMarkerService, useClass: FireMarkerService }]}).get(FireMarkerService);
+ // private fireMarkerService = Injector.create({ providers: [{ provide: FireMarkerService, useClass: FireMarkerService }]}).get(FireMarkerService);
   protected constructor() {}
 
   getIconMarker(type: IconMarkerTypes): IconDefinition {
@@ -45,7 +45,14 @@ export abstract class AbstractMarkerService<T extends MarkersTypes> {
   createMarkers(markerParams: MarkerParameter[], map: L.Map): void {
     markerParams.forEach((marker) => {
       const icon = this.getIconMarker(marker.type);
-      const iconHtml = `<svg class="svg-inline--fa fa-w-16" aria-hidden="true" focusable="false" data-prefix="${icon.prefix}" data-icon="${icon.iconName}" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${icon.icon[0]} ${icon.icon[1]}" style="font-size: 24px;background-color:transparent; color: ${marker.color};"><path fill="currentColor" d="${icon.icon[4]}"></path></svg>`;
+      let tailleIcone
+      if (marker.intensity != undefined){
+        tailleIcone = 24 + marker.intensity * 2;
+      }
+      else {
+        tailleIcone = 24;
+      }
+      const iconHtml = `<svg class="svg-inline--fa fa-w-16" aria-hidden="true" focusable="false" data-prefix="${icon.prefix}" data-icon="${icon.iconName}" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${icon.icon[0]} ${icon.icon[1]}" style="font-size: ${tailleIcone};background-color:transparent; color: ${marker.color};"><path fill="currentColor" d="${icon.icon[4]}"></path></svg>`;
       new L.Marker([marker.coords.latitude, marker.coords.longitude], {
         icon: L.divIcon({
           html: iconHtml,
@@ -69,6 +76,6 @@ export abstract class AbstractMarkerService<T extends MarkersTypes> {
   }
 
   onDeleteFireEvent(id: number): void {
-      this.fireMarkerService.deleteFireEvent(id).subscribe();
+  //    this.fireMarkerService.deleteFireEvent(id).subscribe();
   }
 }
