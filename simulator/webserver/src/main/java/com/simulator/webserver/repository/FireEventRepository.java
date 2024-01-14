@@ -5,6 +5,7 @@ import com.simulator.webserver.models.FireEventEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -14,4 +15,5 @@ public interface FireEventRepository extends JpaRepository<FireEventEntity, Long
 
     @Override
     Optional<FireEventEntity> findById(Long id);
+    Optional<List<FireEventEntity>> findBySensorId(Long id);
 }

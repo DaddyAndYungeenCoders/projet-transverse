@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SensorHandlerService {
-    Optional<SensorEntity> createSensor(@RequestBody SensorDTO sensorDTO);
+    Optional<SensorEntity> createSensor(SensorDTO sensorDTO);
     Optional<List<SensorEntity>> getAllSensors();
     Optional<SensorEntity> updateSensor(Long id, SensorDTO sensorDTO);
 }

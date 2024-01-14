@@ -1,28 +1,23 @@
 package com.simulator.webserver.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simulator.webserver.dto.FireEventDTO;
-import com.simulator.webserver.models.DetectsEntity;
 import com.simulator.webserver.models.FireEventEntity;
 import com.simulator.webserver.service.PostService;
-import com.simulator.webserver.service.implementations.DetectsHandlerServiceImpl;
-import com.simulator.webserver.service.implementations.SensorHandlerServiceImpl;
-import com.simulator.webserver.service.interfaces.DetectsHandlerService;
 import com.simulator.webserver.service.interfaces.FireEventHandlerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -32,7 +27,6 @@ import java.util.stream.Collectors;
 public class FireEventController extends AbstractController<FireEventEntity, FireEventDTO> {
 
     private final FireEventHandlerService fireEventHandlerService;
-    private final DetectsHandlerService detectsHandlerService;
 
     private PostService postService = new PostService();
     private RestTemplate restTemplate = new RestTemplate();
@@ -120,27 +114,8 @@ public class FireEventController extends AbstractController<FireEventEntity, Fir
 
     @GetMapping("/is-real/{sensorId}")
     public ResponseEntity<Boolean> isThereAtLeastOneRealFireInDetectionZone(@PathVariable Long sensorId) {
-        Optional<List<DetectsEntity>> result = detectsHandlerService.findAllFiresDetectedBySensorId(sensorId);
-
-        if (result.isEmpty() || result.get().isEmpty()) {
-            log.debug("No detects found with sensorId {}", sensorId);
-            return ResponseEntity.ok(Boolean.FALSE);
-        }
-
-        List<DetectsEntity> detectsEntities = result.get();
-
-        return ResponseEntity.ok(detectsEntities.stream().anyMatch(detectsEntity -> {
-            try {
-                return isFireReal(detectsEntity.getIdFireEvent());
-            } catch (BadRequestException e) {
-                log.error("FIRE WITH ID {} WAS NOT FOUND", detectsEntity.getIdFireEvent());
-                return false;
-            }
-        }));
-    }
-
-    private boolean isFireReal(Long fireEventId) throws BadRequestException {
-        return fireEventHandlerService.isFireReal(fireEventId); // CETTE FONCTION PE
+        boolean isThereARealFire = fireEventHandlerService.isThereARealFireNearSensor(sensorId);
+        return new ResponseEntity<>(isThereARealFire, HttpStatus.OK);
     }
 
     @Override

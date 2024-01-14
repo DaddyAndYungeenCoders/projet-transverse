@@ -2,6 +2,7 @@
 package com.simulator.webserver.dto;
 
 import com.simulator.webserver.models.Coords;
+import com.simulator.webserver.models.FireEventEntity;
 import lombok.*;
 import org.springframework.util.ObjectUtils;
 
@@ -22,6 +23,8 @@ public class FireEventDTO extends BaseDTO implements Serializable {
     private Date startDate;
     private Date endDate;
     private boolean isReal;
+    private boolean isHandled;
+    private Long sensorId;
 
     public boolean hasNecessaryValuesToCreate() {
         return (
@@ -30,5 +33,9 @@ public class FireEventDTO extends BaseDTO implements Serializable {
                         && this.startDate != null
                         && !ObjectUtils.isEmpty(this.coords)
         );
+    }
+    
+    public FireEventEntity toEntity() {
+        return new FireEventEntity(this.id, this.coords, this.realIntensity, this.startDate, this.endDate, this.isReal, this.isHandled, this.sensorId);
     }
 }
