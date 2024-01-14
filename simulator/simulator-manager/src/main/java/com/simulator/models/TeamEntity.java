@@ -1,38 +1,54 @@
 package com.simulator.models;
 
 
-import java.util.List;
-
 public class TeamEntity {
     private Long id;
-    private String chief_officier;
     private int stamina;
-    private int id_firestation;
-    private boolean is_available;
-    private double current_latitude;
-    private double current_longitude;
+    private int idFirestation;
+    private int fireMastery;
 
 
-
-    public TeamEntity( Long id,
-     String chief_officier,
-     int stamina,
-     int id_firestation,
-     boolean is_available,
-     double current_latitude,
-     double current_longitude) {
+    public TeamEntity(Long id,
+                      int stamina,
+                      int idFirestation,
+                      int fireMastery
+    ) {
         this.id = id;
-        this.chief_officier=chief_officier;
         this.stamina = stamina;
-        this.id_firestation=id_firestation;
-        this.is_available=is_available;
-        this.current_latitude=current_latitude;
-        this.current_longitude=current_longitude;
+        this.fireMastery = fireMastery;
 
     }
 
 
     public Long getId() {
         return id;
+    }
+
+    public int getStamina() {
+        return stamina;
+    }
+
+    public int getIdFirestation() {
+        return idFirestation;
+    }
+
+    public int getFireMastery() {
+        return fireMastery;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setStamina(int stamina) {
+        this.stamina = stamina;
+    }
+
+    public void setIdFirestation(int idFirestation) {
+        this.idFirestation = idFirestation;
+    }
+
+    public void setFireMastery(int fireMastery) {
+        this.fireMastery = fireMastery;
     }
 }

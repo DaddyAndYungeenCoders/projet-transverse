@@ -88,11 +88,11 @@ public class FireEventEntity implements Serializable{
         return this.isHandled;
     }
 
-    public List<InterventionEntity> getIntervention() {
-return null;
+    public boolean isHandled() {
+        return isHandled;
     }
 
-    public DetectsEntity getDetecs() {
-        return null;
+    public void setHandled(boolean handled) {
+        isHandled = handled;
     }
 }

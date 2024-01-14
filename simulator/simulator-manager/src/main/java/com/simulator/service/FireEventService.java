@@ -13,6 +13,7 @@ import com.simulator.utils.Topics;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -88,6 +89,7 @@ public class FireEventService {
 
     public FireEventEntity  updateFireIntensity(Integer intensity, FireEventEntity fireEvent) {
         try {
+            System.out.println();
             String jsonInputString = objectMapper.writeValueAsString(fireEvent);
             HttpURLConnection connection = setConnectionBaseParam("/update/" + fireEvent.getId() + "/" + intensity, "PUT");
 
@@ -134,10 +136,13 @@ public class FireEventService {
 
     public void reduceFire(TeamEntity team, FireEventEntity fireEvent) {
         while (fireEvent.getRealIntensity() > 0) {
-            int newIntensity = Long.valueOf(fireEvent.getRealIntensity() * team.getStamina() / 10).intValue();
+            int newIntensity = Long.valueOf(fireEvent.getRealIntensity() * team.getFireMastery() / 10).intValue();
             fireEvent.setRealIntensity(newIntensity);
             this.updateFireIntensity(newIntensity, fireEvent);
         }
+        fireEvent.setRealIntensity(0);
+        fireEvent.setEndDate(convertUtilToSqlDate(new Date()));
+        this.updateFire(fireEvent);
     }
 
     public void onReceiveInterventionEvent() {
