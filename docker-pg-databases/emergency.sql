@@ -17,11 +17,12 @@ CREATE TABLE FireEvent (
     intensity INT,
     start_date TIMESTAMP,
     end_date TIMESTAMP,
-    validation_status VARCHAR(10),
+    is_verified BOOLEAN,
+    sensor_id INT,
     id_equipe_intervention INT,
     is_handled BOOLEAN
 );
-
+/*
 -- Table historique
 CREATE TABLE historique (
     sensor_id INT,
@@ -40,7 +41,7 @@ CREATE TABLE Users (
     is_admin BOOLEAN,
     created_date DATE
 );
-
+*/
 -- Table Fireman
 CREATE TABLE Fireman (
     id SERIAL PRIMARY KEY,
@@ -58,7 +59,9 @@ CREATE TABLE Team (
     chief_officer VARCHAR(50),
     stamina INT,
     id_firestation INT,
-    is_available BOOLEAN
+    is_available BOOLEAN,
+    current_latitude FLOAT,
+    current_longitude FLOAT
     -- Assumption: id_firestation is a foreign key referencing FireStation table
 );
 

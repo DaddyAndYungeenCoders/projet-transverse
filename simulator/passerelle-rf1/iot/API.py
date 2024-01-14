@@ -7,8 +7,8 @@ from multiprocessing import Process
 
 from pydantic import BaseModel
 
-#SERIALPORT = "/dev/ttcyACM0"
-SERIALPORT = "COM5"
+SERIALPORT = "/dev/ttcyACM0"
+#SERIALPORT = "COM5"
 BAUDRATE = 115200
 ser = serial.Serial()
 
@@ -47,7 +47,7 @@ def initUART():
         ser.open()
     except serial.SerialException:
         print("Serial {} port not available".format(SERIALPORT))
-        exit()
+        #exit()
 
 def sendUARTMessage(msg):
     msg = msg.replace(" ", "")

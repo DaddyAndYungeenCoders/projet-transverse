@@ -47,6 +47,10 @@ public class SensorHandlerServiceImpl extends AbstractOrchestrationService<Senso
         System.out.println("updated");
         return Optional.of(new SensorEntity());
     }
+    
+    public Optional<SensorEntity> getFromId(Long id) {
+        return this.repository.findById(id);
+    }
 
     //  TODO
     /*

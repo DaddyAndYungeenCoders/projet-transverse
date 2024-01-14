@@ -62,7 +62,7 @@ public class FireEventHandlerServiceImpl extends AbstractOrchestrationService<Fi
     //TODO Mapper with MapStruct instead of this function
     private void updateFireEventData(FireEventDTO fireEventDTO, FireEventEntity fireEventEntity) {
         fireEventEntity.setIntensity(fireEventDTO.getIntensity());
-        fireEventEntity.setValidation_status(fireEventDTO.getValidationStatus());
+        fireEventEntity.set_verified(fireEventDTO.isVerified());
         fireEventEntity.setStart_date(fireEventDTO.getStartDate());
         fireEventEntity.setCoords(fireEventDTO.getCoords());
     }
