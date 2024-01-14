@@ -1,12 +1,12 @@
 -- Création des tables
 
-
+/*
 CREATE TABLE Users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50),
     password VARCHAR(50),
     created_date DATE
-);
+);*/
 
 CREATE TABLE Sensor (
     id SERIAL PRIMARY KEY,
@@ -20,29 +20,21 @@ CREATE TABLE FireEvent (
     latitude FLOAT,
     longitude FLOAT,
     real_intensity INT,
+    sensor_id INT,
     start_date TIMESTAMP,
     end_date TIMESTAMP,
     is_real BOOLEAN,
     is_handled BOOLEAN
 );
 
-CREATE TABLE detects (
-    id_sensor INT,
-    id_fire_event INT,
-    intensity FLOAT,
-    PRIMARY KEY (id_sensor, id_fire_event),
-    FOREIGN KEY (id_sensor) REFERENCES Sensor(id),
-    FOREIGN KEY (id_fire_event) REFERENCES FireEvent(id)
-);
-
-CREATE TABLE Historique (
+/*CREATE TABLE Historique ( -- we do not use this for now, useless to keep it in db
     id_user INT,
     id_fire_event INT,
     date_creation TIMESTAMP,
     PRIMARY KEY (id_user, id_fire_event),
     FOREIGN KEY (id_user) REFERENCES Users(id),
     FOREIGN KEY (id_fire_event) REFERENCES FireEvent(id)
-);
+);*/
 
 CREATE TABLE FireStation (
     id SERIAL PRIMARY KEY,
@@ -56,6 +48,7 @@ CREATE TABLE Team (
     id SERIAL PRIMARY KEY,
     fire_station_id INT,
     stamina INT,
+    fire_mastery INT,
     FOREIGN KEY (fire_station_id) REFERENCES FireStation(id)
 );
 
