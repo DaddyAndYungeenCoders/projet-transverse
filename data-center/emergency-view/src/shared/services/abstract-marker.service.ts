@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
-import { IconMarkerTypes } from '../types/enum/IconType';
-import {faDroplet, faFire, faHome, faSmoking, faPassport, IconDefinition} from '@fortawesome/free-solid-svg-icons';
-import L from 'leaflet';
+import {Injectable} from '@angular/core';
+import {IconMarkerTypes} from '../types/enum/IconType';
+import {faDroplet, faFire, faHome, faPassport, faSmoking, faTruck, IconDefinition} from '@fortawesome/free-solid-svg-icons';
+import L, {Map} from 'leaflet';
 import {MarkerParameter, MarkersTypes} from '../types/interfaces/MarkersTypes';
-import { Map } from 'leaflet';
 import {Coords} from '../types/DTOs/Coords';
 
 @Injectable({
@@ -24,6 +23,8 @@ export abstract class AbstractMarkerService<T extends MarkersTypes> {
         return faHome
       case IconMarkerTypes.SENSOR:
         return faPassport
+      case IconMarkerTypes.INTERVENTION:
+        return faTruck
     }
   };
 

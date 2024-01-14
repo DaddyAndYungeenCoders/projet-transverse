@@ -27,7 +27,7 @@ export class FireMarkerService extends AbstractMarkerService<FireMarkerType> {
             coords: fire.coords,
             type: iconMarkerType,
             color: 'black',
-            intensity: fire.realIntensity
+            intensity: fire.intensity
           })
         });
         super.createMarkers(markerParams, map);
