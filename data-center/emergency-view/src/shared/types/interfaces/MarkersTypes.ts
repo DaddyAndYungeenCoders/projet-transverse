@@ -5,7 +5,8 @@ export interface MarkerParameter {
   coords: Coords,
   type: IconMarkerTypes,
   color: string,
-  intensity?: number
+  textNumber?: number,
+  number2?: number
 }
 
 export interface MarkersTypes {

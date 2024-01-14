@@ -17,8 +17,8 @@ export class FirestationMarkerService extends AbstractMarkerService<FireStationM
     super();
   }
 
-  override getObjectInfo(intensity?: number, coords?: Coords): any {
-    return ("<span> Coordonnées de la caserne: [ " + coords?.longitude.toString() + "; " + coords?.latitude.toString() + " ]" + "</span><br/><button style=\"margin: 0.25rem auto auto; background-color: #870000; color: #ffffff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;\">\n" + "  SUPPRIMER\n" +  "</button>")
+  override getObjectInfo(markerParam: MarkerParameter): any {
+    return ("<span> Coordonnées de la caserne: [ " + markerParam.coords?.longitude.toString() + "; " + markerParam.coords?.latitude.toString() + " ]" + "</span><br/><button style=\"margin: 0.25rem auto auto; background-color: #870000; color: #ffffff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;\">\n" + "  SUPPRIMER\n" +  "</button>")
   }
 
   override fetchAll(map: Map) {
@@ -31,7 +31,7 @@ export class FirestationMarkerService extends AbstractMarkerService<FireStationM
             coords: fire.coords,
             type: IconMarkerTypes.FIRESTATION,
             color: 'black',
-            intensity: 0
+            textNumber: 0
           })
         });
         super.createMarkers(markerParams, map);

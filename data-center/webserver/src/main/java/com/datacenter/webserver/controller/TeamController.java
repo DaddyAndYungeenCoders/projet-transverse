@@ -37,6 +37,10 @@ public class TeamController extends CRUDController<TeamEntity, TeamDTO>{
     public ResponseEntity<TeamEntity> updateCoords(@PathVariable Long id, @RequestBody Coords newCoords) {
         Optional<TeamEntity> updatedTeam = this.service.updateCoords(id, newCoords);
 
+        if (updatedTeam.isPresent()) {
+            this.notifyFrontEnd();
+        }
+        
         return updatedTeam.map(entity -> new ResponseEntity<>(entity, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
@@ -44,6 +48,10 @@ public class TeamController extends CRUDController<TeamEntity, TeamDTO>{
     @PutMapping("/available/{id}/{isAvailable}")
     public ResponseEntity<TeamEntity> updateIsAvailable(@PathVariable Long id, @PathVariable boolean isAvailable) {
         Optional<TeamEntity> updatedTeam = this.service.updateIsAvailable(id, isAvailable);
+
+        if (updatedTeam.isPresent()) {
+            this.notifyFrontEnd();
+        }
 
         return updatedTeam.map(entity -> new ResponseEntity<>(entity, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));

@@ -35,6 +35,9 @@ export class MainMapComponent implements OnInit, AfterViewInit {
     this.stompService.subscribe("/topic/fire-event", () => {
       this.refreshFires()
     });
+    this.stompService.subscribe("/topic/intervention", () => {
+      this.refreshIntervention();
+    });
   }
   ngAfterViewInit() {
     this.mountMap(); // Creating the map
@@ -62,7 +65,8 @@ export class MainMapComponent implements OnInit, AfterViewInit {
     this.fireMarkerService.fetchAll(this.map);
   }
   private refreshIntervention() {
-    console.log("here move intervention"); // TODO
+    this.interventionMarkerService.removeAll(this.map);
+    this.interventionMarkerService.fetchAll(this.map);
   }
 
   private fetchAll() {
