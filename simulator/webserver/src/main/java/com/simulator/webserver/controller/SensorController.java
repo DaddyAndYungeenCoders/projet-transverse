@@ -67,6 +67,17 @@ public class SensorController extends AbstractController<SensorEntity, SensorDTO
         return result;
     }
 
+    @PutMapping("/updateIntensity/{id}/{intensity}")
+    public ResponseEntity<SensorEntity> updateSensorIntensityFromId(@PathVariable Long id, @PathVariable int intensity) {
+        ResponseEntity<SensorEntity> result = this.sensorHandlerService.updateSensorIntensity(id, intensity)
+                .map(sensor -> ResponseEntity.ok().body(sensor))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+
+        this.notifyFrontEnd();
+
+        return result;
+    }
+
     @Override
     String getEntityTopic() {
         return "sensor";
