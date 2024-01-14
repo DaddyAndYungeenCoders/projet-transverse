@@ -7,8 +7,6 @@ import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 public class HttpService {
-    private RestTemplate restTemplate = new RestTemplate();
-    private ObjectMapper objectMapper = new ObjectMapper();
     private static final Logger logger = LoggerUtil.getLogger();
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();

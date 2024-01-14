@@ -3,6 +3,7 @@ package org.example.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.models.Coords;
 import org.example.models.Team;
 import org.example.utils.HttpUtils;
 import org.example.utils.LoggerUtil;
@@ -91,10 +92,11 @@ public class TeamService {
     public void updateTeamPosition(String data) {
         try {
             Team team = mapper.readValue(data, Team.class);
-            String teamAsJson = mapper.writeValueAsString(team);
+            Coords newCoords = team.getCoords();
+            String newCoordsAsJson = mapper.writeValueAsString(newCoords);
             HttpURLConnection connection =
                     setConnectionBaseParam("/coords/" + team.getId(), "PUT");
-            HttpUtils.sendJson(connection, teamAsJson);
+            HttpUtils.sendJson(connection, newCoordsAsJson);
             String response = HttpUtils.readResponse(connection);
 
             logger.info("Manager WebServer responded with : {}", response);

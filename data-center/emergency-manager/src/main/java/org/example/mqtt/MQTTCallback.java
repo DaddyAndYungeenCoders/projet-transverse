@@ -3,8 +3,8 @@ package org.example.mqtt;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.example.service.PublishService;
 import org.example.service.FireService;
+import org.example.service.PublishService;
 import org.example.service.TeamService;
 import org.example.utils.LoggerUtil;
 import org.example.utils.Topics;
@@ -17,7 +17,6 @@ public class MQTTCallback implements MqttCallback {
     private static final PublishService pubService = PublishService.getPublishService();
     private static final FireService fireService = new FireService();
     private static final TeamService teamService = new TeamService();
-
 
 
     public MQTTCallback(MQTTClient mqttClient) {
