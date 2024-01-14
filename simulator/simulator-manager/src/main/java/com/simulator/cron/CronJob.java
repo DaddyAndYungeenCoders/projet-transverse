@@ -12,13 +12,12 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
 
 public class CronJob implements Job {
     private GeometryFactory geometryFactory;
-
+    
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         RandomCoords randomCoords = new RandomCoords();
@@ -40,7 +39,7 @@ public class CronJob implements Job {
             FireEventService fireEventService = new FireEventService();
             CoordsEntity randomCoordinatesInBound = generateRandomCoordinateInsidePolygon(polygon);
 
-            FireEventEntity fireEvent = new FireEventEntity(3L, new CoordsEntity(randomCoordinatesInBound.getLatitude(), randomCoordinatesInBound.getLongitude()), intensity, FireEventService.convertUtilToSqlDate(new Date()), null, trueFire, false);
+            FireEventEntity fireEvent = new FireEventEntity(3L, new CoordsEntity(randomCoordinatesInBound.getLatitude(), randomCoordinatesInBound.getLongitude()), intensity, FireEventService.convertUtilToSqlDate(new Date()), null, trueFire, false, null);
             fireEventService.createFire(fireEvent);
             FireEventEntity updatedFireEvent = fireEventService.updateFireIntensity(21, fireEvent);
             System.out.println("THIS IS OUR UPDATED FIREEVENT "+ updatedFireEvent.getRealIntensity());

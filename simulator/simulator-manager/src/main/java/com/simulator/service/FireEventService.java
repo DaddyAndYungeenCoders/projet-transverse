@@ -90,13 +90,11 @@ public class FireEventService {
     public FireEventEntity  updateFireIntensity(Integer intensity, FireEventEntity fireEvent) {
         try {
             System.out.println();
-            String jsonInputString = objectMapper.writeValueAsString(fireEvent);
             HttpURLConnection connection = setConnectionBaseParam("/update/" + fireEvent.getId() + "/" + intensity, "PUT");
 
-            HttpUtils.sendJson(connection, jsonInputString);
             String response = HttpUtils.readResponse(connection);
             System.out.println("CECI EST LA RESPONSE : " + response);
-            FireEventDatabaseEntity updatedFireEvent = objectMapper.readValue(response,FireEventDatabaseEntity.class );
+            FireEventDatabaseEntity updatedFireEvent = objectMapper.readValue(response, FireEventDatabaseEntity.class);
             System.out.println("LIGNE 97 :"+updatedFireEvent);
             return updatedFireEvent.toEntity();
         } catch (Exception e) {

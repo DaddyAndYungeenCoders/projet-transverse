@@ -22,8 +22,8 @@ public class FireEventDTO extends BaseDTO implements Serializable {
     private Date endDate;
     @JsonProperty("real")
     private boolean isReal;
-
-
+    @JsonProperty("sensorId")
+    private Long sensorId;
     @JsonProperty("isHandled")
     private boolean isHandled;
 
@@ -39,6 +39,6 @@ public class FireEventDTO extends BaseDTO implements Serializable {
     }
 
     public FireEventEntity toEntity(){
-        return new FireEventEntity(this.id, this.coords, this.realIntensity, this.startDate, this.endDate, this.isReal, this.isHandled);
+        return new FireEventEntity(this.id, this.coords, this.realIntensity, this.startDate, this.endDate, this.isReal, this.isHandled, this.sensorId);
     }
 }
