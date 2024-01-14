@@ -86,15 +86,7 @@ CREATE TABLE FireStation (
     longitude FLOAT
 );
 
--- Table Team_Intervention_Reference
-CREATE TABLE Team_Intervention_Reference (
-    id_fire_event INT,
-    id_team INT,
-    duration INT,
-    PRIMARY KEY (id_fire_event, id_team),
-    FOREIGN KEY (id_fire_event) REFERENCES FireEvent(id),
-    FOREIGN KEY (id_team) REFERENCES Team(id)
-);
+
 
 -- Ajout des contraintes de clé étrangère
 ALTER TABLE FireEvent ADD CONSTRAINT fk_equipe_intervention FOREIGN KEY (id_equipe_intervention) REFERENCES Team(id);

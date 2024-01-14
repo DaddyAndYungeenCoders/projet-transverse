@@ -70,8 +70,8 @@ public class FireEventHandlerServiceImpl implements FireEventHandlerService {
             return Optional.empty();
         }
         FireEventEntity fire = fireToUpdate.get();
-        updateFireEventData(fireEventDTO, fire);
-        return Optional.of(this.fireEventRepository.save(fire));
+//        updateFireEventData(fireEventDTO, fire);
+        return Optional.of(this.fireEventRepository.save(fireEventDTO.toEntity()));
     }
 
     @Override

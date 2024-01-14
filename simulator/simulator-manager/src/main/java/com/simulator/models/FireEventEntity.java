@@ -1,28 +1,42 @@
 package com.simulator.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
 public class FireEventEntity implements Serializable{
+
     private Long id;
+
     private CoordsEntity coords;
+
     private int realIntensity;
+
     private Date startDate;
+
     private Date endDate;
+
     private boolean isReal;
+
+    private boolean isHandled;
+
+    private Long sensorId;
 
 
     public FireEventEntity() {
     }
 
-    public FireEventEntity(Long id, CoordsEntity coords, int realIntensity, Date startDate, Date endDate, boolean isReal) {
+    public FireEventEntity(Long id, CoordsEntity coords, int realIntensity, Date startDate, Date endDate, boolean isReal, boolean isHandled, Long sensorId) {
         this.id = id;
         this.coords = coords;
         this.realIntensity = realIntensity;
         this.startDate = startDate;
         this.endDate = endDate;
         this.isReal = isReal;
+        this.isHandled = isHandled;
+        this.sensorId = sensorId;
     }
 
     public Long getId() {
@@ -64,6 +78,14 @@ public class FireEventEntity implements Serializable{
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+    
+    public Long getSensorId() {
+        return sensorId;
+    }
+
+    public void setSensorId(Long sensorId) {
+        this.sensorId = sensorId;
+    }
 
     public boolean isReal() {
         return isReal;
@@ -73,11 +95,15 @@ public class FireEventEntity implements Serializable{
         this.isReal = real;
     }
 
-    public List<InterventionEntity> getIntervention() {
-return null;
+    public Boolean getFireState(){
+        return this.isHandled;
     }
 
-    public DetectsEntity getDetecs() {
-        return null;
+    public boolean isHandled() {
+        return isHandled;
+    }
+
+    public void setHandled(boolean handled) {
+        isHandled = handled;
     }
 }

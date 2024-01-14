@@ -12,27 +12,21 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
 
 public class CronJob implements Job {
     private GeometryFactory geometryFactory;
-
+    
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         RandomCoords randomCoords = new RandomCoords();
 
         this.geometryFactory = new GeometryFactory();
 
-        System.out.println("CURRENT TRANSFORMATION");
-
-        System.out.println(Arrays.toString(randomCoords.boundCoordinates));
 
         Polygon polygon = this.geometryFactory.createPolygon(new CoordinateArraySequence(randomCoords.boundCoordinates));
 
-        System.out.println("CURRENT THIS.POLYGON");
-        System.out.println(polygon);
         Random rand = new Random();
         int upperbound = 1;
         int int_random = rand.nextInt(upperbound);
@@ -42,14 +36,11 @@ public class CronJob implements Job {
             Boolean trueFire = randomBoolean == 0;
             int upperboundIntensity = 10;
             int intensity = 1 + rand.nextInt(upperboundIntensity);
-            System.out.println("GONNA GENERATE A FIRE");
-            System.out.println("CRON EXECUTED;");
             FireEventService fireEventService = new FireEventService();
             CoordsEntity randomCoordinatesInBound = generateRandomCoordinateInsidePolygon(polygon);
 
-            FireEventEntity fireEvent = new FireEventEntity(3L, new CoordsEntity(randomCoordinatesInBound.getLatitude(), randomCoordinatesInBound.getLongitude()), intensity, FireEventService.convertUtilToSqlDate(new Date()), null, trueFire);
-            fireEventService.createFire(fireEvent);
-
+            FireEventEntity fireEvent = new FireEventEntity(0L, new CoordsEntity(randomCoordinatesInBound.getLatitude(), randomCoordinatesInBound.getLongitude()), intensity, FireEventService.convertUtilToSqlDate(new Date()), null, trueFire, false, null);
+            FireEventEntity newFireEvent = fireEventService.createFire(fireEvent);
         } else {
             System.out.println("!NOT GONNA GENERATE A FIRE!");
         }
