@@ -1,19 +1,15 @@
 package com.simulator.webserver.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simulator.webserver.dto.FireEventDTO;
 import com.simulator.webserver.models.DetectsEntity;
 import com.simulator.webserver.models.FireEventEntity;
 import com.simulator.webserver.service.PostService;
-import com.simulator.webserver.service.implementations.DetectsHandlerServiceImpl;
-import com.simulator.webserver.service.implementations.SensorHandlerServiceImpl;
 import com.simulator.webserver.service.interfaces.DetectsHandlerService;
 import com.simulator.webserver.service.interfaces.FireEventHandlerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;

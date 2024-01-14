@@ -47,8 +47,10 @@ public class CronJob implements Job {
             FireEventService fireEventService = new FireEventService();
             CoordsEntity randomCoordinatesInBound = generateRandomCoordinateInsidePolygon(polygon);
 
-            FireEventEntity fireEvent = new FireEventEntity(3L, new CoordsEntity(randomCoordinatesInBound.getLatitude(), randomCoordinatesInBound.getLongitude()), intensity, FireEventService.convertUtilToSqlDate(new Date()), null, trueFire);
+            FireEventEntity fireEvent = new FireEventEntity(3L, new CoordsEntity(randomCoordinatesInBound.getLatitude(), randomCoordinatesInBound.getLongitude()), intensity, FireEventService.convertUtilToSqlDate(new Date()), null, trueFire, false);
             fireEventService.createFire(fireEvent);
+            FireEventEntity updatedFireEvent = fireEventService.updateFireIntensity(21, fireEvent);
+            System.out.println("THIS IS OUR UPDATED FIREEVENT "+ updatedFireEvent.getRealIntensity());
 
         } else {
             System.out.println("!NOT GONNA GENERATE A FIRE!");

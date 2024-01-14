@@ -1,6 +1,9 @@
 package com.simulator;
 
 import com.simulator.cron.SchedulerManager;
+import com.simulator.models.FireEventEntity;
+import com.simulator.service.FireEventService;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

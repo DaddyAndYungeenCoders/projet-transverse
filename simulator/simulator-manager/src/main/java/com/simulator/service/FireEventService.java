@@ -7,6 +7,7 @@ import com.simulator.dto.FireEventDTO;
 import com.simulator.models.FireEventEntity;
 import com.simulator.models.SensorEntity;
 import com.simulator.models.TeamEntity;
+import com.simulator.models.database.entity.FireEventDatabaseEntity;
 import com.simulator.utils.HttpUtils;
 import com.simulator.utils.Topics;
 
@@ -85,21 +86,20 @@ public class FireEventService {
         }
     }
 
-    public void updateFireIntensity(Integer intensity, FireEventEntity fireEvent) {
+    public FireEventEntity  updateFireIntensity(Integer intensity, FireEventEntity fireEvent) {
         try {
             String jsonInputString = objectMapper.writeValueAsString(fireEvent);
-            // HttpURLConnection connection =
-            // setConnectionBaseParam("/update/"+fireEvent.getId(),"PUT");
-            HttpURLConnection connection = setConnectionBaseParam("/update/" + fireEvent.getId() + "/" + intensity,
-                    "PUT");
+            HttpURLConnection connection = setConnectionBaseParam("/update/" + fireEvent.getId() + "/" + intensity, "PUT");
 
             HttpUtils.sendJson(connection, jsonInputString);
             String response = HttpUtils.readResponse(connection);
-
-            System.out.println(response);
+            FireEventEntity updatedFireEvent = objectMapper.readValue(response,FireEventEntity.class ); ;
+            System.out.println(updatedFireEvent);
+            return updatedFireEvent;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return null;
     }
 
     public void updateFire(FireEventEntity fireEvent) {
@@ -115,21 +115,27 @@ public class FireEventService {
             System.out.println(e.getMessage());
         }
     }
-    public void fireRandomEvolution(FireEventEntity fireEvent){
-        //TODO Verify if the fire is notHandled
-        Random rand = new Random();
-        int upperbound = 10 - fireEvent.getRealIntensity();
-        int int_random = rand.nextInt(upperbound);
-        fireEvent.setRealIntensity(int_random);
-        //TODO Call the api to update fireIntensity
-    }
-    public void reduceFire(TeamEntity team, FireEventEntity fireEvent){
-        
-        while( fireEvent.getRealIntensity()>0){
 
-            int newIntensity = Long.valueOf(fireEvent.getRealIntensity()*team.getStamina()/10).intValue();
+    public void fireRandomEvolution(FireEventEntity fireEvent) {
+        if (!fireEvent.getFireState()) {
+            Random rand = new Random();
+            int upperbound = 10 - fireEvent.getRealIntensity();
+            int int_random = rand.nextInt(upperbound);
+            int booleanUpperBound = 2;
+            int boolean_random = rand.nextInt(booleanUpperBound);
+            int booleanFactor = boolean_random == 1 ? -1 : 1;
+            int newIntensity = fireEvent.getRealIntensity() + booleanFactor * int_random;
             fireEvent.setRealIntensity(newIntensity);
-            //TODO call to the api to set the new value
+            this.updateFireIntensity(newIntensity, fireEvent);
+
+        }
+    }
+
+    public void reduceFire(TeamEntity team, FireEventEntity fireEvent) {
+        while (fireEvent.getRealIntensity() > 0) {
+            int newIntensity = Long.valueOf(fireEvent.getRealIntensity() * team.getStamina() / 10).intValue();
+            fireEvent.setRealIntensity(newIntensity);
+            this.updateFireIntensity(newIntensity, fireEvent);
         }
     }
 
