@@ -3,8 +3,11 @@ import {Coords} from './Coords';
 export interface FireEventDTO {
   id?: number,
   coords: Coords,
-  realIntensity: number,
+  intensity: number,
   startDate: Date,
   endDate: Date | null,
-  real: boolean
+  sensorId: number,
+  real: boolean,
+  isVerified: boolean,
+  is_handled: boolean
 }

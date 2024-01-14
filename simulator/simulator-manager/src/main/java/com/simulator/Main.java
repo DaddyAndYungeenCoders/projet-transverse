@@ -1,7 +1,6 @@
 package com.simulator;
 
 import com.simulator.cron.SchedulerManager;
-import com.simulator.models.FireEventEntity;
 import com.simulator.service.FireEventService;
 
 import java.util.concurrent.ExecutorService;
@@ -19,5 +18,6 @@ public class Main {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        new FireEventService();
     }
 }
