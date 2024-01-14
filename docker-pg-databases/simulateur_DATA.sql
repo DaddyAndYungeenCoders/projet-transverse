@@ -1,9 +1,9 @@
 -- Insertion de données dans la table Users
-INSERT INTO Users (username, password, created_date)
+/*INSERT INTO Users (username, password, created_date)
 VALUES
     ('JohnDoe', 'password123', '2024-01-01'),
     ('JaneSmith', 'securepass', '2024-01-02'),
-    ('BobJohnson', 'pass123', '2024-01-03');
+    ('BobJohnson', 'pass123', '2024-01-03');*/
 
 -- Insertion de données dans la table Sensor
 INSERT INTO Sensor (latitude, longitude, intensity)
