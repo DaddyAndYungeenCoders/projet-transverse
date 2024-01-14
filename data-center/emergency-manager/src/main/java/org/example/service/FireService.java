@@ -14,7 +14,7 @@ import java.net.URL;
 public class FireService {
     private static final Logger logger = LoggerFactory.getLogger(LoggerUtil.class);
     ObjectMapper mapper = new ObjectMapper();
-    private static final String BASE_URL = "http://localhost:7777/api/fire-event";
+    private static final String BASE_URL = "http://localhost:8080/api/fire-event";
     private static final PublishService pubService = PublishService.getPublishService();
     private static final TeamService teamService = new TeamService();
 
@@ -34,7 +34,7 @@ public class FireService {
             }
 
         } catch (Exception e) {
-            logger.error("Error while decoding fireEventConfirmation : {}", String.valueOf(e));
+            logger.error("Error caught : {}", String.valueOf(e));
         }
     }
 

@@ -19,7 +19,7 @@ public class TeamService {
 
     private static final Logger logger = LoggerFactory.getLogger(LoggerUtil.class);
     ObjectMapper mapper = new ObjectMapper();
-    private static final String BASE_URL = "http://localhost:7777/api/team";
+    private static final String BASE_URL = "http://localhost:8080/api/team";
     private static final PublishService pubService = PublishService.getPublishService();
     private static final FireService fireService = new FireService();
     static HttpService httpService = new HttpService();
