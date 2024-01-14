@@ -59,7 +59,7 @@ public class FireEventDatabaseEntity {
                 this.coords,
                 this.real_intensity,
                 FireEventService.convertUtilToSqlDate(this.start_date),
-                null,
+                FireEventService.convertUtilToSqlDate(this.end_date),
                 this.is_real,
                 this.is_handled,
                 this.sensorId

@@ -28,7 +28,8 @@ public class FireEventService {
 
     public static java.sql.Date convertUtilToSqlDate(java.util.Date utilDate) {
         if (utilDate == null) {
-            throw new IllegalArgumentException("The provided date is null");
+            // throw new IllegalArgumentException("The provided date is null");
+            return null;
         }
         long timeInMillis = utilDate.getTime();
         return new java.sql.Date(timeInMillis);
@@ -39,7 +40,7 @@ public class FireEventService {
             FireEventDTO fireEventDTO = objectMapper.readValue(message.toString(), FireEventDTO.class);
             FireEventEntity fireEvent = fireEventDTO.toEntity();
             System.out.println("fireEvent : " + fireEvent);
-//                    List<SensorEntity> sensorEntities = httpService.getSensorEntities();
+            // List<SensorEntity> sensorEntities = httpService.getSensorEntities();
             String response = httpService.get(AppConfig.getWebServerURL() + "/api/sensor/fetch-all");
             System.out.println("Server Response : " + response);
 
@@ -48,10 +49,11 @@ public class FireEventService {
             SensorEntity nearestSensor = sensorService.findNearestSensor(sensorEntities, fireEvent.getCoords());
             nearestSensor.setIntensity(fireEvent.getRealIntensity());
             System.out.println("Nearest : " + nearestSensor.getId());
-//            String json = objectMapper.writeValueAsString(nearestSensor.toDTO());
-//            System.out.println("JSON sent to MQTT: " + json);
-            httpService.putSendObject(AppConfig.getWebServerURL() + "/api/sensor/updateIntensity/" + nearestSensor.getId() + "/" + nearestSensor.getIntensity(), nearestSensor.toDTO());
-//            mqttService.publish(Topics.SIMULATOR_NEW_SENSOR_VALUE, json);
+            // String json = objectMapper.writeValueAsString(nearestSensor.toDTO());
+            // System.out.println("JSON sent to MQTT: " + json);
+            httpService.putSendObject(AppConfig.getWebServerURL() + "/api/sensor/updateIntensity/"
+                    + nearestSensor.getId() + "/" + nearestSensor.getIntensity(), nearestSensor.toDTO());
+            // mqttService.publish(Topics.SIMULATOR_NEW_SENSOR_VALUE, json);
         } catch (JsonProcessingException e) {
             e.printStackTrace(); // Handle or log the exception
         }
@@ -90,7 +92,7 @@ public class FireEventService {
         return null;
     }
 
-    public FireEventEntity  updateFireIntensity(Integer intensity, Long id) {
+    public FireEventEntity updateFireIntensity(Integer intensity, Long id) {
         try {
             System.out.println();
             HttpURLConnection connection = setConnectionBaseParam("/update/" + id + "/" + intensity, "PUT");
