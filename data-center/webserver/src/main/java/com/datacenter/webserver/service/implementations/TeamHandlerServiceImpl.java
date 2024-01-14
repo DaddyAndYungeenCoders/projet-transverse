@@ -43,6 +43,11 @@ public class TeamHandlerServiceImpl extends AbstractOrchestrationService<TeamEnt
         return Optional.empty();
     }
 
+    @Override
+    public Optional<TeamEntity> updateVerificationStatus(Long id, boolean isVerified) {
+        return Optional.empty();
+    }
+
     public Optional<TeamEntity> updateCoords(Long id, Coords coords) {
         return this.repository.findById(id)
                 .map(teamEntity -> {
