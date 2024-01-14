@@ -11,4 +11,6 @@ public interface SensorHandlerService {
     Optional<SensorEntity> createSensor(SensorDTO sensorDTO);
     Optional<List<SensorEntity>> getAllSensors();
     Optional<SensorEntity> updateSensor(Long id, SensorDTO sensorDTO);
+
+    Optional<SensorEntity> updateSensorIntensity(Long id, int intensity);
 }

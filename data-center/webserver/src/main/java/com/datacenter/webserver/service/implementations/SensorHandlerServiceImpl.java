@@ -1,9 +1,8 @@
 package com.datacenter.webserver.service.implementations;
 
-import com.datacenter.webserver.dto.BaseDTO;
 import com.datacenter.webserver.dto.SensorDTO;
+import com.datacenter.webserver.models.Coords;
 import com.datacenter.webserver.models.SensorEntity;
-import com.datacenter.webserver.repository.FireStationRepository;
 import com.datacenter.webserver.repository.SensorRepository;
 import com.datacenter.webserver.service.interfaces.AbstractOrchestrationService;
 import lombok.extern.slf4j.Slf4j;
@@ -46,16 +45,34 @@ public class SensorHandlerServiceImpl extends AbstractOrchestrationService<Senso
     @Override 
     public Optional<SensorEntity> update(Long id, SensorDTO sensorDTO) {
         System.out.println("updated");
-        return Optional.of(new SensorEntity());
-    }
-    
-    public Optional<SensorEntity> getFromId(Long id) {
-        return this.repository.findById(id);
+        Optional<SensorEntity> sensorEntity = Optional.of(this.repository.getReferenceById(id));
+        if (sensorEntity.isEmpty()) {
+            return sensorEntity;
+        }
+        
+        Long id1 = sensorEntity.get().getId();
+        sensorDTO.setId(id1);
+        
+        return Optional.of(this.repository.save(SensorDTO.toEntity(sensorDTO)));
     }
 
     @Override
-    public Optional<SensorEntity> updateVerificationStatus(Long id, BaseDTO dto) {
+    public Optional<SensorEntity> updateVerificationStatus(Long id, boolean isVerified) {
         return Optional.empty();
+    }
+
+    @Override
+    public Optional<SensorEntity> updateCoords(Long id, Coords coords) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<SensorEntity> updateIsAvailable(Long id, boolean isAvailable) {
+        return Optional.empty();
+    }
+
+    public Optional<SensorEntity> getFromId(Long id) {
+        return this.repository.findById(id);
     }
 
     //  TODO

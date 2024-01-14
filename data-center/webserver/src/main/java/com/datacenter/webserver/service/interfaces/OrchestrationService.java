@@ -2,6 +2,7 @@ package com.datacenter.webserver.service.interfaces;
 
 import com.datacenter.webserver.dto.BaseDTO;
 import com.datacenter.webserver.models.BaseEntity;
+import com.datacenter.webserver.models.Coords;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -12,5 +13,7 @@ public interface OrchestrationService<ENTITY extends BaseEntity, DTO extends Bas
     Optional<ENTITY> createFromView(@RequestBody DTO dto);
     Optional<List<DTO>> getAll();
     Optional<ENTITY> update(Long id, DTO dto);
-    Optional<ENTITY> updateVerificationStatus(Long id, BaseDTO dto);
+    Optional<ENTITY> updateVerificationStatus(Long id, boolean isVerified);
+    Optional<ENTITY> updateCoords(Long id, Coords coords);
+    Optional<ENTITY> updateIsAvailable(Long id, boolean isAvailable);
 }
