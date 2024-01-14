@@ -14,12 +14,14 @@ import java.net.URL;
 public class FireService {
     private static final Logger logger = LoggerFactory.getLogger(LoggerUtil.class);
     ObjectMapper mapper = new ObjectMapper();
-    private static final String BASE_URL = "http://localhost:8080/api/fire-event";
+    private static final String BASE_URL = "http://localhost:%s/api/fire-event";
+    private static final String DATA_CENTER_PORT = "8080";
+    private static final String SIMU_PORT = "7777";
     private static final PublishService pubService = PublishService.getPublishService();
     private static final TeamService teamService = new TeamService();
 
-    private String urlApi(String endpoint) {
-        return BASE_URL + endpoint;
+    private String urlApi(String port, String endpoint) {
+        return String.format(BASE_URL, port) + endpoint;
     }
 
     public void handleFireConfirmation(String data) {
@@ -40,8 +42,8 @@ public class FireService {
     }
 
 
-    private HttpURLConnection setConnectionBaseParam(String endpoint, String method) throws Exception {
-        URL url = new URI(urlApi(endpoint)).toURL();
+    private HttpURLConnection setConnectionBaseParam(String port, String endpoint, String method) throws Exception {
+        URL url = new URI(urlApi(port, endpoint)).toURL();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod(method);
         connection.setRequestProperty("Content-Type", "application/json");
@@ -55,7 +57,7 @@ public class FireService {
             String sensorValuesAsJson = mapper.writeValueAsString(sensorDetection);
             System.out.println(sensorValuesAsJson);
             HttpURLConnection connection =
-                    setConnectionBaseParam("/update/" + sensorDetection.getId(), "PUT");
+                    setConnectionBaseParam(DATA_CENTER_PORT, "/update/" + sensorDetection.getId(), "PUT");
 
             HttpUtils.sendJson(connection, sensorValuesAsJson);
             String response = HttpUtils.readResponse(connection);
@@ -67,10 +69,10 @@ public class FireService {
     }
 
     public void updateFireEventHandledStatus(String sensorId) {
-        // update fireEvent by sensorId
+        // update fireEvent by sensorId IN SIMULATOR
         try {
             HttpURLConnection connection =
-                    setConnectionBaseParam("/update-handled/" + sensorId, "PUT");
+                    setConnectionBaseParam(SIMU_PORT, "/update-handled/" + sensorId, "PUT");
 
             HttpUtils.sendJson(connection, "");
             String response = HttpUtils.readResponse(connection);
