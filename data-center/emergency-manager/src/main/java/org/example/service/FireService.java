@@ -33,12 +33,9 @@ public class FireService {
             if (sensorDetection.isReal()) {
                 // if it's real, start intervention, and update fireEvent in webserver
                 logger.info("Fire is Real !");
-<<<<<<< HEAD
-=======
                 // update reality of fire in any case
                 updateFireEventValidationStatus(sensorDetection);
->>>>>>> b351405 (feat: call api a tester et mqtt ok)
-               teamService.processAvailableTeam(String.valueOf(sensorDetection.getId()));
+                teamService.processAvailableTeam(String.valueOf(sensorDetection.getId()));
             }
 
         } catch (Exception e) {
@@ -69,7 +66,7 @@ public class FireService {
 
             logger.info("Manager WebServer responded with : {}", response);
         } catch (Exception e) {
-           logger.error(e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 
