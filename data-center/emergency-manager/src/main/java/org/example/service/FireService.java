@@ -2,6 +2,7 @@ package org.example.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.models.SensorDetection;
+import org.example.models.Team;
 import org.example.utils.HttpUtils;
 import org.example.utils.LoggerUtil;
 import org.slf4j.Logger;
