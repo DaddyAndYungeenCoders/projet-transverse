@@ -27,9 +27,10 @@ public class FireEventEntity extends BaseEntity implements Serializable {
     private Date end_date;
     private boolean is_real;
     private boolean is_handled;
-    private Long sensor_id;
+    @Column(name = "sensor_id")
+    private Long sensorId;
     
     public FireEventDTO toDTO() {
-        return new FireEventDTO(this.id, this.coords, this.real_intensity, this.start_date, this.end_date, this.is_real, this.is_handled, this.sensor_id);
+        return new FireEventDTO(this.id, this.coords, this.real_intensity, this.start_date, this.end_date, this.is_real, this.is_handled, this.sensorId);
     }
 }
