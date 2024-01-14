@@ -1,6 +1,7 @@
 package com.simulator.models;
 
 import com.simulator.dto.InterventionMessageDTO;
+import com.simulator.service.FireStationService;
 import com.simulator.service.MovingTeamService;
 import com.simulator.service.RouteService;
 import lombok.*;
@@ -15,6 +16,7 @@ public class MovingTeamEntity {
     private TeamEntity team;
     private CoordsEntity destination;
     private CoordsEntity current_position;
+    private FireStationEntity fire_station;
     private int stamina;
     private int fire_mastery_total;
     private boolean moving = true;
@@ -26,14 +28,17 @@ public class MovingTeamEntity {
 
     private static final MovingTeamService movingTeamService = new MovingTeamService();
     private static final RouteService routeService = new RouteService();
+    private static final FireStationService fireStationService = new FireStationService();
 
-    public MovingTeamEntity(TeamEntity team, CoordsEntity fireCoords, CoordsEntity fireStationCoords, int stamina, int fireMasteryTotal) {
+
+    public MovingTeamEntity(TeamEntity team, CoordsEntity fireCoords, CoordsEntity fireStationCoords, int stamina, int fireMasteryTotal, FireStationEntity fireStationEntity) {
         this.team = team;
         this.destination = fireCoords;
         this.current_position = fireStationCoords;
         this.stamina = stamina;
         this.fire_mastery_total = fireMasteryTotal;
         this.route = routeService.getRoute(current_position, destination);
+        this.fire_station = fireStationEntity;
         movingTeamService.sendTeamPosition(this.toInterventionMessageDTO());
     }
 
@@ -48,7 +53,7 @@ public class MovingTeamEntity {
             count++;
             if (count == 10) {
                 System.out.println("Moving team " + team.getId() + " to fire station");
-                destination = team.getFire_station().getCoords();
+                destination = fire_station.getCoords();
                 this.route = routeService.getRoute(current_position, destination);
                 this.step = 0;
                 count = 0;
@@ -80,7 +85,7 @@ public class MovingTeamEntity {
 
     public Boolean isBackHome() {
         if (backingHome)
-            return current_position.equals(team.getFire_station().getCoords());
+            return current_position.equals(fire_station.getCoords());
         else
             return false;
     }
@@ -91,7 +96,7 @@ public class MovingTeamEntity {
         interventionMessageDTO.setFire_mastery_total(fire_mastery_total);
         interventionMessageDTO.setStamina(stamina);
         interventionMessageDTO.setCoords(current_position);
-        interventionMessageDTO.setFire_station_id(team.getFire_station().getId());
+        interventionMessageDTO.setFire_station_id(this.fire_station.getId());
         return interventionMessageDTO;
     }
 

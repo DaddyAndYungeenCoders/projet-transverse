@@ -12,6 +12,7 @@ public class FireStationService {
 
     public FireStationEntity getFireStationById(Long fireStationId) {
         String response = HttpService.get(BASE_URL + "/get/" + fireStationId);
+        System.out.println("Server Response : " + response);
         return FireStationService.convertJsonToFireStationEntity(response);
     }
 

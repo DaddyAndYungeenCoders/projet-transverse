@@ -40,7 +40,7 @@ public class FireEventService {
             FireEventEntity fireEvent = fireEventDTO.toEntity();
             System.out.println("fireEvent : " + fireEvent);
             // List<SensorEntity> sensorEntities = httpService.getSensorEntities();
-            String response = httpService.get(AppConfig.getWebServerURL() + "/api/sensor/fetch-all");
+            String response = HttpService.get(AppConfig.getWebServerURL() + "/api/sensor/fetch-all");
             System.out.println("Server Response : " + response);
 
             List<SensorEntity> sensorEntities = SensorService.convertJsonToSensorEntities(response);
@@ -49,7 +49,7 @@ public class FireEventService {
             System.out.println("Nearest : " + nearestSensor.getId());
             // String json = objectMapper.writeValueAsString(nearestSensor.toDTO());
             // System.out.println("JSON sent to MQTT: " + json);
-            httpService.putSendObject(AppConfig.getWebServerURL() + "/api/sensor/updateIntensity/"
+            HttpService.putSendObject(AppConfig.getWebServerURL() + "/api/sensor/updateIntensity/"
                     + nearestSensor.getId() + "/" + nearestSensor.getIntensity(), nearestSensor.toDTO());
             // mqttService.publish(Topics.SIMULATOR_NEW_SENSOR_VALUE, json);
         } catch (JsonProcessingException e) {

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simulator.dto.InterventionMessageDTO;
 import com.simulator.models.CoordsEntity;
+import com.simulator.models.FireStationEntity;
 import com.simulator.models.MovingTeamEntity;
 import com.simulator.models.TeamEntity;
 
@@ -35,9 +36,10 @@ public class InterventionMessageService {
             CoordsEntity fireCoords = interventionMessageDTO.getCoords();
             TeamEntity team = teamService.getTeamById(interventionMessageDTO.getTeam_id());
 //            team.setFire_station(fireStationService.getFireStationById(interventionMessageDTO.getFire_station_id()));
-            CoordsEntity fireStationCoords = team.getFire_station().getCoords();
+            FireStationEntity fireStationEntity = fireStationService.getFireStationById(interventionMessageDTO.getFire_station_id());
+            CoordsEntity fireStationCoords = fireStationEntity.getCoords();
             System.out.println("Fire station coords: " + fireStationCoords);
-            MovingTeamEntity movingTeamEntity = new MovingTeamEntity(team, fireCoords, fireStationCoords, interventionMessageDTO.getStamina(),interventionMessageDTO.getFire_mastery_total());
+            MovingTeamEntity movingTeamEntity = new MovingTeamEntity(team, fireCoords, fireStationCoords, interventionMessageDTO.getStamina(),interventionMessageDTO.getFire_mastery_total(), fireStationEntity);
             movingTeamService.addTeam(movingTeamEntity);
         } catch (JsonProcessingException e) {
             e.printStackTrace(); // Handle or log the exception
