@@ -22,8 +22,7 @@ public class ActorService {
 
     public void checkIfFireIsReal(String payload) {
         logger.info("Asking Actor to check fire reality...");
-        logger.info(payload);
-//        mqtt.publish(Topics.MANAGER_ASK_VALIDATION, payload);
+        mqtt.publish(Topics.getTopicName(Topics.MANAGER_ASK_VALIDATION), payload);
     }
 
 

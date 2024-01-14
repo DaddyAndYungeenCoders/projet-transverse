@@ -1,5 +1,6 @@
 package com.datacenter.webserver.service.implementations;
 
+import com.datacenter.webserver.dto.BaseDTO;
 import com.datacenter.webserver.dto.FireStationDTO;
 import com.datacenter.webserver.models.FireStationEntity;
 import com.datacenter.webserver.repository.FireEventRepository;
@@ -51,5 +52,10 @@ public class FireStationHandlerServiceImpl extends AbstractOrchestrationService<
         fireStationToUpdate
                 .map(fireStation -> FireStationDTO.toEntity(fireStationDTO));
         return Optional.of(this.repository.save(fireStationToUpdate.get()));
+    }
+
+    @Override
+    public Optional<FireStationEntity> updateStatus(Long id, BaseDTO dto) {
+        return Optional.empty();
     }
 }

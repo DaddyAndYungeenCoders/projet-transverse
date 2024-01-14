@@ -1,5 +1,6 @@
 package com.datacenter.webserver.service.implementations;
 
+import com.datacenter.webserver.dto.BaseDTO;
 import com.datacenter.webserver.dto.SensorDTO;
 import com.datacenter.webserver.models.SensorEntity;
 import com.datacenter.webserver.repository.FireStationRepository;
@@ -50,6 +51,11 @@ public class SensorHandlerServiceImpl extends AbstractOrchestrationService<Senso
     
     public Optional<SensorEntity> getFromId(Long id) {
         return this.repository.findById(id);
+    }
+
+    @Override
+    public Optional<SensorEntity> updateStatus(Long id, BaseDTO dto) {
+        return Optional.empty();
     }
 
     //  TODO

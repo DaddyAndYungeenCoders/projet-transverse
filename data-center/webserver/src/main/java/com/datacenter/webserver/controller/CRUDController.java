@@ -23,7 +23,7 @@ public abstract class CRUDController<ENTITY extends BaseEntity, DTO extends Base
     @Autowired
     WebSocketService webSocketService;
     
-    private final OrchestrationService<ENTITY, DTO> service;
+    protected final OrchestrationService<ENTITY, DTO> service;
 
     abstract String getEntityTopic();
     
