@@ -25,11 +25,12 @@ public class FireService {
     public void handleFireConfirmation(String data) {
         try {
             SensorDetection sensorDetection = mapper.readValue(data, SensorDetection.class);
+            // update reality of fire in any case
+            updateFireEventValidationStatus(sensorDetection);
+
             if (sensorDetection.isReal()) {
                 // if it's real, start intervention, and update fireEvent in webserver
                 logger.info("Fire is Real !");
-                // update reality of fire in any case
-                updateFireEventValidationStatus(sensorDetection);
                teamService.processAvailableTeam(String.valueOf(sensorDetection.getId()));
             }
 
@@ -52,6 +53,7 @@ public class FireService {
     public void updateFireEventValidationStatus(SensorDetection sensorDetection) {
         try {
             String sensorValuesAsJson = mapper.writeValueAsString(sensorDetection);
+            System.out.println(sensorValuesAsJson);
             HttpURLConnection connection =
                     setConnectionBaseParam("/update/" + sensorDetection.getId(), "PUT");
 

@@ -32,6 +32,7 @@ public class TeamService {
         // get all teams fetch-all
         String response = null;
         response = httpService.get(BASE_URL + "/fetch-all");
+        logger.info("Getting all teams...");
         try {
             List<Team> allTeams = mapper.readValue(response, new TypeReference<List<Team>>() {
             });
@@ -43,6 +44,7 @@ public class TeamService {
             // publish message team inter + put team inter to webserver + update fireEvent to isHandled in simulator
             firstAvailableTeam.ifPresentOrElse(team -> {
                 try {
+                    logger.info("Available team found : {}", team);
                     String teamToSend = mapper.writeValueAsString(team);
                     pubService.pubManagerIntervention(teamToSend);
                     updateAvailabilityOfTeam(team, false);
