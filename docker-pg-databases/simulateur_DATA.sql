@@ -25,11 +25,11 @@ VALUES
     ('CASERNE FICTIVE 2', '17 rue du random', 45.769207, 4.870679),
 
 -- Insertion de données dans la table Team
-INSERT INTO Team (fire_station_id, stamina)
+INSERT INTO Team (fire_station_id, stamina, fire_mastery)
 VALUES
-    (1, 100),
-    (2, 100),
-    (3, 100);
+    (1, 100, 10),
+    (2, 100, 10),
+    (3, 100, 10);
 
 /*-- Insertion de données dans la table intervention
 INSERT INTO intervention (id_fire_event, id_team, duration)
