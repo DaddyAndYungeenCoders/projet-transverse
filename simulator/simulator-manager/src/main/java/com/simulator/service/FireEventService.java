@@ -6,12 +6,14 @@ import com.simulator.config.AppConfig;
 import com.simulator.dto.FireEventDTO;
 import com.simulator.models.FireEventEntity;
 import com.simulator.models.SensorEntity;
+import com.simulator.models.TeamEntity;
 import com.simulator.utils.HttpUtils;
 import com.simulator.utils.Topics;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+import java.util.Random;
 
 public class FireEventService {
     private static final String BASE_URL = "http://localhost:7777/api/fire-event";
@@ -111,6 +113,23 @@ public class FireEventService {
             System.out.println(response);
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+    }
+    public void fireRandomEvolution(FireEventEntity fireEvent){
+        //TODO Verify if the fire is notHandled
+        Random rand = new Random();
+        int upperbound = 10 - fireEvent.getRealIntensity();
+        int int_random = rand.nextInt(upperbound);
+        fireEvent.setRealIntensity(int_random);
+        //TODO Call the api to update fireIntensity
+    }
+    public void reduceFire(TeamEntity team, FireEventEntity fireEvent){
+        
+        while( fireEvent.getRealIntensity()>0){
+
+            int newIntensity = Long.valueOf(fireEvent.getRealIntensity()*team.getStamina()/10).intValue();
+            fireEvent.setRealIntensity(newIntensity);
+            //TODO call to the api to set the new value
         }
     }
 
