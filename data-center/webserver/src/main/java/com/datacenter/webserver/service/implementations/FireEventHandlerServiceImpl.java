@@ -1,10 +1,8 @@
 package com.datacenter.webserver.service.implementations;
 
-import com.datacenter.webserver.dto.BaseDTO;
 import com.datacenter.webserver.dto.FireEventDTO;
-import com.datacenter.webserver.dto.SensorDetectionDTO;
+import com.datacenter.webserver.models.Coords;
 import com.datacenter.webserver.models.FireEventEntity;
-import com.datacenter.webserver.models.ValidationStatus;
 import com.datacenter.webserver.repository.FireEventRepository;
 import com.datacenter.webserver.service.interfaces.AbstractOrchestrationService;
 import lombok.extern.slf4j.Slf4j;
@@ -62,9 +60,16 @@ public class FireEventHandlerServiceImpl extends AbstractOrchestrationService<Fi
     }
 
     @Override
-    public Optional<FireEventEntity> updateVerificationStatus(Long id, BaseDTO dto) {
-        // get sur historique et set a verified
+    public Optional<FireEventEntity> updateVerificationStatus(Long id, boolean isVerified) {
+        return Optional.empty();
+    }
 
+    public Optional<FireEventEntity> updateCoords(Long id, Coords coords) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<FireEventEntity> updateIsAvailable(Long id, boolean isAvailable) {
         return Optional.empty();
     }
 

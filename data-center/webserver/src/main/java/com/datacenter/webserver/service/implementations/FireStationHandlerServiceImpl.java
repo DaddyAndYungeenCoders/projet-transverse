@@ -2,6 +2,7 @@ package com.datacenter.webserver.service.implementations;
 
 import com.datacenter.webserver.dto.BaseDTO;
 import com.datacenter.webserver.dto.FireStationDTO;
+import com.datacenter.webserver.models.Coords;
 import com.datacenter.webserver.models.FireStationEntity;
 import com.datacenter.webserver.repository.FireEventRepository;
 import com.datacenter.webserver.repository.FireStationRepository;
@@ -55,7 +56,16 @@ public class FireStationHandlerServiceImpl extends AbstractOrchestrationService<
     }
 
     @Override
-    public Optional<FireStationEntity> updateVerificationStatus(Long id, BaseDTO dto) {
+    public Optional<FireStationEntity> updateVerificationStatus(Long id, boolean isVerified) {
+        return Optional.empty();
+    }
+    
+    public Optional<FireStationEntity> updateCoords(Long id, Coords coords) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<FireStationEntity> updateIsAvailable(Long id, boolean isAvailable) {
         return Optional.empty();
     }
 }
