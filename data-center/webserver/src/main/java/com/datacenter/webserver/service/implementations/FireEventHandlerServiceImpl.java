@@ -1,6 +1,8 @@
 package com.datacenter.webserver.service.implementations;
 
+import com.datacenter.webserver.dto.BaseDTO;
 import com.datacenter.webserver.dto.FireEventDTO;
+import com.datacenter.webserver.dto.SensorDetectionDTO;
 import com.datacenter.webserver.models.FireEventEntity;
 import com.datacenter.webserver.models.ValidationStatus;
 import com.datacenter.webserver.repository.FireEventRepository;
@@ -59,6 +61,13 @@ public class FireEventHandlerServiceImpl extends AbstractOrchestrationService<Fi
         return Optional.of(this.repository.save(fire));
     }
 
+    @Override
+    public Optional<FireEventEntity> updateVerificationStatus(Long id, BaseDTO dto) {
+        // get sur historique et set a verified
+
+        return Optional.empty();
+    }
+
     //TODO Mapper with MapStruct instead of this function
     private void updateFireEventData(FireEventDTO fireEventDTO, FireEventEntity fireEventEntity) {
         fireEventEntity.setIntensity(fireEventDTO.getIntensity());
@@ -66,4 +75,5 @@ public class FireEventHandlerServiceImpl extends AbstractOrchestrationService<Fi
         fireEventEntity.setStart_date(fireEventDTO.getStartDate());
         fireEventEntity.setCoords(fireEventDTO.getCoords());
     }
+
 }
