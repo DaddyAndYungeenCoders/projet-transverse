@@ -71,7 +71,7 @@ public class FireEventService {
         return connection;
     }
 
-    public void createFire(FireEventEntity fireEvent) {
+    public FireEventEntity createFire(FireEventEntity fireEvent) {
         // = new FireEventEntity(4L, new CoordsEntity(23.3, 23.1), 8, new Date(2024, 1,
         // 10), null, true);
         try {
@@ -80,22 +80,23 @@ public class FireEventService {
 
             HttpUtils.sendJson(connection, jsonInputString);
             String response = HttpUtils.readResponse(connection);
-
+            FireEventDatabaseEntity newFireEvent = objectMapper.readValue(response, FireEventDatabaseEntity.class);
             System.out.println(response);
+            return newFireEvent.toEntity();
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return null;
     }
 
-    public FireEventEntity  updateFireIntensity(Integer intensity, FireEventEntity fireEvent) {
+    public FireEventEntity  updateFireIntensity(Integer intensity, Long id) {
         try {
             System.out.println();
-            HttpURLConnection connection = setConnectionBaseParam("/update/" + fireEvent.getId() + "/" + intensity, "PUT");
+            HttpURLConnection connection = setConnectionBaseParam("/update/" + id + "/" + intensity, "PUT");
 
             String response = HttpUtils.readResponse(connection);
-            System.out.println("CECI EST LA RESPONSE : " + response);
             FireEventDatabaseEntity updatedFireEvent = objectMapper.readValue(response, FireEventDatabaseEntity.class);
-            System.out.println("LIGNE 97 :"+updatedFireEvent);
             return updatedFireEvent.toEntity();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -103,18 +104,19 @@ public class FireEventService {
         return null;
     }
 
-    public void updateFire(FireEventEntity fireEvent) {
+    public FireEventEntity updateFire(FireEventEntity fireEvent) {
         try {
             String jsonInputString = objectMapper.writeValueAsString(fireEvent);
             HttpURLConnection connection = setConnectionBaseParam("/update/" + fireEvent.getId(), "PUT");
 
             HttpUtils.sendJson(connection, jsonInputString);
             String response = HttpUtils.readResponse(connection);
-
-            System.out.println(response);
+            FireEventDatabaseEntity updatedFireEvent = objectMapper.readValue(response, FireEventDatabaseEntity.class);
+            return updatedFireEvent.toEntity();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return null;
     }
 
     public void fireRandomEvolution(FireEventEntity fireEvent) {
@@ -127,7 +129,7 @@ public class FireEventService {
             int booleanFactor = boolean_random == 1 ? -1 : 1;
             int newIntensity = fireEvent.getRealIntensity() + booleanFactor * int_random;
             fireEvent.setRealIntensity(newIntensity);
-            this.updateFireIntensity(newIntensity, fireEvent);
+            this.updateFireIntensity(newIntensity, fireEvent.getId());
 
         }
     }
@@ -136,7 +138,7 @@ public class FireEventService {
         while (fireEvent.getRealIntensity() > 0) {
             int newIntensity = Long.valueOf(fireEvent.getRealIntensity() * team.getFireMastery() / 10).intValue();
             fireEvent.setRealIntensity(newIntensity);
-            this.updateFireIntensity(newIntensity, fireEvent);
+            this.updateFireIntensity(newIntensity, fireEvent.getId());
         }
         fireEvent.setRealIntensity(0);
         fireEvent.setEndDate(convertUtilToSqlDate(new Date()));
