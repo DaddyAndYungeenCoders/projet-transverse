@@ -1,6 +1,10 @@
 package com.simulator.models;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.List;
+
 public class TeamEntity {
     private Long id;
     private int stamina;

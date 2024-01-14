@@ -1,7 +1,10 @@
 package com.simulator.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simulator.config.AppConfig;
+import com.simulator.dto.TeamDTO;
 import com.simulator.models.FireStationEntity;
 import com.simulator.models.TeamEntity;
 
@@ -18,9 +21,12 @@ public class TeamService {
     private static TeamEntity convertJsonToTeamEntity(String response) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(response, TeamEntity.class);
-        } catch (IOException e) {
-            throw new RuntimeException("Error converting JSON to TeamEntities", e);
+            System.out.println(response);
+            return objectMapper.readValue(response, TeamDTO.class).toEntity();
+        } catch (JsonMappingException e) {
+            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
     }
 }

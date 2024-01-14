@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MovingTeamService {
-    private static List<MovingTeamEntity> teamsInIntervention =new ArrayList<>();
+    private static List<MovingTeamEntity> teamsInIntervention = new ArrayList<>();
     private static final Logger logger = LoggerUtil.getLogger();
 
 
@@ -18,37 +18,39 @@ public class MovingTeamService {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
 
-   public void moveTeams(MovingTeamEntity team) {
-       team.move();
-       try {
-           String json = objectMapper.writeValueAsString(team);
-           logger.info("Nouvelle position de team {}", json);
+    public void sendTeamPosition(MovingTeamEntity team) {
+        try {
+            String json = objectMapper.writeValueAsString(team);
+            logger.info("Nouvelle position de team {}", json);
+            mqttService.publish(Topics.SIMULATOR_TEAM_POSITION, json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
-           mqttService.publish(Topics.SIMULATOR_TEAM_POSITION, json);
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
+    public Runnable moveTeams() {
+        while (true) {
+            logger.info("Moving teams");
+            List<MovingTeamEntity> teamsCopy = new ArrayList<>(teamsInIntervention);
 
-
-   }
-
-
-   public Runnable moveTeams() {
-       while (true) {
-           logger.info("Moving teams");
-           for (MovingTeamEntity team : teamsInIntervention) {
-               moveTeams(team);
-           }
-           try {
-               Thread.sleep(1000);
-           } catch (InterruptedException e) {
-               e.printStackTrace();
-           }
-       }
-   }
+            for (MovingTeamEntity team : teamsCopy) {
+                if (team != null) {
+                    team.move();
+                    if (team.isBackHome()) {
+                        teamsInIntervention.remove(team);
+                    }
+                }
+            }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public void addTeam(MovingTeamEntity movingTeamEntity) {
-       teamsInIntervention.add(movingTeamEntity);
+        teamsInIntervention.add(movingTeamEntity);
     }
 }
