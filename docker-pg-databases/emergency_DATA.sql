@@ -18,6 +18,12 @@ VALUES
     (4, 7500, 88, 'FPT', 7, 1),
     (6, 3200, 92, 'CAR', 6, 2),
     (5, 8100, 82, 'EPA', 8, 3);
+INSERT INTO Team (chief_officer, stamina, id_firestation, is_available, current_latitude, current_longitude)
+VALUES
+    ('Jean Dupont', 80, 1, TRUE, 45.7653297, 4.9029549),
+    ('Marie Curie', 85, 2, TRUE, 45.757098, 4.876627),
+    ('Pierre Martin', 75, 3, FALSE, 45.782051, 4.872859),
+    ('Lucie Durant', 90, 4, TRUE, 45.769207, 4.870679);
 INSERT INTO Fireman (lastname, firstname, birthdate, fire_mastery, id_team)
 VALUES
     ('Dupont', 'Jean', '1978-02-15', 9, 1),
@@ -32,9 +38,4 @@ VALUES
     ('Leroy', 'Julie', '1991-05-19', 5, 3),
     ('Roux', 'David', '1989-11-09', 7, 4),
     ('Vincent', 'Anne', '1986-04-17', 6, 4);
-INSERT INTO Team (chief_officer, stamina, id_firestation, is_available, current_latitude, current_longitude)
-VALUES
-    ('Jean Dupont', 80, 1, TRUE, 45.7653297, 4.9029549),
-    ('Marie Curie', 85, 2, TRUE, 45.757098, 4.876627),
-    ('Pierre Martin', 75, 3, FALSE, 45.782051, 4.872859),
-    ('Lucie Durant', 90, 4, TRUE, 45.769207, 4.870679);
+
