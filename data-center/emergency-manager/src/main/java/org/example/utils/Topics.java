@@ -18,6 +18,7 @@ public class Topics {
     public static final String MANAGER_FIRE_EVENT_FINISHED = "manager.fire-event-finished";
     public static final String MANAGER_INTERVENTION = "manager.intervention";
     public static final String RF2_FIRE_EVENT = "rf2.fire-event";
+    public static final String SIM_TEAM_POSITION = "simulator.team-position";
     private static Map<String, String> topics;
     private static final String topics_path = "topics.yaml";
     private static final List<String> topicsToSubscribe = List.of(ACTOR_FIRE_VALIDATION, RF2_FIRE_EVENT);
