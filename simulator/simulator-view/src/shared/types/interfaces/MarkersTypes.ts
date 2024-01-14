@@ -2,6 +2,7 @@ import { Coords } from '../DTOs/Coords';
 import { IconMarkerTypes } from '../enum/IconType';
 
 export interface MarkerParameter {
+  id?: number;
   coords: Coords;
   type: IconMarkerTypes;
   color: string;

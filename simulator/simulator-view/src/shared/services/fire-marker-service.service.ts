@@ -6,6 +6,7 @@ import {FireMarkerType, MarkerParameter} from '../types/interfaces/MarkersTypes'
 import {HttpClient} from '@angular/common/http';
 import {WEBSERVER_PORT} from '../types/constants/shared-constants';
 import {FireEventDTO} from '../types/DTOs/FireEventDTO';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
   providedIn: 'root',
@@ -27,11 +28,17 @@ export class FireMarkerService extends AbstractMarkerService<FireMarkerType> {
             coords: fire.coords,
             type: iconMarkerType,
             color: 'black',
-            intensity: fire.realIntensity
+            intensity: fire.realIntensity,
+            id: fire.id
           })
         });
         super.createMarkers(markerParams, map);
       }
     )
+  }
+  
+  deleteFireEvent(id: number): Observable<void> {
+    console.info("A fire has been deleted");
+    return this._http.delete<void>(`${this.BASE_URL}/delete/${id}`);
   }
 }

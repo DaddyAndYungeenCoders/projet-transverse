@@ -15,6 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -85,6 +86,10 @@ public class FireEventHandlerServiceImpl implements FireEventHandlerService {
                 .orElse(Collections.emptyList());
         System.out.println("isThereARealFireNearSensor: " + filteredList.toString());
         return !filteredList.isEmpty();
+    }
+
+    public void deleteFireEvent(Long id) {
+        fireEventRepository.deleteById(id);
     }
 
     @Override

@@ -136,6 +136,20 @@ public class FireEventController extends AbstractController<FireEventEntity, Fir
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteFireEvent(@PathVariable Long id) {
+        try {
+            this.fireEventHandlerService.deleteFireEvent(id);
+            System.out.println("bonjour");
+            this.notifyFrontEnd();
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            log.error("Error deleting fire event with id: {}", id, e);
+            this.notifyFrontEnd();
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @Override
     String getEntityTopic() {
         return "fire-event";

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { IconMarkerTypes } from '../types/enum/IconType';
 import {
   faDroplet,
@@ -15,11 +15,13 @@ import {
 } from '../types/interfaces/MarkersTypes';
 import { Map } from 'leaflet';
 import { Coords } from '../types/DTOs/Coords';
+import { FireMarkerService } from './fire-marker-service.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export abstract class AbstractMarkerService<T extends MarkersTypes> {
+  private fireMarkerService = Injector.create({ providers: [{ provide: FireMarkerService, useClass: FireMarkerService }]}).get(FireMarkerService);
   protected constructor() {}
 
   getIconMarker(type: IconMarkerTypes): IconDefinition {
@@ -52,7 +54,7 @@ export abstract class AbstractMarkerService<T extends MarkersTypes> {
         }),
       })
         .addTo(map)
-        .bindPopup(this.getObjectInfo(marker.intensity, marker.coords));
+        .bindPopup(this.getObjectInfo(marker.intensity, marker.coords, marker.id));
     });
   }
 
@@ -60,9 +62,13 @@ export abstract class AbstractMarkerService<T extends MarkersTypes> {
     return (
       '<span>Intensité du feu : ' +
       intensity?.toString() +
-      '</span><br/><button style="margin: 0.25rem auto auto; background-color: #870000; color: #ffffff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">\n' +
+      '</span><br/><button (click)="onDeleteFireEvent(${id})" style="margin: 0.25rem auto auto; background-color: #870000; color: #ffffff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">\n' +
       '  SUPPRIMER\n' +
       '</button>'
     );
+  }
+
+  onDeleteFireEvent(id: number): void {
+      this.fireMarkerService.deleteFireEvent(id).subscribe();
   }
 }
