@@ -5,43 +5,34 @@ import java.util.List;
 
 public class TeamEntity {
     private Long id;
-    private Long stamina;
-    private FireStationEntity fire_station;
+    private String chief_officier;
+    private int stamina;
+    private int id_firestation;
+    private boolean is_available;
+    private double current_latitude;
+    private double current_longitude;
 
-    public TeamEntity() {
-    }
 
-    public TeamEntity(Long id, Long stamina, FireStationEntity fire_station) {
+
+    public TeamEntity( Long id,
+     String chief_officier,
+     int stamina,
+     int id_firestation,
+     boolean is_available,
+     double current_latitude,
+     double current_longitude) {
         this.id = id;
+        this.chief_officier=chief_officier;
         this.stamina = stamina;
-        this.fire_station = fire_station;
+        this.id_firestation=id_firestation;
+        this.is_available=is_available;
+        this.current_latitude=current_latitude;
+        this.current_longitude=current_longitude;
+
     }
+
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getStamina() {
-        return stamina;
-    }
-
-    public void setStamina(Long stamina) {
-        this.stamina = stamina;
-    }
-
-    public FireStationEntity getFire_station() {
-        return fire_station;
-    }
-
-    public void setFire_station(FireStationEntity fire_station) {
-        this.fire_station = fire_station;
-    }
-
-    public List<InterventionEntity> getIntervention() {
-        return null;
     }
 }

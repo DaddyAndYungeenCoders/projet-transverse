@@ -22,6 +22,7 @@ public class FireEventDTO extends BaseDTO implements Serializable {
     private Date startDate;
     private Date endDate;
     private boolean isReal;
+    private boolean is_handled;
 
     public boolean hasNecessaryValuesToCreate() {
         return (

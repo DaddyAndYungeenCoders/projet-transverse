@@ -3,7 +3,6 @@ package com.simulator.webserver.models.PK;
 import java.io.Serializable;
 
 import com.simulator.webserver.models.FireEventEntity;
-import com.simulator.webserver.models.UserEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

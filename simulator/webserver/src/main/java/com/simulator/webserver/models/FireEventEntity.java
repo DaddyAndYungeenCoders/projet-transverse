@@ -26,8 +26,9 @@ public class FireEventEntity extends BaseEntity implements Serializable {
     private Date start_date;
     private Date end_date;
     private boolean is_real;
+    private boolean is_handled;
     
     public FireEventDTO toDTO() {
-        return new FireEventDTO(this.id, this.coords, this.real_intensity, this.start_date, this.end_date, this.is_real);
+        return new FireEventDTO(this.id, this.coords, this.real_intensity, this.start_date, this.end_date, this.is_real, this.is_handled,);
     }
 }
