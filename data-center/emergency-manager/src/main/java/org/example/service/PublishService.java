@@ -21,13 +21,11 @@ public class PublishService {
 
     public void checkIfFireIsReal(String payload) {
         logger.info("Asking Actor to check fire reality with : {}", payload);
-        mqtt.publish(Topics.getTopicName(Topics.getTopicName(Topics.MANAGER_ASK_VALIDATION)), payload);
+        mqtt.publish(Topics.getTopicName(Topics.MANAGER_ASK_VALIDATION), payload);
     }
 
     public void pubManagerIntervention(String payload) {
         logger.info("Publishing a new Manager Intervention. Team is : {}", payload);
-        mqtt.publish(Topics.getTopicName(Topics.getTopicName(Topics.MANAGER_INTERVENTION)), payload);
+        mqtt.publish(Topics.getTopicName(Topics.MANAGER_INTERVENTION), payload);
     }
-
-
 }

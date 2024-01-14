@@ -2,7 +2,6 @@ package org.example.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.models.SensorDetection;
-import org.example.models.Team;
 import org.example.utils.HttpUtils;
 import org.example.utils.LoggerUtil;
 import org.slf4j.Logger;
@@ -17,7 +16,7 @@ public class FireService {
     ObjectMapper mapper = new ObjectMapper();
     private static final String BASE_URL = "http://localhost:7777/api/fire-event";
     private static final PublishService pubService = PublishService.getPublishService();
-    private static final InterventionService interventionService = new InterventionService();
+    private static final TeamService teamService = new TeamService();
 
     private String urlApi(String endpoint) {
         return BASE_URL + endpoint;
@@ -31,7 +30,7 @@ public class FireService {
                 logger.info("Fire is Real !");
                 // update reality of fire in any case
                 updateFireEventValidationStatus(sensorDetection);
-               interventionService.processAvailableTeam(String.valueOf(sensorDetection.getId()));
+               teamService.processAvailableTeam(String.valueOf(sensorDetection.getId()));
             }
 
         } catch (Exception e) {

@@ -21,7 +21,7 @@ public class Topics {
     public static final String SIM_TEAM_POSITION = "simulator.team-position";
     private static Map<String, String> topics;
     private static final String topics_path = "topics.yaml";
-    private static final List<String> topicsToSubscribe = List.of(ACTOR_FIRE_VALIDATION, RF2_FIRE_EVENT);
+    private static final List<String> topicsToSubscribe = List.of(ACTOR_FIRE_VALIDATION, RF2_FIRE_EVENT, SIM_TEAM_POSITION);
 
     public void setTopics(Map<String, String> topics) {
         Topics.topics = topics;

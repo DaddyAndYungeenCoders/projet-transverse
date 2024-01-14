@@ -5,6 +5,7 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.example.service.PublishService;
 import org.example.service.FireService;
+import org.example.service.TeamService;
 import org.example.utils.LoggerUtil;
 import org.example.utils.Topics;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ public class MQTTCallback implements MqttCallback {
     private final MQTTClient mqttClient;
     private static final PublishService pubService = PublishService.getPublishService();
     private static final FireService fireService = new FireService();
+    private static final TeamService teamService = new TeamService();
 
 
 
@@ -36,13 +38,11 @@ public class MQTTCallback implements MqttCallback {
             logger.info("Message: {}", data);
             if (s.equals(Topics.getTopicName(Topics.ACTOR_FIRE_VALIDATION))) {
                 // received confirmation or whether fire is real or not.
-                // ajouter un thread
+                // ajouter un thread peut etre pour gerer si aucune equipe dispo
                 try {
-
 //                    ExecutorService executorService = Executors.newCachedThreadPool();
 //                    executorService.submit(movingTeamService.moveTeams());
                     fireService.handleFireConfirmation(data);
-
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
@@ -51,7 +51,7 @@ public class MQTTCallback implements MqttCallback {
                 pubService.checkIfFireIsReal(data);
             } else if (s.equals(Topics.getTopicName(Topics.SIM_TEAM_POSITION))) {
                 // received team position, post to DB
-                teamService.sendTeamPosition(data);
+                teamService.updateTeamPosition(data);
             } else {
                 // should not happen
                 logger.error("Not a valid topic : {}", s);

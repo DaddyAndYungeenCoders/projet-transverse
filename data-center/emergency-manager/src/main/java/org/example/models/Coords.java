@@ -8,6 +8,9 @@ public class Coords implements Serializable {
     private double latitude;
     private double longitude;
 
+    public Coords() {
+    }
+
     public Coords(double latitude, double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;

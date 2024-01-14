@@ -15,11 +15,11 @@ import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 
-public class InterventionService {
+public class TeamService {
 
     private static final Logger logger = LoggerFactory.getLogger(LoggerUtil.class);
     ObjectMapper mapper = new ObjectMapper();
-    private static final String BASE_URL = "http://localhost:7777/api";
+    private static final String BASE_URL = "http://localhost:7777/api/team";
     private static final PublishService pubService = PublishService.getPublishService();
     private static final FireService fireService = new FireService();
     static HttpService httpService = new HttpService();
@@ -31,7 +31,7 @@ public class InterventionService {
     public void processAvailableTeam(String sensorId) {
         // get all teams fetch-all
         String response = null;
-        response = httpService.get(BASE_URL + "/team/fetch-all");
+        response = httpService.get(BASE_URL + "/fetch-all");
         try {
             List<Team> allTeams = mapper.readValue(response, new TypeReference<List<Team>>() {
             });
@@ -45,7 +45,7 @@ public class InterventionService {
                 try {
                     String teamToSend = mapper.writeValueAsString(team);
                     pubService.pubManagerIntervention(teamToSend);
-                    updateAvailabilityOfTeam(team);
+                    updateAvailabilityOfTeam(team, false);
                     fireService.updateFireEventHandledStatus(sensorId);
 
                 } catch (JsonProcessingException e) {
@@ -70,8 +70,24 @@ public class InterventionService {
         return connection;
     }
 
-    public void updateAvailabilityOfTeam(Team team) {
+    public void updateAvailabilityOfTeam(Team team, boolean availability) {
         try {
+            team.setAvailable(availability);
+            String teamAsJson = mapper.writeValueAsString(team);
+            HttpURLConnection connection =
+                    setConnectionBaseParam("/update/" + team.getId(), "PUT");
+            HttpUtils.sendJson(connection, teamAsJson);
+            String response = HttpUtils.readResponse(connection);
+
+            logger.info("Manager WebServer responded with : {}", response);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+    }
+
+    public void updateTeamPosition(String data) {
+        try {
+            Team team = mapper.readValue(data, Team.class);
             String teamAsJson = mapper.writeValueAsString(team);
             HttpURLConnection connection =
                     setConnectionBaseParam("/update/" + team.getId(), "PUT");
