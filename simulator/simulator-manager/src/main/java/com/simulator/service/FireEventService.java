@@ -7,7 +7,6 @@ import com.simulator.dto.FireEventDTO;
 import com.simulator.models.FireEventEntity;
 import com.simulator.models.SensorEntity;
 import com.simulator.utils.HttpUtils;
-import com.simulator.utils.Topics;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -45,9 +44,10 @@ public class FireEventService {
             SensorEntity nearestSensor = sensorService.findNearestSensor(sensorEntities, fireEvent.getCoords());
             nearestSensor.setIntensity(fireEvent.getRealIntensity());
             System.out.println("Nearest : " + nearestSensor.getId());
-            String json = objectMapper.writeValueAsString(nearestSensor.toDTO());
-            System.out.println("JSON sent to MQTT: " + json);
-            mqttService.publish(Topics.getTopicName(Topics.SIMULATOR_NEW_SENSOR_VALUE), json);
+//            String json = objectMapper.writeValueAsString(nearestSensor.toDTO());
+//            System.out.println("JSON sent to MQTT: " + json);
+            httpService.putSendObject(AppConfig.getWebServerURL() + "/api/sensor/updateIntensity/" + nearestSensor.getId() + "/" + nearestSensor.getIntensity(), nearestSensor.toDTO());
+//            mqttService.publish(Topics.SIMULATOR_NEW_SENSOR_VALUE, json);
         } catch (JsonProcessingException e) {
             e.printStackTrace(); // Handle or log the exception
         }

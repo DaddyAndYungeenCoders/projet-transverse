@@ -65,6 +65,18 @@ public class SensorHandlerServiceImpl implements SensorHandlerService {
 
         return Optional.of(this.sensorRepository.save(sensorToUpdate.get()));    }
 
+    @Override
+    public Optional<SensorEntity> updateSensorIntensity(Long id, int intensity) {
+        Optional<SensorEntity> sensorToUpdate = this.sensorRepository.findById(id);
+        if (sensorToUpdate.isEmpty()) {
+            return Optional.empty();
+        }
+        sensorToUpdate.get().setIntensity(intensity);
+        postService.sendObject(passerelleURL , SensorEntity.toDTO(sensorToUpdate.get()));
+
+        return Optional.of(this.sensorRepository.save(sensorToUpdate.get()));
+    }
+
     private void sendSensorUpdate(String url, SensorDTO sensorDTO){ try {
         String json = objectMapper.writeValueAsString(sensorDTO);
         HttpEntity<String> requestEntity = new HttpEntity<>(json, headers);
