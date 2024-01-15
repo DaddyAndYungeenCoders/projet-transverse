@@ -52,6 +52,7 @@ public class FireEventController extends AbstractController<FireEventEntity, Fir
                     .map(fire -> ResponseEntity.ok().body(fire))
                     .orElseGet(() -> ResponseEntity.notFound().build());
 
+            log.info("result.getBody() => {}", result.getBody());
             postService.sendObject(relayURL, Objects.requireNonNull(result.getBody()).toDTO());
             this.notifyFrontEnd();
 

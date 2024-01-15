@@ -28,7 +28,7 @@ TOPICS_TO_SUBSCRIBE = [
 
 # -------------------------------------- #
 # -------- SERIAL CONFIGURATION -------- #
-SERIALPORT = "/dev/ttyACM1"
+SERIALPORT = "/dev/ttyACM0"
 BAUDRATE = 115200
 DELIMITER = b"|"
 # ----------------------------------- #

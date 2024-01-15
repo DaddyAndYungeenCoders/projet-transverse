@@ -9,11 +9,11 @@ RUN mvn package
 # For Java 11,
 FROM openjdk:21-ea-1-jdk-slim
 
-ARG JAR_FILE=emergency-manager-1.0-SNAPSHOT.jar
+ARG JAR_FILE=simulator-manager-1.0-SNAPSHOT.jar
 
 WORKDIR /opt/app
 
 # Copy the spring-boot-api-tutorial.jar from the maven stage to the /opt/app directory of the current stage.
 COPY --from=maven /usr/src/app/target/${JAR_FILE} /opt/app/
 
-ENTRYPOINT ["java","-jar","emergency-manager-1.0-SNAPSHOT.jar"]
+ENTRYPOINT ["java","-jar","simulator-manager-1.0-SNAPSHOT.jar"]
