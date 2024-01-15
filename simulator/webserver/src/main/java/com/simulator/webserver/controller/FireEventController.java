@@ -71,6 +71,7 @@ public class FireEventController extends AbstractController<FireEventEntity, Fir
                     .map(fire -> ResponseEntity.ok().body(fire))
                     .orElseGet(() -> ResponseEntity.notFound().build());
 
+            postService.sendObject(relayURL, Objects.requireNonNull(result.getBody()).toDTO());
             this.notifyFrontEnd();
 
             return result;
@@ -82,6 +83,7 @@ public class FireEventController extends AbstractController<FireEventEntity, Fir
     public ResponseEntity<List<FireEventDTO>> fetchAll() {
         List<FireEventDTO> fireEventDTOList = fireEventHandlerService.getAllFireEvents()
                 .map(fireEventEntities -> fireEventEntities.stream()
+                        .filter(fireEventEntity -> fireEventEntity.getReal_intensity() > 0)
                         .map(FireEventEntity::toDTO)
                         .collect(Collectors.toList()))
                 .orElse(Collections.emptyList());

@@ -1,8 +1,12 @@
 package com.simulator.cron;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simulator.models.CoordsEntity;
 import com.simulator.models.FireEventEntity;
 import com.simulator.service.FireEventService;
+import com.simulator.service.MQTTService;
+import com.simulator.utils.Topics;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -23,6 +27,7 @@ public class CronJob implements Job {
         RandomCoords randomCoords = new RandomCoords();
 
         this.geometryFactory = new GeometryFactory();
+        ObjectMapper mapper = new ObjectMapper();
 
 
         Polygon polygon = this.geometryFactory.createPolygon(new CoordinateArraySequence(randomCoords.boundCoordinates));
