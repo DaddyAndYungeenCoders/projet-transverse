@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simulator.config.AppConfig;
 import com.simulator.dto.FireEventDTO;
+import com.simulator.models.CoordsEntity;
 import com.simulator.models.FireEventEntity;
 import com.simulator.models.SensorEntity;
 import com.simulator.models.TeamEntity;
@@ -135,10 +136,15 @@ public class FireEventService {
     }
 
     public void reduceFire(TeamEntity team, FireEventEntity fireEvent) {
-        while (fireEvent.getRealIntensity() > 0) {
+        while (fireEvent.getRealIntensity() > 1) {
             int newIntensity = Double.valueOf(fireEvent.getRealIntensity() * team.getFireMastery() / 10).intValue();
             fireEvent.setRealIntensity(newIntensity);
-            this.updateFireIntensity(newIntensity, fireEvent.getId());
+            fireEvent = this.updateFireIntensity(newIntensity, fireEvent.getId());
+            try{
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         fireEvent.setRealIntensity(0);
         fireEvent.setEndDate(convertUtilToSqlDate(new Date()));
@@ -151,5 +157,17 @@ public class FireEventService {
 
     public void onReceiveActorEvent() {
         // Implementation
+    }
+
+    public FireEventEntity getFireEventBySensorId(Long sensorId) {
+        try {
+            HttpURLConnection connection = setConnectionBaseParam("/getBySensorId/" + sensorId, "GET");
+            String response = HttpUtils.readResponse(connection);
+            FireEventDatabaseEntity fireEvent = objectMapper.readValue(response, FireEventDatabaseEntity.class);
+            return fireEvent.toEntity();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }

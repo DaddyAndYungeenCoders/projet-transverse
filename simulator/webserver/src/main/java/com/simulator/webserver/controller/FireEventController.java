@@ -129,6 +129,13 @@ public class FireEventController extends AbstractController<FireEventEntity, Fir
         return new ResponseEntity<>(isThereARealFire, HttpStatus.OK);
     }
 
+    @GetMapping("/getBySensorId/{sensorId}")
+    public ResponseEntity<FireEventEntity> getFireEventBySensorId(@PathVariable Long sensorId) {
+        return this.fireEventHandlerService.getFireEventBySensorId(sensorId)
+                .map(fire -> ResponseEntity.ok().body(fire))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @Override
     String getEntityTopic() {
         return "fire-event";

@@ -18,4 +18,6 @@ public interface FireEventHandlerService {
     boolean isThereARealFireNearSensor(Long sensorId);
 
     Optional<FireEventEntity> updateIsHandled(Long id);
+
+    Optional<FireEventEntity> getFireEventBySensorId(Long sensorId);
 }
