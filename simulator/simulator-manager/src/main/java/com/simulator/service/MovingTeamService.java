@@ -23,7 +23,7 @@ public class MovingTeamService {
         try {
             String json = objectMapper.writeValueAsString(team);
             logger.info("Nouvelle position de team {}", json);
-            mqttService.publish(Topics.SIMULATOR_TEAM_POSITION, json);
+            mqttService.publish(Topics.getTopicName(Topics.SIMULATOR_TEAM_POSITION), json);
         } catch (Exception e) {
             e.printStackTrace();
         }

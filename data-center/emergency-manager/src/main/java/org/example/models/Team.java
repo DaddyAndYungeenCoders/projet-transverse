@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Team {
     private Long id;
     private String chiefOfficer;
@@ -14,7 +14,7 @@ public class Team {
     private Coords coords;
 
     @JsonCreator
-    public Team(@JsonProperty("id") Long id,
+    public Team(@JsonProperty("team_id") Long id,
                 @JsonProperty("stamina") int stamina,
                 @JsonProperty("chief_officer") String chiefOfficer,
                 @JsonProperty("idFirestation") Long fireStationId,
