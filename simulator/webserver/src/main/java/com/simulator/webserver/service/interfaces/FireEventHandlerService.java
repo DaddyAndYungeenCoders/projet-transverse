@@ -20,4 +20,6 @@ public interface FireEventHandlerService {
     Optional<FireEventEntity> updateIsHandled(Long id);
 
     Optional<FireEventEntity> getFireEventBySensorId(Long sensorId);
+    boolean isFireReal(Long id) throws BadRequestException;
+    void deleteFireEvent(Long id);
 }

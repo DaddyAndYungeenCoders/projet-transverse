@@ -1,0 +1,19 @@
+[INFO] 12/01/2024 10:47:57 PM : Application service-relay-mqtt-db started ! :) - Press Ctrl-C to quit
+[INFO] 12/01/2024 10:47:58 PM : Successfully connected to Broker 192.168.80.2:1883
+[INFO] 12/01/2024 10:47:58 PM : Successfully subscribed to topics
+[INFO] 12/01/2024 10:47:58 PM : Successfully connected to database (Org: DaddyYungees)
+[INFO] 12/01/2024 11:29:23 PM : Disconnected with result code: 7
+[INFO] 12/01/2024 11:29:23 PM : Reconnecting in 1 seconds...
+[INFO] 12/01/2024 11:29:24 PM : Reconnected successfully!
+[INFO] 12/01/2024 11:29:25 PM : Successfully connected to Broker 192.168.80.2:1883
+[INFO] 12/01/2024 11:29:25 PM : Successfully subscribed to topics
+[INFO] 13/01/2024 02:45:34 PM : Disconnected with result code: 7
+[INFO] 13/01/2024 02:45:35 PM : Reconnecting in 1 seconds...
+[INFO] 13/01/2024 02:45:38 PM : Reconnected successfully!
+[INFO] 13/01/2024 02:45:41 PM : Successfully connected to Broker 192.168.80.2:1883
+[INFO] 13/01/2024 02:45:42 PM : Successfully subscribed to topics
+[INFO] 13/01/2024 08:26:41 PM : Disconnected with result code: 7
+[INFO] 13/01/2024 08:26:41 PM : Reconnecting in 1 seconds...
+[INFO] 13/01/2024 08:26:43 PM : Reconnected successfully!
+[INFO] 13/01/2024 08:26:44 PM : Successfully connected to Broker 192.168.80.2:1883
+[INFO] 13/01/2024 08:26:57 PM : Successfully subscribed to topics
