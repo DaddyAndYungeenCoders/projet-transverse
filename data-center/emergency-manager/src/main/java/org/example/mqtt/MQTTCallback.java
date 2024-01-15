@@ -1,8 +1,10 @@
 package org.example.mqtt;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.example.models.Team;
 import org.example.service.FireService;
 import org.example.service.PublishService;
 import org.example.service.TeamService;
@@ -17,6 +19,7 @@ public class MQTTCallback implements MqttCallback {
     private static final PublishService pubService = PublishService.getPublishService();
     private static final FireService fireService = new FireService();
     private static final TeamService teamService = new TeamService();
+    ObjectMapper mapper = new ObjectMapper();
 
 
     public MQTTCallback(MQTTClient mqttClient) {
@@ -51,6 +54,10 @@ public class MQTTCallback implements MqttCallback {
             } else if (s.equals(Topics.getTopicName(Topics.SIM_TEAM_POSITION))) {
                 // received team position, post to DB
                 teamService.updateTeamPosition(data);
+            } else if (s.equals(Topics.getTopicName(Topics.MANAGER_FIRE_EVENT_FINISHED))) {
+                // update availability of Team
+                Team teamToUpdate = mapper.readValue(data, Team.class);
+                teamService.updateAvailabilityOfTeam(teamToUpdate, true);
             } else {
                 // should not happen
                 logger.error("Not a valid topic : {}", s);

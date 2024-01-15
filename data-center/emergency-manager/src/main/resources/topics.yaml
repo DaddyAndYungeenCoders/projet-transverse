@@ -10,3 +10,4 @@ topics:
   simulator.team-position: "/simulator/team_position"
   simulator-view.sensor-changed: "/simulator_view/sensor_changed"
   simulator-view.fire-event: "/simulator_view/fire_event"
+  manager.fire-event-finished: "/manager/fire_event_finished"

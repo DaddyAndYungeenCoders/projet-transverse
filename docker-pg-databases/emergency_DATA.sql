@@ -23,7 +23,18 @@ VALUES
     ('Jean Dupont', 80, 1, TRUE, 45.7653297, 4.9029549),
     ('Marie Curie', 85, 2, TRUE, 45.757098, 4.876627),
     ('Pierre Martin', 75, 3, FALSE, 45.782051, 4.872859),
-    ('Lucie Durant', 90, 4, TRUE, 45.769207, 4.870679);
+    ('Lucie Durant', 90, 4, TRUE, 45.769207, 4.870679),
+
+    ('Pauline Lambert', 80, 1, TRUE, 45.7653297, 4.9029549),
+    ('François Dubois', 85, 2, TRUE, 45.757098, 4.876627),
+    ('Sandrine Girard', 75, 3, FALSE, 45.782051, 4.872859),
+    ('Thomas Lefevre', 90, 4, TRUE, 45.769207, 4.870679),
+    ('Elise Martin', 80, 1, TRUE, 45.7653297, 4.9029549),
+    ('Julien Durand', 85, 2, TRUE, 45.757098, 4.876627),
+    ('Camille Lemoine', 75, 3, FALSE, 45.782051, 4.872859),
+    ('Maxime Robert', 90, 4, TRUE, 45.769207, 4.870679),
+    ('Sophie Morel', 80, 1, TRUE, 45.7653297, 4.9029549),
+
 INSERT INTO Fireman (lastname, firstname, birthdate, fire_mastery, id_team)
 VALUES
     ('Dupont', 'Jean', '1978-02-15', 9, 1),
@@ -37,5 +48,16 @@ VALUES
     ('Girard', 'Nicolas', '1987-07-25', 8, 3),
     ('Leroy', 'Julie', '1991-05-19', 5, 3),
     ('Roux', 'David', '1989-11-09', 7, 4),
-    ('Vincent', 'Anne', '1986-04-17', 6, 4);
+    ('Vincent', 'Anne', '1986-04-17', 6, 4),
+
+    ('Lambert', 'Pauline', '1980-08-22', 7, 5),
+    ('Dubois', 'François', '1983-01-12', 8, 6),
+    ('Girard', 'Sandrine', '1987-05-30', 6, 7),
+    ('Lefevre', 'Thomas', '1975-11-17', 9, 8),
+    ('Martin', 'Elise', '1982-03-25', 7, 9),
+    ('Durand', 'Julien', '1985-06-10', 8, 10),
+    ('Lemoine', 'Camille', '1990-12-18', 5, 11),
+    ('Robert', 'Maxime', '1987-07-03', 6, 12),
+    ('Morel', 'Sophie', '1980-04-15', 7, 13),
+    ('Dupuis', 'Alexandre', '1983-09-29', 8, 13);
 
