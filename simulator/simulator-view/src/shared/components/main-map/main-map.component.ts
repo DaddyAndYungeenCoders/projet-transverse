@@ -11,6 +11,7 @@ import {SensorMarkerService} from '../../services/sensor-marker-service';
 import {StompService} from '../../services/StompService';
 import * as jsonPolygon from './polygon.json';
 import {SensorsCreationService} from '../../services/sensors-creation.service';
+import {StompServiceSensors} from '../../services/StompServiceSensors';
 
 @Component({
   selector: 'app-main-map',
@@ -31,6 +32,7 @@ export class MainMapComponent implements OnInit, AfterViewInit {
     private interventionMarkerService: InterventionMarkerService,
     private fireMarkerService: FireMarkerService,
     private stompService: StompService,
+    private stompServiceSensors: StompServiceSensors,
     private sensorMarkerService: SensorMarkerService,
     private sensorsCreationService: SensorsCreationService
   ) {}
@@ -40,9 +42,9 @@ export class MainMapComponent implements OnInit, AfterViewInit {
     this.stompService.subscribe('/topic/fire-event', () => {
       this.refreshFires();
     });
-    //this.stompService.subscribe("/topic/intervention", () => {
-    //  this.refreshIntervention()
-    //});
+    this.stompServiceSensors.subscribe("/topic/sensor", () => {
+      this.refreshSensors()
+    });
     this.$isInCreationSubscription =
       this.fireCreationService.$isInCreationState.subscribe((isCreating) => {
         this.isInMenuCreationMode = isCreating;
@@ -75,10 +77,12 @@ export class MainMapComponent implements OnInit, AfterViewInit {
   }
 
   private refreshFires() {
+    this.fireMarkerService.removeAll(this.map);
     this.fireMarkerService.fetchAll(this.map);
   }
-  private refreshIntervention() {
-    console.log('here move intervention'); // TODO
+  private refreshSensors() {
+    this.sensorMarkerService.removeAllSensors(this.map);
+    this.sensorMarkerService.fetchAll(this.map);
   }
 
   private fetchAll() {

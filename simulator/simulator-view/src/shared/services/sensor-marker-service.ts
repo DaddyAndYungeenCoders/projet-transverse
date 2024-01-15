@@ -4,7 +4,7 @@ import {
   SensorMarkerType,
 } from '../types/interfaces/MarkersTypes';
 import { Injectable } from '@angular/core';
-import { Map } from 'leaflet';
+import {Map, Marker} from 'leaflet';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SensorDTO } from '../types/DTOs/SensorDTO';
 import { WEBSERVER_PORT } from '../types/constants/shared-constants';
@@ -18,9 +18,17 @@ import * as L from 'leaflet';
 })
 export class SensorMarkerService extends AbstractMarkerService<SensorMarkerType> {
   private BASE_URL = `http://localhost:${WEBSERVER_PORT}/api/sensor`;
+  sensorsMarkers: Marker<any>[] = [];
 
   constructor(private _http: HttpClient) {
     super();
+  }
+
+  removeAllSensors(map: Map) {
+    this.sensorsMarkers.forEach(marker => {
+      map.removeLayer(marker);
+    })
+    this.sensorsMarkers = [];
   }
 
   override getObjectInfo(intensity?: number): any {
@@ -32,11 +40,12 @@ export class SensorMarkerService extends AbstractMarkerService<SensorMarkerType>
       '</button>'
     );
   }
+
   override createMarkers(markerParams: MarkerParameter[], map: L.Map): void {
     markerParams.forEach((marker) => {
       const icon = this.getIconMarker(marker.type);
       const iconHtml = `<svg class="svg-inline--fa fa-w-16" aria-hidden="true" focusable="false" data-prefix="${icon.prefix}" data-icon="${icon.iconName}" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${icon.icon[0]} ${icon.icon[1]}" style="font-size: 24px;background-color:transparent; color: ${marker.color};"><path fill="currentColor" d="${icon.icon[4]}"></path></svg>`;
-      new L.Marker([marker.coords.latitude, marker.coords.longitude], {
+      const newMarker = new L.Marker([marker.coords.latitude, marker.coords.longitude], {
         icon: L.divIcon({
           html: iconHtml,
           iconSize: marker.height ? [marker.height, marker.height] : [20, 20],
@@ -45,6 +54,10 @@ export class SensorMarkerService extends AbstractMarkerService<SensorMarkerType>
       })
         .addTo(map)
         .bindPopup(super.getObjectInfo(marker.intensity, marker.coords));
+
+      if (marker.type == IconMarkerTypes.INTERVENTION) {
+        this.sensorsMarkers.push(newMarker);
+      }
 
       const leafletCircle = L.circle(
         [marker.coords.latitude, marker.coords.longitude],
@@ -75,6 +88,7 @@ export class SensorMarkerService extends AbstractMarkerService<SensorMarkerType>
   }
 
   override fetchAll(map: Map) {
+    console.debug("sensor fetch all");
     let markerParams: MarkerParameter[] = [];
 
     this._http
@@ -84,8 +98,8 @@ export class SensorMarkerService extends AbstractMarkerService<SensorMarkerType>
           markerParams.push({
             coords: sensor.coords,
             type: IconMarkerTypes.SENSOR,
-            color: 'black',
-            intensity: sensor.intensity,
+            color: sensor?.intensity && sensor?.intensity > 0 ? 'red' : 'black',
+            intensity: sensor?.intensity,
             height: 50,
           });
         });
