@@ -2,6 +2,7 @@ package com.datacenter.webserver.models;
 
 import com.datacenter.webserver.dto.BaseDTO;
 import com.datacenter.webserver.dto.SensorDTO;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +17,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table(name = "sensor")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class SensorEntity extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

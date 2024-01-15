@@ -19,7 +19,7 @@ public class SensorController extends CRUDController<SensorEntity, SensorDTO> {
 
     @Override
     String getEntityTopic() {
-        return "sensor";
+        return "fire-event";
     }
 
     @Override
