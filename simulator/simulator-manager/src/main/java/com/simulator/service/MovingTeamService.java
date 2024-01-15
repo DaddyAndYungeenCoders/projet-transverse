@@ -9,10 +9,12 @@ import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MovingTeamService {
-    private static List<MovingTeamEntity> teamsInIntervention = new ArrayList<>();
     private static final Logger logger = LoggerUtil.getLogger();
+    private static final MoveTeamsService moveTeamsService = new MoveTeamsService();
 
 
     static MQTTService mqttService = new MQTTService();
@@ -29,29 +31,7 @@ public class MovingTeamService {
         }
     }
 
-
-    public Runnable moveTeams() {
-        while (true) {
-//            logger.info("Moving teams");
-            List<MovingTeamEntity> teamsCopy = new ArrayList<>(teamsInIntervention);
-
-            for (MovingTeamEntity team : teamsCopy) {
-                if (team != null) {
-                    team.move();
-                    if (team.isBackHome()) {
-                        teamsInIntervention.remove(team);
-                    }
-                }
-            }
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     public void addTeam(MovingTeamEntity movingTeamEntity) {
-        teamsInIntervention.add(movingTeamEntity);
+       moveTeamsService.addTeam(movingTeamEntity);
     }
 }

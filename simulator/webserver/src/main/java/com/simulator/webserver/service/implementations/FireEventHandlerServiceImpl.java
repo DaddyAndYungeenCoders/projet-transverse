@@ -98,6 +98,15 @@ public class FireEventHandlerServiceImpl implements FireEventHandlerService {
         return Optional.of(this.fireEventRepository.save(fire));
     }
 
+    @Override
+    public Optional<FireEventEntity> getFireEventBySensorId(Long sensorId) {
+        Optional<List<FireEventEntity>> fireEventEntity = this.fireEventRepository.findBySensorId(sensorId);
+        return fireEventEntity.map(list -> list.stream()
+                .filter(entity -> entity.getReal_intensity() > 0 && entity.is_real())
+                .findFirst())
+                .orElse(Optional.empty());
+    }
+
 
     //TODO Mapper with MapStruct instead of this function
     private void updateFireEventData(FireEventDTO fireEventDTO, FireEventEntity fireEventEntity) {

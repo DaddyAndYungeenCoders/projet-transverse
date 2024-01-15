@@ -54,7 +54,7 @@ public class TeamService {
                     String responseSensor = HttpService.get(BASE_URL_SENSOR + "/get/" + sensorId);
                     logger.info("Getting sensor..." + responseSensor);
                     SensorEntity sensor = mapper.readValue(responseSensor, SensorEntity.class);
-                    InterventionMessageDTO newIntervention = new InterventionMessageDTO(sensor.getCoords(), team.getStamina(), 10, team.getFireStationId(), team.getId());
+                    InterventionMessageDTO newIntervention = new InterventionMessageDTO(sensor.getCoords(), team.getStamina(), 10, team.getFireStationId(), team.getId(), sensor.getId());
                     String interventionTosend = mapper.writeValueAsString(newIntervention);
                     pubService.pubManagerIntervention(interventionTosend);
 

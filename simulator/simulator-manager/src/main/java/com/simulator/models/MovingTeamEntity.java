@@ -1,10 +1,13 @@
 package com.simulator.models;
 
 import com.simulator.dto.InterventionMessageDTO;
+import com.simulator.service.FireEventService;
 import com.simulator.service.FireStationService;
 import com.simulator.service.MovingTeamService;
 import com.simulator.service.RouteService;
 import lombok.*;
+
+import java.util.concurrent.ExecutorService;
 
 @EqualsAndHashCode(callSuper = false)
 @Data
@@ -16,6 +19,7 @@ public class MovingTeamEntity {
     private TeamEntity team;
     private CoordsEntity destination;
     private CoordsEntity current_position;
+    private FireEventEntity fireEvent;
     private FireStationEntity fire_station;
     private int stamina;
     private int fire_mastery_total;
@@ -24,14 +28,16 @@ public class MovingTeamEntity {
     private RouteResponseEntity route;
     private int step = 0;
 
-    private int count = 0;
+    private boolean isFireEnded = false;
 
     private static final MovingTeamService movingTeamService = new MovingTeamService();
     private static final RouteService routeService = new RouteService();
     private static final FireStationService fireStationService = new FireStationService();
+    private static final FireEventService fireEventService = new FireEventService();
 
 
-    public MovingTeamEntity(TeamEntity team, CoordsEntity fireCoords, CoordsEntity fireStationCoords, int stamina, int fireMasteryTotal, FireStationEntity fireStationEntity) {
+    public MovingTeamEntity(TeamEntity team, CoordsEntity fireCoords, CoordsEntity fireStationCoords, int stamina,
+                            int fireMasteryTotal, FireStationEntity fireStationEntity, Long sensor_id) {
         this.team = team;
         this.destination = fireCoords;
         this.current_position = fireStationCoords;
@@ -39,31 +45,11 @@ public class MovingTeamEntity {
         this.fire_mastery_total = fireMasteryTotal;
         this.route = routeService.getRoute(current_position, destination);
         this.fire_station = fireStationEntity;
+        this.fireEvent = fireEventService.getFireEventBySensorId(sensor_id);
         movingTeamService.sendTeamPosition(this.toInterventionMessageDTO());
     }
 
-    public void move() {
-        if (moving) {
-            this.changePosition();
-            movingTeamService.sendTeamPosition(this.toInterventionMessageDTO());
-            if (isArrived()) {
-                moving = false;
-            }
-        } else {
-            count++;
-            if (count == 10) {
-                System.out.println("Moving team " + team.getId() + " to fire station");
-                destination = fire_station.getCoords();
-                this.route = routeService.getRoute(current_position, destination);
-                this.step = 0;
-                count = 0;
-                moving = true;
-                backingHome = true;
-            }
-        }
-    }
-
-    private void changePosition(){
+    public void changePosition(){
         step++;
         CoordsEntity newStep = new CoordsEntity();
         Double latitude = this.route.getRoutes().get(0).getLegs().get(0).getSteps().get(step).getIntersections().get(0).getLocation().get(1);
@@ -97,6 +83,7 @@ public class MovingTeamEntity {
         interventionMessageDTO.setStamina(stamina);
         interventionMessageDTO.setCoords(current_position);
         interventionMessageDTO.setFire_station_id(this.fire_station.getId());
+        interventionMessageDTO.setSensor_id(this.fireEvent.getSensorId());
         return interventionMessageDTO;
     }
 

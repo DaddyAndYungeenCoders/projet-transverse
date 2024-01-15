@@ -39,7 +39,9 @@ public class InterventionMessageService {
             FireStationEntity fireStationEntity = fireStationService.getFireStationById(interventionMessageDTO.getFire_station_id());
             CoordsEntity fireStationCoords = fireStationEntity.getCoords();
             System.out.println("Fire station coords: " + fireStationCoords);
-            MovingTeamEntity movingTeamEntity = new MovingTeamEntity(team, fireCoords, fireStationCoords, interventionMessageDTO.getStamina(),interventionMessageDTO.getFire_mastery_total(), fireStationEntity);
+            MovingTeamEntity movingTeamEntity = new MovingTeamEntity(team, fireCoords, fireStationCoords,
+                    interventionMessageDTO.getStamina(),interventionMessageDTO.getFire_mastery_total(), fireStationEntity,
+                    interventionMessageDTO.getSensor_id());
             movingTeamService.addTeam(movingTeamEntity);
         } catch (JsonProcessingException e) {
             e.printStackTrace(); // Handle or log the exception

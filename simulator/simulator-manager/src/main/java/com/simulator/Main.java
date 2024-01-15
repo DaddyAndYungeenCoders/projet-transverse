@@ -2,6 +2,7 @@ package com.simulator;
 
 import com.simulator.cron.SchedulerManager;
 import com.simulator.service.FireEventService;
+import com.simulator.service.MoveTeamsService;
 import com.simulator.service.MovingTeamService;
 
 import java.util.concurrent.ExecutorService;
@@ -18,7 +19,10 @@ public class Main {
 
 //            executorService.submit(schedulerManager::startScheduler);
 
-            executorService.submit(movingTeamService.moveTeams());
+//            executorService.submit(movingTeamService.moveTeams(executorService));
+            MoveTeamsService moveTeamsService = new MoveTeamsService();
+            Thread t = new Thread(moveTeamsService);
+            t.start();
 
         } catch (Exception e) {
             System.out.println(e.getMessage());

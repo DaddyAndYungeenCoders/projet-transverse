@@ -6,13 +6,23 @@ public class InterventionMessageDTO {
     private int fire_mastery_total;
     private Long fire_station_id;
     private Long team_id;
+    private Long sensor_id;
 
-    public InterventionMessageDTO(Coords coords, int stamina, int fire_mastery_total, Long fire_station_id, Long team_id) {
+    public InterventionMessageDTO(Coords coords, int stamina, int fire_mastery_total, Long fire_station_id, Long team_id, Long sensor_id) {
         this.coords = coords;
         this.stamina = stamina;
         this.fire_mastery_total = fire_mastery_total;
         this.fire_station_id = fire_station_id;
         this.team_id = team_id;
+        this.sensor_id = sensor_id;
+    }
+
+    public Long getSensor_id() {
+        return sensor_id;
+    }
+
+    public void setSensor_id(Long sensor_id) {
+        this.sensor_id = sensor_id;
     }
 
     public Coords getCoords() {
