@@ -112,9 +112,20 @@ public class FireEventController extends AbstractController<FireEventEntity, Fir
         return result;
     }
 
+    @PutMapping("/update-handled/{id}")
+    public ResponseEntity<FireEventEntity> updateIsHandled(@PathVariable Long id) throws Exception {
+        ResponseEntity<FireEventEntity> result = this.fireEventHandlerService.updateIsHandled(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+
+        this.notifyFrontEnd();
+        return result;
+    };
+
     @GetMapping("/is-real/{sensorId}")
     public ResponseEntity<Boolean> isThereAtLeastOneRealFireInDetectionZone(@PathVariable Long sensorId) {
         boolean isThereARealFire = fireEventHandlerService.isThereARealFireNearSensor(sensorId);
+        System.out.println("isThereARealFireInDetectionZone: " + isThereARealFire);
         return new ResponseEntity<>(isThereARealFire, HttpStatus.OK);
     }
 

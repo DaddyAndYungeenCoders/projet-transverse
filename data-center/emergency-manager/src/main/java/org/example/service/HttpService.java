@@ -8,10 +8,10 @@ import org.springframework.web.client.RestTemplate;
 
 public class HttpService {
     private static final Logger logger = LoggerUtil.getLogger();
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final static RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public String get(String url) {
+    public static String get(String url) {
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> requestEntity = new HttpEntity<>("", requestHeaders);

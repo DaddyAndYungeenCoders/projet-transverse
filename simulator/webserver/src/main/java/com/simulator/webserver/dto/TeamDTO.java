@@ -17,9 +17,8 @@ public class TeamDTO extends BaseDTO implements Serializable {
     private Long fireStationId;
     private int stamina;
     private int fireMastery;
-    private Coords coords;
-    
+
     public TeamEntity toEntity() {
-        return new TeamEntity(this.id, this.fireStationId, this.stamina, this.fireMastery, this.coords);
+        return new TeamEntity(this.id, this.fireStationId, this.stamina, this.fireMastery);
     }
 }

@@ -59,6 +59,15 @@ public class FireStationController extends AbstractController<FireStationEntity,
         return result;
     }
 
+    @GetMapping("/get/{id}")
+    public ResponseEntity<FireStationEntity> get(@PathVariable Long id) {
+        ResponseEntity<FireStationEntity> result = this.fireStationHandlerService.getFireStaionByID(id)
+                .map(fire -> ResponseEntity.ok().body(fire))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+
+        return result;
+    }
+
     @Override
     String getEntityTopic() {
         return "fire-station";

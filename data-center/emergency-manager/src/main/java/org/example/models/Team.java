@@ -4,20 +4,20 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Team {
-    private int id;
+    private Long id;
     private String chiefOfficer;
     private int stamina;
-    private int fireStationId;
+    private Long fireStationId;
     private boolean isAvailable;
     private Coords coords;
 
     @JsonCreator
-    public Team(@JsonProperty("id") int id,
+    public Team(@JsonProperty("team_id") Long id,
                 @JsonProperty("stamina") int stamina,
                 @JsonProperty("chief_officer") String chiefOfficer,
-                @JsonProperty("id_firestation") int fireStationId,
+                @JsonProperty("idFirestation") Long fireStationId,
                 @JsonProperty("is_available") boolean isAvailable,
                 @JsonProperty("coords") Coords coords) {
         this.id = id;
@@ -28,11 +28,11 @@ public class Team {
         this.coords = coords;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -60,11 +60,11 @@ public class Team {
         this.chiefOfficer = chiefOfficer;
     }
 
-    public int getFireStationId() {
+    public Long getFireStationId() {
         return fireStationId;
     }
 
-    public void setFireStationId(int fireStationId) {
+    public void setFireStationId(Long fireStationId) {
         this.fireStationId = fireStationId;
     }
 

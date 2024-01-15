@@ -76,7 +76,6 @@ public class SensorHandlerServiceImpl extends AbstractOrchestrationService<Senso
         return this.repository.findById(id);
     }
 
-    @Override
     public Optional<SensorEntity> updateVerificationStatus(Long id, BaseDTO dto) {
         return Optional.empty();
     }

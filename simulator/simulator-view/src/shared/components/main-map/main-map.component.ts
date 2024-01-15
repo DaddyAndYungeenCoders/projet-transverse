@@ -1,19 +1,17 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { NgClass, NgForOf, NgIf } from '@angular/common';
-import { Coordinates } from '../../types/interfaces/Coordinates';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {NgClass, NgForOf, NgIf} from '@angular/common';
+import {Coordinates} from '../../types/interfaces/Coordinates';
 import * as L from 'leaflet';
-import { FireCreationService } from '../../services/fire-creation.service';
-import { FireMarkerService } from '../../services/fire-marker-service.service';
-import { Subscription } from 'rxjs';
-import { InterventionMarkerService } from '../../services/intervention-marker-service.service';
-import { FirestationMarkerService } from '../../services/firestation-marker-service.service';
-import { SensorMarkerService } from '../../services/sensor-marker-service';
-import { StompService } from '../../services/StompService';
+import {FireCreationService} from '../../services/fire-creation.service';
+import {FireMarkerService} from '../../services/fire-marker-service.service';
+import {Subscription} from 'rxjs';
+import {InterventionMarkerService} from '../../services/intervention-marker-service.service';
+import {FirestationMarkerService} from '../../services/firestation-marker-service.service';
+import {SensorMarkerService} from '../../services/sensor-marker-service';
+import {StompService} from '../../services/StompService';
 import * as jsonPolygon from './polygon.json';
-import * as turf from '@turf/turf';
-import { SensorDTO } from '../../types/DTOs/SensorDTO';
-import { Coords } from '../../types/DTOs/Coords';
-import { SensorsCreationService } from '../../services/sensors-creation.service';
+import {SensorsCreationService} from '../../services/sensors-creation.service';
+
 @Component({
   selector: 'app-main-map',
   standalone: true,

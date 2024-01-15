@@ -1,7 +1,9 @@
-pip install fastapi
-pip install uvicorn[standard]
-pip install pyserial
-pip install api
+
+
+python3 -m venv .venv
+source .venv/bin/activate
+pip3 install -r requirements.txt
+
 
 export PATH=$PATH:/home/maxime.dubois.1/.local/bin
 

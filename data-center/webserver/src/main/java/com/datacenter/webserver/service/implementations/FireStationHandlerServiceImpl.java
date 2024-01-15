@@ -68,4 +68,9 @@ public class FireStationHandlerServiceImpl extends AbstractOrchestrationService<
     public Optional<FireStationEntity> updateIsAvailable(Long id, boolean isAvailable) {
         return Optional.empty();
     }
+
+    @Override
+    public Optional<FireStationEntity> getFromId(Long id) {
+        return Optional.empty();
+    }
 }

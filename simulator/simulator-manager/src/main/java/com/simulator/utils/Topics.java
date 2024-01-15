@@ -19,6 +19,7 @@ public class Topics {
     public static final String SIMULATOR_VIEW_FIRE_EVENT = "simulator-view.fire-event";
     public static final String SIMULATOR_NEW_SENSOR_VALUE = "simulator.new-sensor-value";
     public static final String RF2_FIRE_EVENT = "rf2.fire-event";
+    public static final String SIMULATOR_TEAM_POSITION = "simulator.team-position";
     private static Map<String, String> topics;
     private static final String topics_path = "topics.yaml";
     private static final List<String> topicsToSubscribe =

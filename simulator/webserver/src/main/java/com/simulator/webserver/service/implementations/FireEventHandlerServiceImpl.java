@@ -83,9 +83,21 @@ public class FireEventHandlerServiceImpl implements FireEventHandlerService {
                         .filter(entity -> entity.getReal_intensity() > 0 && entity.is_real())
                         .collect(Collectors.toList()))
                 .orElse(Collections.emptyList());
-        
+        System.out.println("isThereARealFireNearSensor: " + filteredList.toString());
         return !filteredList.isEmpty();
     }
+
+    @Override
+    public Optional<FireEventEntity> updateIsHandled(Long id) {
+        Optional<FireEventEntity> fireToUpdate = this.fireEventRepository.findById(id);
+        if (fireToUpdate.isEmpty()) {
+            return Optional.empty();
+        }
+        FireEventEntity fire = fireToUpdate.get();
+        fire.set_handled(true);
+        return Optional.of(this.fireEventRepository.save(fire));
+    }
+
 
     //TODO Mapper with MapStruct instead of this function
     private void updateFireEventData(FireEventDTO fireEventDTO, FireEventEntity fireEventEntity) {

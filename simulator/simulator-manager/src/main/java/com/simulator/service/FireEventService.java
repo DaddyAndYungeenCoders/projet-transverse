@@ -17,10 +17,9 @@ import java.util.List;
 import java.util.Random;
 
 public class FireEventService {
-    private static final String BASE_URL = "http://localhost:7777/api/fire-event";
+    private static final String BASE_URL = AppConfig.getWebServerURL() + "/api/fire-event";
     private static final ObjectMapper objectMapper = new ObjectMapper();
     static SensorService sensorService = new SensorService();
-    static HttpService httpService = new HttpService();
     static MQTTService mqttService = new MQTTService();
 
     public FireEventService() {
@@ -41,17 +40,16 @@ public class FireEventService {
             FireEventEntity fireEvent = fireEventDTO.toEntity();
             System.out.println("fireEvent : " + fireEvent);
             // List<SensorEntity> sensorEntities = httpService.getSensorEntities();
-            String response = httpService.get(AppConfig.getWebServerURL() + "/api/sensor/fetch-all");
+            String response = HttpService.get(AppConfig.getWebServerURL() + "/api/sensor/fetch-all");
             System.out.println("Server Response : " + response);
 
             List<SensorEntity> sensorEntities = SensorService.convertJsonToSensorEntities(response);
-            System.out.println(sensorEntities);
             SensorEntity nearestSensor = sensorService.findNearestSensor(sensorEntities, fireEvent.getCoords());
             nearestSensor.setIntensity(fireEvent.getRealIntensity());
             System.out.println("Nearest : " + nearestSensor.getId());
             // String json = objectMapper.writeValueAsString(nearestSensor.toDTO());
             // System.out.println("JSON sent to MQTT: " + json);
-            httpService.putSendObject(AppConfig.getWebServerURL() + "/api/sensor/updateIntensity/"
+            HttpService.putSendObject(AppConfig.getWebServerURL() + "/api/sensor/updateIntensity/"
                     + nearestSensor.getId() + "/" + nearestSensor.getIntensity(), nearestSensor.toDTO());
             // mqttService.publish(Topics.SIMULATOR_NEW_SENSOR_VALUE, json);
         } catch (JsonProcessingException e) {
