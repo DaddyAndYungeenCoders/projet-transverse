@@ -17,6 +17,7 @@ import {MarkerParameter, MarkersTypes} from '../types/interfaces/MarkersTypes';
 })
 export abstract class AbstractMarkerService<T extends MarkersTypes> {
   interventionMarkers: Marker<any>[] = [];
+  sensorsMarkers: Marker<any>[] = [];
 
   protected constructor() {}
 
@@ -44,6 +45,13 @@ export abstract class AbstractMarkerService<T extends MarkersTypes> {
     this.interventionMarkers = [];
   }
 
+  removeAllSensors(map: Map) {
+    this.sensorsMarkers.forEach(marker => {
+      map.removeLayer(marker);
+    })
+    this.sensorsMarkers = [];
+  }
+
   // TODO Fire station and intervention and sensor
   abstract fetchAll(map: Map): void;
 
@@ -66,6 +74,8 @@ export abstract class AbstractMarkerService<T extends MarkersTypes> {
 
       if (marker.type == IconMarkerTypes.INTERVENTION) {
         this.interventionMarkers.push(newMarker);
+      } else if (marker.type == IconMarkerTypes.SENSOR) {
+        this.sensorsMarkers.push(newMarker);
       }
     });
   }

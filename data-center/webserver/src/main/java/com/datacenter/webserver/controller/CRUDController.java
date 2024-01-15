@@ -61,7 +61,7 @@ public abstract class CRUDController<ENTITY extends BaseEntity, DTO extends Base
     };
 
     protected void notifyFrontEnd() {
-        System.out.println("[WEBSOCKET] - web socket sending a refresh socket to frontend");
+        System.out.println("[WEBSOCKET] - web socket sending a refresh socket to frontend with topic " + getEntityTopic());
         final String entityTopic = getEntityTopic();
         if (StringUtils.isBlank(entityTopic)) {
             return;
