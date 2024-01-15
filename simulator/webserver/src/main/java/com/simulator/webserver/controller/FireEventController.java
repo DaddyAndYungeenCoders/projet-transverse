@@ -150,6 +150,16 @@ public class FireEventController extends AbstractController<FireEventEntity, Fir
         }
     }
 
+    @PutMapping("/updateSensorId/{id}")
+    public ResponseEntity<FireEventEntity> updateSensorId(@PathVariable Long id, @RequestBody FireEventDTO fireEventDTO){
+        ResponseEntity<FireEventEntity> result = this.fireEventHandlerService.updateSensorId(fireEventDTO)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+
+        this.notifyFrontEnd();
+        return result;
+    }
+
     @Override
     String getEntityTopic() {
         return "fire-event";

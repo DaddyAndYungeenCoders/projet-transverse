@@ -29,6 +29,7 @@ public class FireEventHandlerServiceImpl implements FireEventHandlerService {
         entity.setEnd_date(null);
         entity.setStart_date(fireEventDTO.getStartDate());
         entity.setReal_intensity(fireEventDTO.getRealIntensity());
+        entity.setSensorId(fireEventDTO.getSensorId());
         return Optional.of(fireEventRepository.save(entity));
     }
 
@@ -82,6 +83,17 @@ public class FireEventHandlerServiceImpl implements FireEventHandlerService {
 
     public void deleteFireEvent(Long id) {
         fireEventRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<FireEventEntity> updateSensorId(FireEventDTO fireEventDTO) {
+        Optional<FireEventEntity> fireToUpdate = this.fireEventRepository.findById(fireEventDTO.getId());
+        if (fireToUpdate.isEmpty()) {
+            return Optional.empty();
+        }
+        FireEventEntity fire = fireToUpdate.get();
+        fire.setSensorId(fireEventDTO.getSensorId());
+        return Optional.of(this.fireEventRepository.save(fire));
     }
 
     @Override

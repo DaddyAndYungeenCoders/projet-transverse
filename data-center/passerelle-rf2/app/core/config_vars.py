@@ -22,13 +22,13 @@ MAX_RECONNECT_COUNT = 12
 MAX_RECONNECT_DELAY = 60
 MAX_SUB_RETRY = 30
 QOS = 1
-RF2_FIRE_EVENT_TOPIC = topics.get("rf2.fire_event")
+RF2_FIRE_EVENT_TOPIC = topics.get("rf2.fire-event")
 TOPICS_TO_SUBSCRIBE = [
 ]
 
 # -------------------------------------- #
 # -------- SERIAL CONFIGURATION -------- #
-SERIALPORT = "/dev/ttyACM0"
+SERIALPORT = "/dev/ttyACM1"
 BAUDRATE = 115200
 DELIMITER = b"|"
 # ----------------------------------- #

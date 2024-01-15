@@ -14,7 +14,7 @@ public class Topics {
     private static final Logger logger = LoggerFactory.getLogger(LoggerUtil.class);
     public static final String ACTOR_FIRE_VALIDATION = "actor.fire-validation";
     public static final String MANAGER_ASK_VALIDATION = "manager.ask-validation";
-    public static final String MANAGER_FIRE_EVENT_FINISHED = "manager.fire-event-finished";
+    public static final String MANAGER_FIRE_EVENT_FINISHED = "manager.finished-fire-event";
     public static final String MANAGER_INTERVENTION = "manager.intervention";
     public static final String SIMULATOR_VIEW_FIRE_EVENT = "simulator-view.fire-event";
     public static final String SIMULATOR_NEW_SENSOR_VALUE = "simulator.new-sensor-value";

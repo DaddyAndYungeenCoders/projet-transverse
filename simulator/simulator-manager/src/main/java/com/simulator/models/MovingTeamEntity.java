@@ -27,6 +27,7 @@ public class MovingTeamEntity {
     private boolean backingHome = false;
     private RouteResponseEntity route;
     private int step = 0;
+    private Long sensorId;
 
     private boolean isFireEnded = false;
 
@@ -46,6 +47,7 @@ public class MovingTeamEntity {
         this.route = routeService.getRoute(current_position, destination);
         this.fire_station = fireStationEntity;
         this.fireEvent = fireEventService.getFireEventBySensorId(sensor_id);
+        this.sensorId = sensor_id;
         movingTeamService.sendTeamPosition(this.toInterventionMessageDTO());
     }
 
@@ -83,7 +85,7 @@ public class MovingTeamEntity {
         interventionMessageDTO.setStamina(stamina);
         interventionMessageDTO.setCoords(current_position);
         interventionMessageDTO.setFire_station_id(this.fire_station.getId());
-        interventionMessageDTO.setSensor_id(this.fireEvent.getSensorId());
+        interventionMessageDTO.setSensor_id(this.sensorId);
         return interventionMessageDTO;
     }
 

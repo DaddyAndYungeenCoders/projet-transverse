@@ -4,11 +4,19 @@ package com.simulator.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.simulator.models.CoordsEntity;
 import com.simulator.models.FireEventEntity;
+import lombok.*;
 import org.springframework.util.ObjectUtils;
 
 import java.io.Serializable;
 import java.sql.Date;
 
+
+@EqualsAndHashCode(callSuper = false)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class FireEventDTO extends BaseDTO implements Serializable {
     @JsonProperty("id")
     private Long id;

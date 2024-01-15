@@ -15,13 +15,19 @@ def publish_fire_event(fire_event):
     from core.mqtt_client import MqttClient
 
     mqtt_client = MqttClient(MQTT_CLIENT_NAME)
+    logger.info(f"Publishing {json.dumps(fire_event)} to {RF2_FIRE_EVENT_TOPIC}")
     mqtt_client.publish_message(RF2_FIRE_EVENT_TOPIC, json.dumps(fire_event))
 
 
 def post_fire_event(fire_event):
-    url = API_URL + "/fire-event"
+    url = API_URL + "/fire-event/create/dto"
+    event_to_send = {
+        "id": fire_event["id"],
+        "intensity": fire_event["intensity"]
+    }
     try:
-        res = requests.post(url, fire_event)
+        headers = {"Content-Type": "application/json"}
+        res = requests.get(url, json=event_to_send, headers=headers)
 
         if res.status_code == 200:
             logger.info(f"The new fire_event {fire_event} was properly sent to {url}")
