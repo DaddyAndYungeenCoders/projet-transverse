@@ -22,16 +22,16 @@ INSERT INTO Team (chief_officer, stamina, id_firestation, is_available, current_
 VALUES
     ('Jean Dupont', 80, 1, TRUE, 45.7653297, 4.9029549),
     ('Marie Curie', 85, 2, TRUE, 45.757098, 4.876627),
-    ('Pierre Martin', 75, 3, FALSE, 45.782051, 4.872859),
+    ('Pierre Martin', 75, 3, TRUE, 45.782051, 4.872859),
     ('Lucie Durant', 90, 4, TRUE, 45.769207, 4.870679),
 
     ('Pauline Lambert', 80, 1, TRUE, 45.7653297, 4.9029549),
     ('François Dubois', 85, 2, TRUE, 45.757098, 4.876627),
-    ('Sandrine Girard', 75, 3, FALSE, 45.782051, 4.872859),
+    ('Sandrine Girard', 75, 3, TRUE, 45.782051, 4.872859),
     ('Thomas Lefevre', 90, 4, TRUE, 45.769207, 4.870679),
     ('Elise Martin', 80, 1, TRUE, 45.7653297, 4.9029549),
     ('Julien Durand', 85, 2, TRUE, 45.757098, 4.876627),
-    ('Camille Lemoine', 75, 3, FALSE, 45.782051, 4.872859),
+    ('Camille Lemoine', 75, 3, TRUE, 45.782051, 4.872859),
     ('Maxime Robert', 90, 4, TRUE, 45.769207, 4.870679),
     ('Sophie Morel', 80, 1, TRUE, 45.7653297, 4.9029549),
 
