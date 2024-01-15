@@ -27,7 +27,16 @@ VALUES
     (1, 80, 9),  -- Correspond à Jean Dupont
     (2, 85, 8),  -- Correspond à Marie Curie
     (3, 75, 8),  -- Correspond à Pierre Martin
-    (4, 90, 9);  -- Correspond à Lucie Durant
+    (4, 90, 9),  -- Correspond à Lucie Durant
+
+    (1, 80, 7),  -- Correspond à Pauline Lambert
+    (2, 85, 6),  -- Correspond à François Dubois
+    (3, 75, 6),  -- Correspond à Sandrine Girard
+    (4, 90, 7),  -- Correspond à Thomas Lefevre
+    (1, 80, 7),  -- Correspond à Elise Martin
+    (2, 85, 8),  -- Correspond à Julien Durand
+    (4, 90, 8),  -- Correspond a Maxime Robert
+    (1, 80, 8);  -- Correspond a Sophie Morel
 
 
 /*-- Insertion de données dans la table intervention
