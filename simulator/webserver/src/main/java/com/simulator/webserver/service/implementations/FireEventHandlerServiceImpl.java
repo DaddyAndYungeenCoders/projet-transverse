@@ -1,7 +1,5 @@
 package com.simulator.webserver.service.implementations;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simulator.webserver.dto.FireEventDTO;
 import com.simulator.webserver.models.FireEventEntity;
 import com.simulator.webserver.repository.FireEventRepository;
@@ -9,13 +7,7 @@ import com.simulator.webserver.service.interfaces.FireEventHandlerService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -110,6 +102,11 @@ public class FireEventHandlerServiceImpl implements FireEventHandlerService {
                 .filter(entity -> entity.getReal_intensity() > 0 && entity.is_real())
                 .findFirst())
                 .orElse(Optional.empty());
+    }
+
+    @Override
+    public boolean isFireReal(Long id) throws BadRequestException {
+        return false;
     }
 
 

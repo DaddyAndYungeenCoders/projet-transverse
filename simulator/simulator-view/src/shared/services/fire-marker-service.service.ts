@@ -25,7 +25,8 @@ export class FireMarkerService extends AbstractMarkerService<FireMarkerType> {
 
     this._http.get<FireEventDTO[]>(this.URL).subscribe(
       list => {
-        list.forEach(fire => {
+        const filteredList = list.filter(fire => fire.realIntensity > 0);
+        filteredList.forEach(fire => {
           let iconMarkerType: IconMarkerTypes = fire.real ? IconMarkerTypes.FIRE : IconMarkerTypes.FAKEFIRE;
           markerParams.push({
             coords: fire.coords,

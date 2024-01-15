@@ -72,7 +72,7 @@ public class SensorHandlerServiceImpl implements SensorHandlerService {
             return Optional.empty();
         }
         sensorToUpdate.get().setIntensity(intensity);
-        postService.sendObject(passerelleURL , SensorEntity.toDTO(sensorToUpdate.get()));
+     //   postService.sendObject(passerelleURL , SensorEntity.toDTO(sensorToUpdate.get()));
 
         return Optional.of(this.sensorRepository.save(sensorToUpdate.get()));
     }
