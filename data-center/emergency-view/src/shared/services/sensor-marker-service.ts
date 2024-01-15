@@ -28,14 +28,16 @@ export class SensorMarkerService extends AbstractMarkerService<SensorMarkerType>
 
     this._http.get<SensorDTO[]>(this.BASE_URL).subscribe(
       list => {
+        console.debug(list);
         list.forEach(sensor => {
           markerParams.push({
             coords: sensor.coords,
             type: IconMarkerTypes.SENSOR,
-            color: 'black',
+            color: sensor.intensity > 0 ? 'red' : 'black',
             textNumber: sensor.intensity
           })
         });
+
         super.createMarkers(markerParams, map);
       }
     )

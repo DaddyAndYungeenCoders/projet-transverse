@@ -9,6 +9,7 @@ import {FirestationMarkerService} from '../../services/firestation-marker-servic
 import {SensorMarkerService} from '../../services/sensor-marker-service';
 import {StompService} from '../../services/StompService';
 import * as jsonPolygon from './polygon.json';
+import {StompServiceSensors} from '../../services/StompServiceSensors';
 
 @Component({
   selector: 'app-main-map',
@@ -28,12 +29,13 @@ export class MainMapComponent implements OnInit, AfterViewInit {
     private interventionMarkerService: InterventionMarkerService,
     private fireMarkerService: FireMarkerService,
     private stompService: StompService,
+    private stompServiceSensors: StompServiceSensors,
     private sensorMarkerService: SensorMarkerService
   ) {}
 
   ngOnInit(): void {
-    this.stompService.subscribe("/topic/fire-event", () => {
-      this.refreshFires()
+    this.stompServiceSensors.subscribe("/topic/fire-event", () => {
+      this.refreshFires();
     });
     this.stompService.subscribe("/topic/intervention", () => {
       this.refreshIntervention();
@@ -60,17 +62,18 @@ export class MainMapComponent implements OnInit, AfterViewInit {
     }
   }
 
-
   private refreshFires() {
-    this.fireMarkerService.fetchAll(this.map);
+    console.debug("refresh sensors");
+    this.sensorMarkerService.removeAllSensors(this.map);
+    this.sensorMarkerService.fetchAll(this.map);
   }
   private refreshIntervention() {
+    console.debug("intervention");
     this.interventionMarkerService.removeAll(this.map);
     this.interventionMarkerService.fetchAll(this.map);
   }
 
   private fetchAll() {
-    this.fireMarkerService.fetchAll(this.map);
     this.fireStationMarkerService.fetchAll(this.map);
     this.interventionMarkerService.fetchAll(this.map);
     this.sensorMarkerService.fetchAll(this.map);
