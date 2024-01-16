@@ -16,7 +16,7 @@ def publish_fire_event(fire_event):
 
     mqtt_client = MqttClient(MQTT_CLIENT_NAME)
     logger.info(f"Publishing {json.dumps(fire_event)} to {RF2_FIRE_EVENT_TOPIC}")
-    mqtt_client.publish_message(RF2_FIRE_EVENT_TOPIC, json.dumps(fire_event))
+    mqtt_client.publish_message(RF2_FIRE_EVENT_TOPIC, fire_event)
 
 
 def post_fire_event(fire_event):

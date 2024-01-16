@@ -1,8 +1,10 @@
 package org.example.models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class SensorDetection {
     private int id;
     private int intensity;
@@ -15,6 +17,9 @@ public class SensorDetection {
         this.id = id;
         this.intensity = intensity;
         this.isReal = isReal;
+    }
+
+    public SensorDetection() {
     }
 
     public boolean isReal() {

@@ -35,7 +35,7 @@ public class CronJob implements Job {
         Random rand = new Random();
         int upperbound = 1;
         int int_random = rand.nextInt(upperbound);
-        if (int_random == 0) {
+        if (int_random <= upperbound / 2) {
             int upperboundRandomBoolean = 5;
             int randomBoolean = rand.nextInt(upperboundRandomBoolean);
             Boolean trueFire = randomBoolean == 0;

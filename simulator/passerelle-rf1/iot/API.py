@@ -7,7 +7,7 @@ from multiprocessing import Process
 
 from pydantic import BaseModel
 
-SERIALPORT = "/dev/ttyACM1"
+SERIALPORT = "/dev/ttyACM0"
 #SERIALPORT = "COM5"
 BAUDRATE = 115200
 ser = serial.Serial()

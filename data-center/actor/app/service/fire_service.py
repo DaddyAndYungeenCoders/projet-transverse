@@ -9,10 +9,10 @@ from app.core.config_vars import API_URL
 def is_fire_real(fire_event):
     logger.info(fire_event)
 
-    event = json.loads(fire_event)
+    # event = json.loads(fire_event)
 
-    logger.info(event["id"])
-    url = API_URL + "/fire-event" + "/is-real/" + str({event["id"]})
+    logger.info(fire_event["id"])
+    url = API_URL + "/fire-event" + "/is-real/" + str(fire_event["id"])
     res = requests.get(url)
     if res.status_code == 200:
         real_fire_event = res.json()

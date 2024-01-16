@@ -7,9 +7,9 @@ def publish_validation_message(fire_event, is_fire_real):
     from app.core.mqtt_client import MqttClient
 
     mqtt_client = MqttClient(MQTT_CLIENT_NAME)
-    fire_event_json = json.loads(fire_event)
+    # fire_event_json = json.loads(fire_event)
 
-    json_event = json.loads(fire_event_json)
+    json_event = json.loads(fire_event)
     json_fire_event = {
         "id": json_event["id"],
         "is_real": is_fire_real

@@ -74,16 +74,16 @@ services:
       firenet: 
         ipv4_address: "192.168.80.6"
 
-  relay-mqtt-webserver:
-    container_name: relay-api
-    build:
-      context: ../../simulator/relay-mqtt-webserver
-      dockerfile: Dockerfile
-    ports:
-      - '8100:8100'
-    networks:
-      firenet:
-        ipv4_address: "192.168.80.200"
+#  relay-mqtt-webserver:
+#    container_name: relay-api
+#    build:
+#      context: ../../simulator/relay-mqtt-webserver
+#      dockerfile: Dockerfile
+#    ports:
+#      - '8100:8100'
+#    networks:
+#      firenet:
+#        ipv4_address: "192.168.80.200"
 
 #  test:
 #    image: alpine:latest
@@ -93,26 +93,26 @@ services:
 #    networks:
 #      firenet:
 
-  db:
-    build:
-      context: ../../docker-pg-databases
-      dockerfile: dockerfile
-    ports:
-      - "5432:5432"
-    volumes:
-      - db_data:/var/lib/postgresql/data
-
-  data-center-webserver:
-    build:
-      context: ../webserver
-      dockerfile: DockerfileDataCenter
-    network_mode: host
-
-  simu-webserver:
-    build:
-      context: ../../simulator/webserver
-      dockerfile: DockerfileSimulatorWebServer
-    network_mode: host
+#  db:
+#    build:
+#      context: ../../docker-pg-databases
+#      dockerfile: dockerfile
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - db_data:/var/lib/postgresql/data
+#
+#  data-center-webserver:
+#    build:
+#      context: ../webserver
+#      dockerfile: DockerfileDataCenter
+#    network_mode: host
+#
+#  simu-webserver:
+#    build:
+#      context: ../../simulator/webserver
+#      dockerfile: DockerfileSimulatorWebServer
+#    network_mode: host
 
 #  emergency-manager:
 #    container_name: emergency-manager
@@ -129,27 +129,27 @@ services:
 #    network_mode: host
 
 
-  emergency-view:
-    container_name: emergency-view
-    build:
-      context: ../../data-center/emergency-view
-      dockerfile: DockerfileEmerView
-    network_mode: host
-
-  simulator-view:
-    container_name: simulator-view
-    build:
-      context: ../../simulator/simulator-view
-      dockerfile: DockerfileSimView
-    network_mode: host
+#  emergency-view:
+#    container_name: emergency-view
+#    build:
+#      context: ../../data-center/emergency-view
+#      dockerfile: DockerfileEmerView
+#    network_mode: host
+#
+#  simulator-view:
+#    container_name: simulator-view
+#    build:
+#      context: ../../simulator/simulator-view
+#      dockerfile: DockerfileSimView
+#    network_mode: host
 
 volumes:
   mosquitto:
   influxdb:
   grafana:
   actor:
-  relay-mqtt-db:
-  db_data:
+#  relay-mqtt-db:
+#  db_data:
 
 networks:
   firenet:
