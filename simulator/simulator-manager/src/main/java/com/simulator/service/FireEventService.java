@@ -50,6 +50,8 @@ public class FireEventService {
             System.out.println("Nearest : " + nearestSensor.getId());
             // String json = objectMapper.writeValueAsString(nearestSensor.toDTO());
             // System.out.println("JSON sent to MQTT: " + json);
+            fireEventDTO.setSensorId(nearestSensor.getId());
+            HttpService.putSendObject(AppConfig.getWebServerURL() + "/api/fire-event/updateSensorId/"+ fireEvent.getId(), fireEventDTO);
             HttpService.putSendObject(AppConfig.getWebServerURL() + "/api/sensor/updateIntensity/"
                     + nearestSensor.getId() + "/" + nearestSensor.getIntensity(), nearestSensor.toDTO());
             // mqttService.publish(Topics.SIMULATOR_NEW_SENSOR_VALUE, json);
@@ -163,6 +165,7 @@ public class FireEventService {
         try {
             HttpURLConnection connection = setConnectionBaseParam("/getBySensorId/" + sensorId, "GET");
             String response = HttpUtils.readResponse(connection);
+            System.out.println("Get fireEvent : " + response);
             FireEventDatabaseEntity fireEvent = objectMapper.readValue(response, FireEventDatabaseEntity.class);
             return fireEvent.toEntity();
         } catch (Exception e) {

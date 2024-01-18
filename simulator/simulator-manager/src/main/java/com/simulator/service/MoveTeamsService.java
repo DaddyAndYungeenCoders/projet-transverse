@@ -12,7 +12,7 @@ public class MoveTeamsService implements Runnable {
     private static final Logger logger = LoggerUtil.getLogger();
     public void run() {
         while (true) {
-            logger.info("Moving teams");
+//            logger.info("Moving teams");
             List<MovingTeamEntity> teamsCopy = new ArrayList<>(teamsInIntervention);
 
             for (MovingTeamEntity team : teamsCopy) {

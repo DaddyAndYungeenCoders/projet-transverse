@@ -33,7 +33,7 @@ public class HttpService {
     public static void putSendObject(String url, Object object) {
         try {
             String json = objectMapper.writeValueAsString(object);
-            log.debug("Request JSON: {}", json);
+            log.debug("PUT Request JSON: {}", json);
 
             HttpHeaders requestHeaders = new HttpHeaders();
             requestHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -53,6 +53,24 @@ public class HttpService {
         } catch (JsonProcessingException e) {
             log.error("Error processing JSON", e);
             // Handle the exception, throw an exception, or perform other error-specific actions
+        }
+    }
+
+    public static void putSendObject(String url) {
+        log.info("PUT Request to {}", url);
+
+        HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> requestEntity = new HttpEntity<>("", requestHeaders);
+        ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, String.class);
+        String response = responseEntity.getBody();
+
+        log.debug("Server Response: {}", response);
+
+        // Check if the response status is not in the 2xx range
+        if (!responseEntity.getStatusCode().is2xxSuccessful()) {
+            log.error("Request failed with status code: {}", responseEntity.getStatusCodeValue());
+            // Handle the error, throw an exception, or perform other error-specific actions
         }
     }
 }

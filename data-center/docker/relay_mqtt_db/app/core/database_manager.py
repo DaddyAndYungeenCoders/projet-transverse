@@ -37,19 +37,3 @@ class DatabaseManager:
             .format(self.bucket, measurement)
         return self.query_api.query(org=self.org, query=query)
 
-# for item in json_data:
-#     json_body = [
-#         {
-#             "measurement": "your_measurement",
-#             "tags": {
-#                 "tag1": "value1",
-#                 "tag2": "value2"
-#             },
-#             "time": item['timestamp'],  # Adjust this based on your JSON structure
-#             "fields": {
-#                 "field1": item['field1'],
-#                 "field2": item['field2'],
-#                 # Add more fields as needed
-#             }
-#         }
-#     ]

@@ -31,3 +31,32 @@ docker push <username>/<app-name>(:<tag>)
 ```shell
 docker run -p 8001:8001 <app-name>
 ```
+
+### Grafana Queries
+```Grafana
+from(bucket: "project")
+  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)
+  |> filter(fn: (r) =>
+    r._measurement == "new_fire_event" and
+    r._field == "intensity"
+  )
+```
+
+```
+from(bucket: "project")
+|> range(start: v.timeRangeStart, stop:v.timeRangeStop)
+|> filter(fn: (r) =>
+r._measurement == "fire_event" and
+r._field == "intensity"
+)
+```
+GeoMap flux query
+```
+from(bucket: "project")
+  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+  |> filter(fn: (r) => r["_measurement"] == "fire_event")
+  |> filter(fn: (r) => r["_field"] == "latitude" or r["_field"] == "longitude" or r["_field"] == "intensity" or r["_field"] == "real")
+  |> group(columns: ["_field"])
+  |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")
+
+```

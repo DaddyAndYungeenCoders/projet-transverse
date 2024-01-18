@@ -23,6 +23,7 @@ ACTOR_VALIDATION_TOPIC = topics.get("actor.fire-validation")
 MANAGER_ASK_VALIDATION = topics.get("manager.ask-validation")
 TOPICS_TO_SUBSCRIBE = [
     (MANAGER_ASK_VALIDATION, QOS)
+    # (ACTOR_VALIDATION_TOPIC, QOS)
 ]
 
 # -------------------------------------- #

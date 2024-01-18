@@ -65,6 +65,7 @@ public class FireEventController extends CRUDController<FireEventEntity, FireEve
         fireEventDTO.setIdEquipeIntervention(null); // WTF ?
 
         fireEventDTO.setCoords(sensorCoordinates);
+        this.notifyFrontEnd();
 
         return this.create(fireEventDTO);
     }

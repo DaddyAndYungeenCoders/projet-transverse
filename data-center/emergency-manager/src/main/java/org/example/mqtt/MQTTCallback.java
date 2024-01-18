@@ -56,6 +56,7 @@ public class MQTTCallback implements MqttCallback {
                 teamService.updateTeamPosition(data);
             } else if (s.equals(Topics.getTopicName(Topics.MANAGER_FIRE_EVENT_FINISHED))) {
                 // update availability of Team
+                logger.info("Fire event is finished, updating availability of team");
                 Team teamToUpdate = mapper.readValue(data, Team.class);
                 teamService.updateAvailabilityOfTeam(teamToUpdate, true);
             } else {

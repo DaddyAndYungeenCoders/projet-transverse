@@ -52,6 +52,7 @@ public class FireEventController extends AbstractController<FireEventEntity, Fir
                     .map(fire -> ResponseEntity.ok().body(fire))
                     .orElseGet(() -> ResponseEntity.notFound().build());
 
+            log.info("result.getBody() => {}", result.getBody());
             postService.sendObject(relayURL, Objects.requireNonNull(result.getBody()).toDTO());
             this.notifyFrontEnd();
 
@@ -71,6 +72,7 @@ public class FireEventController extends AbstractController<FireEventEntity, Fir
                     .map(fire -> ResponseEntity.ok().body(fire))
                     .orElseGet(() -> ResponseEntity.notFound().build());
 
+            postService.sendObject(relayURL, Objects.requireNonNull(result.getBody()).toDTO());
             this.notifyFrontEnd();
 
             return result;
@@ -82,6 +84,7 @@ public class FireEventController extends AbstractController<FireEventEntity, Fir
     public ResponseEntity<List<FireEventDTO>> fetchAll() {
         List<FireEventDTO> fireEventDTOList = fireEventHandlerService.getAllFireEvents()
                 .map(fireEventEntities -> fireEventEntities.stream()
+                        .filter(fireEventEntity -> fireEventEntity.getReal_intensity() > 0)
                         .map(FireEventEntity::toDTO)
                         .collect(Collectors.toList()))
                 .orElse(Collections.emptyList());
@@ -148,6 +151,16 @@ public class FireEventController extends AbstractController<FireEventEntity, Fir
             this.notifyFrontEnd();
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PutMapping("/updateSensorId/{id}")
+    public ResponseEntity<FireEventEntity> updateSensorId(@PathVariable Long id, @RequestBody FireEventDTO fireEventDTO){
+        ResponseEntity<FireEventEntity> result = this.fireEventHandlerService.updateSensorId(fireEventDTO)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+
+        this.notifyFrontEnd();
+        return result;
     }
 
     @Override

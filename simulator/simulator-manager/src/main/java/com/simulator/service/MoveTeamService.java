@@ -2,6 +2,7 @@ package com.simulator.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.simulator.config.AppConfig;
 import com.simulator.models.MovingTeamEntity;
 import com.simulator.utils.Topics;
 
@@ -30,6 +31,9 @@ public class MoveTeamService implements Runnable {
                     try {
                         String json = objectMapper.writeValueAsString(movingTeamEntity.getFireEvent());
                         mqttService.publish(Topics.getTopicName(Topics.MANAGER_FIRE_EVENT_FINISHED), json);
+                        HttpService.putSendObject(AppConfig.getWebServerURL() + "/api/sensor/updateIntensity/"
+                                + movingTeamEntity.getSensorId() + "/" + 0);
+
                     } catch (JsonProcessingException e) {
                         throw new RuntimeException(e);
                     }

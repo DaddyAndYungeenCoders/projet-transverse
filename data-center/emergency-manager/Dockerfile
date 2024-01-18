@@ -1,16 +1,19 @@
+# AS <NAME> to name this stage as maven
+FROM maven:3.9.5 AS maven
+
+WORKDIR /usr/src/app
+COPY . /usr/src/app
+# Compile and package the application to an executable JAR
+RUN mvn package
+
+# For Java 11,
 FROM openjdk:21-ea-1-jdk-slim
 
-WORKDIR /app
+ARG JAR_FILE=emergency-manager-1.0-SNAPSHOT.jar
 
-# Copiez le fichier POM
-COPY ./pom.xml .
+WORKDIR /opt/app
 
-RUN apt-get update && \
-    apt-get install -y maven && \
-    mvn dependency:go-offline
+# Copy the spring-boot-api-tutorial.jar from the maven stage to the /opt/app directory of the current stage.
+COPY --from=maven /usr/src/app/target/${JAR_FILE} /opt/app/
 
-COPY ./src ./src
-
-RUN mvn clean package -DskipTests
-
-CMD ["java", "-cp", "target/classes:target/dependency/*", "org.example.Main"]
+ENTRYPOINT ["java","-jar","emergency-manager-1.0-SNAPSHOT.jar"]

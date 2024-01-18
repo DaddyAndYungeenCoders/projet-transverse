@@ -1,4 +1,5 @@
 import time
+import json
 
 from app.controller.controller import publish_validation_message
 from app.core.config_vars import *
@@ -16,14 +17,26 @@ def on_message(client, userdata, message):
     data = message.payload.decode('utf-8')
 
     if message.topic == MANAGER_ASK_VALIDATION:
-        # check if fire is real or not in simulator DB
-        fire_reality = is_fire_real(data)
-        # pub if fire is real or not
-        if isinstance(fire_reality, bool):
-            publish_validation_message(data, fire_reality)
-        else:
-            logger.error(f"Status of fire could not be determined : fire_reality : {fire_reality}")
-            # maybe pub a message and let the manager handle it ?
+        try:
+            # check if fire is real or not in simulator DB
+            logger.info(f"Checking if fire is real or not with this : {data} and type : {type(data)}")
+            data_json = json.loads(data)
+            # data_json = json.loads(data_json)
+            logger.info(f"Checking if fire is real or not with this : {data_json} and type : {type(data_json)}")
+            logger.info(data_json["intensity"])
+            if data_json["intensity"] > 0:
+                logger.info("Fire intensity is > 0, checking if fire is real or not")
+                fire_reality = is_fire_real(data_json)
+                # pub if fire is real or not
+                # if isinstance(fire_reality, bool):
+                publish_validation_message(data, fire_reality)
+                # else:
+                #     logger.error(f"Status of fire could not be determined : fire_reality : {fire_reality}")
+                # maybe pub a message and let the manager handle it ?
+            else:
+                logger.info("Fire intensity is 0, no need to check if fire is real or not")
+        except Exception as e:
+            logger.error(f"Error while trying to check if fire is real or not : {e}")
     else:
         logger.error(f"Not a valid topic : {message.topic}")
 
